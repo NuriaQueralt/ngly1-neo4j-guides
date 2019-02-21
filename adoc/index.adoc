@@ -1,0 +1,777 @@
+:author: Núria Queralt Rosinach
+:twitter: nqueralt
+:tags: NGLY1 Deficiency, NGLY1, Hypothesis Generation
+:neo4j-version: 3.0.3
+
+
+== INTRODUCTION
+
+
+=== NGLY1 DEFICIENCY KNOWLEDGE GRAPH
+
+
+**Detail the knowledge content in the structured reviewed**
+
+The NGLY1 Deficiency Knowledge Graph is a network of biology, medicine, and chemistry. It contains the current knowledge about the NGLY1 deficiency-CDDG disease curated from the scientific literature and from the biomedical knowledge. The current version 3.2 contains 9,365 nodes of 8 types and 237,027 relationships of 32 types.
+
+We created the NGLY1 Deficiency Knowledge Graph to support translational research on the NGLY1 deficiency. We reviewed and structured information around the clinical profile, the pathophysiology and the pharmacology of the NGLY1 deficiency to help researchers to discover evidence-based explanations for their hypotheses. The third release of the graph organizes curated information from human and animal models 1) manually extracted from the literature; 2) retrieved from https://monarchinitiative.org/[the Monarch Initiative]; 3) transcription factors and their targeted genes from several sources in tftargets and MSigDB; 4) manually contributed by the community from http://100.25.145.12:8181/wiki/Main_Page[the NGLY1 Deficiency wikibase platform]; and integrates it with an experimental expression data from mouse. 
+
+
+=== WHAT KIND OF QUESTIONS WE CAN DO
+
+**Highlight what we can learn from the knowledge reviewed**
+
+The user can query the knowledge graph asking for paths between entities to discover new hypotheses or extracting data that can shed light or give new ideas. +
+
+
+
+=== STYLE THE GRAPH
+
+
+We first style the graph, before playing with it. To load the NGLY1 Deficiency graph style into the Neo4j Browser, run the following command by clicking the box, which will populate the shell, and hitting ```enter``` (or ```return``` in some keyboards). This command only needs to be run once per web browser.
+
+
+[source,cypher]
+----
+:style http://100.25.145.12:8003/guides/style.grass
+----
+
+
+TIP:  The user can set up the style of the graph by itself locally in its browser. If you click on any label or relationship above the graph visualization, you can then choose its styling in the area below the graph. Colors, sizes, and captions are selectable from there. Click http://guides.neo4j.com/browser.html[Styling Neo4j Browser Visualization] for more details. 
+
+
+=== STRUCTURE OF THE GUIDE
+
+
+This guide is structured with query pages in the next section, where the guide shows an explicit question and develops a type of query we can formulate to inspect hypotheses from the knowledge in the review. In the last section, the guide develops how to query the graph with some hints and examples to aid the new user. To see how to retrieve connections through regulation between NGLY1-AQP1 go to:
+
+* _Slide 2_: *NGLY1 - AQP1* 
+
+To learn how to query the version 3.2 of the NGLY1 Defiency knowledge graph, go to:
+
+* _Slide 3_: *HOW TO QUERY* 
+
+
+IMPORTANT:  Click the top right **black&white** arrow to go to the next page
+
+
+
+== NGLY1 - AQP1 
+
+
+Researchers have observed an association between NGLY1 human gene and AQP1 human gene at expression level. Their hypothesis is that both genes are linked through transcriptional regulation and they want to search the knowledge and the expression data integrated in the review to find potential mechanisms. In particular, they want to query the review to extract regulatory paths through genetic interactions that link NGLY1 and AQP1. +
+
+
+
+---
+
+
+=== QUERY
+
+
+==== Define the query template
+
+
+The first think to do is to formulate the query template to answer this question:
+
+image::https://www.dropbox.com/s/qypkrn1l50p83n6/query1_topology_v3.2.png?dl=1[height=100, width=5000, align="center"]
+
+In this query, we specify relations between genes to be of two types: 'interacts with' that will be explicitly either of regulatory origin once filtered by source of provenance to the databases *tftargets* and *MSigDB* or of gene expression origin once filtered by reference to the *PubMed Identifier*, where the experimental fly transcriptome data set was published, or a gene-gene interaction if none of these restrictions applied; and 'in 1 to 1 orthology relationship with' that relates to direct orthology between genes.
+
+
+==== Formulate the query in Cypher
+
+
+Once we have a clear query template we can create the query in Cypher to search for mechanistic links based on gene interactions and regulation edges. The following query traverses the graph to find these kind of links in the review:
+
+[%autofit]
+----
+MATCH path=(source:GENE)-[i1:`RO:0002434`]->(rna:GENE)-[i2:`RO:HOM0000020`]-(ortholog_rna:GENE)-[i3:`RO:0002434`]-(tf:GENE)-[i4:`RO:0002434`]->(target:GENE)
+
+WHERE source.id = 'FlyBase:FBgn0033050' AND target.id = 'HGNC:633' AND ALL(x IN nodes(path) WHERE single(y IN nodes(path) WHERE y = x))
+
+WITH path,
+
+[n IN nodes(path) WHERE n.preflabel IN ['cytoplasm','cytosol','nucleus','metabolism','membrane','protein binding','visible','viable','phenotype']] AS nodes_marked,
+
+[r IN relationships(path) WHERE toLower(r.reference_supporting_text) =~ '.*tftargets.*|.*msigdb.*'] AS interactions
+
+WHERE size(nodes_marked) = 0 AND size(interactions) <> 0
+
+AND toLower(i1.reference_uri) CONTAINS 'pubmed/29346549'
+
+AND toLower(i4.reference_supporting_text) =~ '.*tftargets.*|.*msigdb.*'
+
+RETURN path
+----
+
+
+Let's explain this query statement by statement. First, we look for mechanisms that match the query template above, where we define gene interactions with the node type _GENE_ and the edge types  _RO:0002434_ (interacts with) and _RO:HOM0000020_ (in 1 to 1 orthology relationship with):
+
+
+ MATCH path=(source:GENE)-[i1:`RO:0002434`]->(rna:GENE)-[i2:`RO:HOM0000020`]-(ortholog_rna:GENE)-[i3:`RO:0002434`]-(tf:GENE)-[i4:`RO:0002434`]->(target:GENE)
+
+
+We define the source and target nodes with the identifier (id). The source is Pngl (FlyBase:FBgn0033050), which is the fly ortholog of the human gene NGLY1, (HGNC:17646) and the target is the human gene AQP1 (HGNC:633)
+
+
+ WHERE source.id = 'FlyBase:FBgn0033050' AND target.id = 'HGNC:633'
+
+
+and we impose that every every node instance is traversed only once in the path.
+
+
+ AND ALL(x IN nodes(path) WHERE single(y IN nodes(path) WHERE y = x))
+
+
+We extract some features from each path to then filter them
+
+
+ WITH path,
+
+
+We mark nodes with too general meaning
+
+
+ [ n IN nodes(path) WHERE n.preflabel IN ['cytoplasm','cytosol','nucleus','metabolism','membrane','protein binding','visible','viable','phenotype'] ] AS nodes_marked,
+
+
+We mark regulatory edges through the "reference_supporting_text" edge provenance attribute
+
+
+ [ r IN relationships(path) WHERE toLower(r.reference_supporting_text) =~ '.*tftargets.*|.*msigdb.*' ] AS interactions
+
+
+We filter paths that only content specific node instances and at least have one regulatory edge
+
+
+ WHERE size(nodes_marked) = 0 AND size(interactions) <> 0
+
+
+We filter paths that the first edge, named in the path pattern as 'i1', is a transcriptomic interaction from the experimental dataset published in the reference id PMID:29346549. We filter it by publication provenance using the `reference_uri` edge attribute
+
+
+ AND toLower(i1.reference_uri) CONTAINS 'pubmed/29346549'
+
+
+We filter paths that the fourth edge, named as 'i4', is a TF --> GENE regulatory interaction. We define a specific directionality of the interaction to keep the TF function towards AQP1. We filter it by source provenance using the `reference_supporting_text` edge attribute
+
+
+ AND toLower(i4.reference_supporting_text) =~ '.*tftargets.*|.*msigdb.*'
+
+
+We retrieve paths
+
+
+ RETURN path
+
+
+{sp}+
+
+---
+
+
+=== RESULTS
+
+
+Results can be vizualized in a summary table of a list of properties calculated from all paths or in a graph exposing all the paths. In this case we can explore all paths directly in graph format that looks like:
+
+
+image::https://www.dropbox.com/s/bbdg1orj7ztrvup/query1_paths_v3.2.png?dl=1[height=3000, width=10500]
+
+
+If we want to retrieve a summary table with all gene interactors that are expressed gene interactors of Pngl and AQP1 Transcription Factors (TFs) ordered by the total number of paths they appear, the query should be:
+
+
+ MATCH path=(source:GENE)-[i1:`RO:0002434`]->(rna:GENE)-[i2:`RO:HOM0000020`]-(ortholog_rna:GENE)-[i3:`RO:0002434`]-(tf:GENE)-[i4:`RO:0002434`]->(target:GENE)
+
+ WHERE source.id = 'FlyBase:FBgn0033050' AND target.id = 'HGNC:633' AND ALL(x IN nodes(path) WHERE single(y IN nodes(path) WHERE y = x))
+
+ WITH path,rna,tf,
+
+ [n IN nodes(path) WHERE n.preflabel IN ['cytoplasm','cytosol','nucleus','metabolism','membrane','protein binding','visible','viable','phenotype']] AS nodes_marked,
+
+ [r IN relationships(path) WHERE toLower(r.reference_supporting_text) =~ '.*tftargets.*|.*msigdb.*'] AS interactions
+
+ WHERE size(nodes_marked) = 0 AND size(interactions) <> 0
+
+ AND toLower(i1.reference_uri) CONTAINS 'pubmed/29346549'
+
+ AND toLower(i4.reference_supporting_text) =~ '.*tftargets.*|.*msigdb.*'
+
+ RETURN DISTINCT rna.name AS Expressed_gene_name, tf.name AS TF_name, count(distinct path) as Total_paths
+
+ ORDER BY Total_paths DESC
+
+
+Which results in the following table:
+
+
+image::https://www.dropbox.com/s/v7i3ld0x3cup7nj/query1_table_v3.2.png?dl=1[height=1000, width=9000]
+
+
+TIP: If the user wants to list ortholog rna genes, replace `rna` label by `ortholog_rna` in the query to refer to the third node position in the query template.
+
+---
+
+
+=== TRY IT!
+
+
+Execute the query yourself and explore results.
+
+
+==== Query 1: paths that relate NGLY1 and AQP1 through gene interactions
+
+
+_Query network_
+
+
+[source,cypher]
+----
+MATCH path=(source:GENE)-[i1:`RO:0002434`]->(rna:GENE)-[i2:`RO:HOM0000020`]-(ortholog_rna:GENE)-[i3:`RO:0002434`]-(tf:GENE)-[i4:`RO:0002434`]->(target:GENE)
+
+WHERE source.id = 'FlyBase:FBgn0033050' AND target.id = 'HGNC:633' AND ALL(x IN nodes(path) WHERE single(y IN nodes(path) WHERE y = x))
+
+WITH path,
+
+[n IN nodes(path) WHERE n.preflabel IN ['cytoplasm','cytosol','nucleus','metabolism','membrane','protein binding','visible','viable','phenotype']] AS nodes_marked,
+
+[r IN relationships(path) WHERE toLower(r.reference_supporting_text) =~ '.*tftargets.*|.*msigdb.*'] AS interactions
+
+WHERE size(nodes_marked) = 0 AND size(interactions) <> 0
+
+AND toLower(i1.reference_uri) CONTAINS 'pubmed/29346549'
+
+AND toLower(i4.reference_supporting_text) =~ '.*tftargets.*|.*msigdb.*'
+
+RETURN path
+----
+
+
+==== Query 2: summary table of gene interactors in the resulting paths
+
+
+_Query network_
+
+
+[source,cypher]
+----
+MATCH path=(source:GENE)-[i1:`RO:0002434`]->(rna:GENE)-[i2:`RO:HOM0000020`]-(ortholog_rna:GENE)-[i3:`RO:0002434`]-(tf:GENE)-[i4:`RO:0002434`]->(target:GENE)
+
+WHERE source.id = 'FlyBase:FBgn0033050' AND target.id = 'HGNC:633' AND ALL(x IN nodes(path) WHERE single(y IN nodes(path) WHERE y = x))
+
+WITH path,rna,tf,
+
+[n IN nodes(path) WHERE n.preflabel IN ['cytoplasm','cytosol','nucleus','metabolism','membrane','protein binding','visible','viable','phenotype']] AS nodes_marked,
+
+[r IN relationships(path) WHERE toLower(r.reference_supporting_text) =~ '.*tftargets.*|.*msigdb.*'] AS interactions
+
+WHERE size(nodes_marked) = 0 AND size(interactions) <> 0
+
+AND toLower(i1.reference_uri) CONTAINS 'pubmed/29346549'
+
+AND toLower(i4.reference_supporting_text) =~ '.*tftargets.*|.*msigdb.*'
+
+RETURN DISTINCT rna.name AS Expressed_gene_name, tf.name AS TF_name, count(distinct path) as Total_paths
+
+ORDER BY Total_paths DESC
+----
+
+
+
+IMPORTANT:  Click the top right **black&white** arrow to go to the next page
+
+
+== AQP1 - DISEASE MANIFESTATIONS OR ABNORMAL PHENOTYPES
+
+
+Next question that the researcher may want to explore is the connection between the AQP1 and the NGLY1 Deficiency disease phenotypes.
+
+
+---
+
+
+=== QUERY
+
+
+=== Define the query template
+
+
+The first think to do is to formulate the query template to answer this question:
+
+
+image::https://www.dropbox.com/s/ch261h9xwpu5zm5/query2_topology_v3.2.png?dl=1[height=600, width=2500, align="center"]
+
+This query is in two steps.
+
+
+=== Formulate the query in Cypher
+
+
+---
+
+
+=== RESULTS
+
+
+The resulting paths can be visualized such as
+
+
+image::https://www.dropbox.com/s/xh14124tnqz0noo/query2_paths_v3.2.png?dl=1[height=500, width=3000]
+
+
+or can be summarized as a table such as
+
+
+image::https://www.dropbox.com/s/vksf6gccraaf92g/query2_table_v3.2.png?dl=1[height=500, width=3000]
+
+
+--- 
+
+
+=== TRY IT!
+
+
+==== Query 1
+
+
+_Query network_
+
+
+[source,cypher]
+----
+MATCH path=(source:GENE)-[i1:`RO:0002434`]->(rna:GENE)-[i2:`RO:HOM0000020`]-(ortholog_rna:GENE)-[i3:`RO:0002434`]-(tf:GENE)-[i4:`RO:0002434`]->(target:GENE)
+
+WHERE source.id = 'FlyBase:FBgn0033050' AND target.id = 'HGNC:633' AND ALL(x IN nodes(path) WHERE single(y IN nodes(path) WHERE y = x))
+
+WITH path,ortholog_rna,tf,
+
+[n IN nodes(path) WHERE n.preflabel IN ['cytoplasm','cytosol','nucleus','metabolism','membrane','protein binding','visible','viable','phenotype']] AS nodes_marked,
+
+[r IN relationships(path) WHERE toLower(r.reference_supporting_text) =~ '.*tftargets.*|.*msigdb.*'] AS interactions
+
+WHERE size(nodes_marked) = 0 AND size(interactions) <> 0
+
+AND toLower(i1.reference_uri) CONTAINS 'pubmed/29346549'
+
+AND toLower(i4.reference_supporting_text) =~ '.*tftargets.*|.*msigdb.*'
+
+WITH COLLECT(DISTINCT ortholog_rna.id) + COLLECT(DISTINCT tf.id) AS genes
+
+MATCH path=(:DISO {id: 'DOID:0060728'})-->(ph:DISO)--(g:GENE)
+
+WHERE g.id in genes AND ph.id CONTAINS 'HP:'
+
+RETURN path
+----
+
+
+==== Query 2
+
+
+_Query network_
+
+
+[source,cypher]
+----
+MATCH path=(source:GENE)-[i1:`RO:0002434`]->(rna:GENE)-[i2:`RO:HOM0000020`]-(ortholog_rna:GENE)-[i3:`RO:0002434`]-(tf:GENE)-[i4:`RO:0002434`]->(target:GENE)
+
+WHERE source.id = 'FlyBase:FBgn0033050' AND target.id = 'HGNC:633' AND ALL(x IN nodes(path) WHERE single(y IN nodes(path) WHERE y = x))
+
+WITH path,ortholog_rna,tf,
+
+[n IN nodes(path) WHERE n.preflabel IN ['cytoplasm','cytosol','nucleus','metabolism','membrane','protein binding','visible','viable','phenotype']] AS nodes_marked,
+
+[r IN relationships(path) WHERE toLower(r.reference_supporting_text) =~ '.*tftargets.*|.*msigdb.*'] AS interactions
+
+WHERE size(nodes_marked) = 0 AND size(interactions) <> 0
+
+AND toLower(i1.reference_uri) contains 'pubmed/29346549'
+
+AND toLower(i4.reference_supporting_text) =~ '.*tftargets.*|.*msigdb.*'
+
+WITH COLLECT(DISTINCT ortholog_rna.id) + COLLECT(DISTINCT tf.id) AS genes
+
+MATCH path=(:DISO {id: 'DOID:0060728'})-->(ph:DISO)--(g:GENE)
+
+WHERE g.id in genes AND ph.id CONTAINS 'HP:'
+
+RETURN DISTINCT ph.id AS phenotype_id, ph.preflabel AS phenotype_label, COLLECT(DISTINCT g.name) AS gene_id_list, count(DISTINCT g.id) AS genes
+
+ORDER BY genes DESC
+----
+
+
+IMPORTANT:  Click the top right **black&white** arrow to go to the next page
+
+
+== MORE QUERIES
+
+There are more examples of queries that can be done from traversing the graph looking for paths connecting entities to transcriptome review-expanded summaries. The user can see more examples in notebooks stored in the https://github.com/NuriaQueralt/ngly1-graph/tree/master/neo4j-graphs/ngly1-v3.2/cypher-queries[GitHub repository project - queries]. These notebooks are written in Python programming language and provide an alternative interface to query the graph that allows to tracking queries and results. 
+
+NOTE:  The user should have installed https://jupyter.org/[the Jupyter Notebook] software and the IPython kernel for Python3 to run and visualize the queries provided. 
+
+
+IMPORTANT:  Click the top right **black&white** arrow to go to the next page
+
+
+== HOW TO QUERY
+
+
+=== Exploring with Neo4j
+
+
+https://neo4j.com/[Neo4j] is a graph database management system developed by Neo Technology, Inc. A https://en.wikipedia.org/wiki/Graph_database[graph database] is a database that uses graph structures for semantic queries with nodes, edges and properties to represent and store data. https://en.wikipedia.org/wiki/Cypher_Query_Language[Cypher] is the query language for Neo4j's graphs. To follow this guide you should be able to read and understand Cypher queries.
+
+You are currently interacting with the NGLY1 knowledge graph through the Neo4j browser, which provides a web interface to the database where you can run queries and explore the connected knowledge. To explore the whole NGLY1 knowledge graph, click on the following block to copy-paste the query into the shell and run it:
+
+[source,cypher]
+----
+MATCH (n) RETURN * LIMIT 100
+----
+
+
+
+IMPORTANT:  Click the top right **black&white** arrow to go to the next page
+
+
+
+
+== THE SEMANTICS OF THE NGLY1 DEFICIENCY KNOWLEDGE GRAPH v3.2
+
+
+In this page we provide the data model of our semantic graph and some example queries to retrieve data model information from the graph.
+
+
+=== Data model
+
+
+The data model is the abstraction of how knowledge is represented in the graph and it is necessary to run more interesting queries. The following picture shows the data model or schema for NGLY1 Knowledge Graph v3.0. The semantics of the concepts in the graph rely on the semantic types that build the https://www.nlm.nih.gov/pubs/factsheets/umlssemn.html[UMLS Semantic Network]. To check the definition of each semantic type abbreviation see the https://metamap.nlm.nih.gov/Docs/SemGroups_2013.txt[UMLS Semantic Groups definitions].
+
+
+image::https://www.dropbox.com/s/6p1zykpuexslx8e/ngly1_graph_schema.png?dl=1[height=300,float=center]
+//image::images/ngly1_graph_schema.svg[height=300,float=center]
+
+
+=== Retrieve information about the data model
+
+
+To retrieve the explicit semantics to use for node types and its attributes in the graph, run the following query:
+
+
+[source,cypher]                                                                                                         
+----                                                                                                                    
+MATCH (n)                                                                                                               
+RETURN DISTINCT labels(n) AS node_type,                                                                                              
+count(*) AS NumberOfEntities, reduce(keys = [], keys_n in collect(keys(n)) | keys + filter(k in keys_n WHERE NOT k IN keys)) AS EntityAttributes 
+ORDER BY NumberOfEntities DESC                                                                                          
+---- 
+
+
+To retrieve the explicit semantics to use for edge types and their attributes, run the following query:
+
+
+[source,cypher]                                                                                                         
+----                                                                                                                    
+MATCH ()-[r]-()                                                                                                         
+RETURN DISTINCT type(r) AS relationship_type, r.property_label AS relationship_label,                                                                                                
+count(*) AS NumberOfRelationships, reduce(keys = [], keys_r in collect(keys(r)) | keys + filter(k in keys_r WHERE NOT k IN keys)) AS EntityAttributes 
+ORDER BY NumberOfRelationships DESC                                                                                     
+----    
+
+
+To retrieve what is related and how, run the following query:
+
+
+[source,cypher]                                                                                                         
+----                                                                                                                    
+MATCH (n)                                                                                                               
+MATCH (n)-[r]->(m)                                                                                                      
+WITH n, type(r) AS via, m                                                                                               
+RETURN labels(n) AS from, via, labels(m) AS to, count(*) AS freq                                                        
+ORDER BY freq DESC                                                                                                      
+---- 
+
+
+
+Click the top right black&white arrow to go to the next page.
+IMPORTANT:  Click the top right **black&white** arrow to go to the next page
+
+
+== HINTS
+
+
+
+=== How to extract hypotheses
+
+
+Hypotheses are derived from exploring the evidence connecting a source-target pair of nodes. To explore this evidence we traverse the NGLY1 Knowledge Graph running queries. Hypotheses are extracted querying for semantic paths connecting source and target nodes. In the next pages, we show examples of hypotheses extracted by specific queries between two nodes. Each page is dedicated to a source-target pair and we provide several query templates to illustrate and guide the user how to query the graph to extract hypotheses. To access these pairwise hypotheses pages the user has to click the b/n arrow on the top-right part of the web. For instance, if we click this arrow we access the first page that is dedicated to the NGLY1 Deficiency-NGLY1 pair. In this page we provide examples on how to run open queries to retrieve hypotheses of path length not longer than 2 edges, i.e. without specifying a explicit pattern connecting two nodes, using or not filters. 
+
+
+=== How to query the graph
+
+
+To query the graph we have to use the Cypher query language. This language allows us to query nodes, node attributes, relationships between nodes and attributes of these relationships. We can perform open queries (without a specific query template), which are usually computationally less efficient for large graphs. Alternatively, we can be more specific and search for explicit nodes and connection patterns using semantics and a query template, which makes queries more efficient in large data graphs. The data model shows how things are meaningfully represented and related to each other and it is the base to use semantics in the query. To illustrate how to query for specific semantic connections the NGLY1 Knowledge Graph, we provide some examples in Cypher using specific query templates. We do not provide a tutorial for the Cypher language. To learn how to query using Cypher the user should refer to external sources like https://neo4j.com/developer/cypher-query-language/[The Neo4j's introduction to Cypher]
+
+
+
+Click the top right black&white arrow to go to the next page.
+
+== QUERIES FOR GRAPH TRAVERSAL ANALYSIS. QUERY EXAMPLE: NGLY1 --- AQP1 PATHS
+
+To solve a question we explore and search the review by querying the graph. Let's develop the whole process with a query example.
+
+
+=== Open query: extraction of metapaths
+
+
+=== Query template
+
+To structure the query in Cypher, it is important to first formulate the question in natural language and then translate it in a query template.
+
+
+==== Query in Cypher
+
+Once we have a clear idea of the query template, it is easier to formulated in a structured way in Cypher.
+
+
+==== Results
+
+The results appear below the command shell as a graph or as a table. Results are only exportable as files: graphic (PNG, SVG, ..) or structured (CVS, ..) formats. 
+
+WARNING:   The current Neo4j Browser does not provide ``session`` services, thus there is not option to save any session.
+
+
+=== Refine query template
+
+==== Query in Cypher
+
+==== Results
+
+
+== DIY: **Execute the query and explore yourself!**
+
+
+=== Query 1: Open query
+
+
+[source,cypher]
+----
+MATCH path=(source:GENE)-[i1:`RO:0002434`]->(:GENE)-[*..3]-(target:GENE)
+
+WHERE source.id = 'FlyBase:FBgn0033050' AND target.id = 'HGNC:633' AND ALL(x IN nodes(path) WHERE single(y IN nodes(path) WHERE y = x))
+
+WITH path,i1,
+
+[n IN nodes(path) WHERE n.preflabel IN ['cytoplasm','cytosol','nucleus','metabolism','membrane','protein binding','visible','viable','phenotype']] AS nodes_marked
+
+WHERE size(nodes_marked) = 0 AND toLower(i1.reference_uri) contains 'pubmed/29346549'
+
+RETURN count(distinct path) as paths
+----
+
+
+_Metapaths_
+
+[source,cypher]
+----
+MATCH path=(source:GENE)-[i1:`RO:0002434`]->(:GENE)-[*..3]-(target:GENE)
+
+WHERE source.id = 'FlyBase:FBgn0033050' AND target.id = 'HGNC:633' AND ALL(x IN nodes(path) WHERE single(y IN nodes(path) WHERE y = x))
+
+WITH path,i1,
+
+[n IN nodes(path) WHERE n.preflabel IN ['cytoplasm','cytosol','nucleus','metabolism','membrane','protein binding','visible','viable','phenotype']] AS nodes_marked
+
+WHERE size(nodes_marked) = 0 AND toLower(i1.reference_uri) contains 'pubmed/29346549'
+
+RETURN DISTINCT extract (x in rels(path) | type(x)) as types, extract (n in nodes(path) | labels(n)) as labels, length(path) as mp_length, count(distinct path) as paths
+
+ORDER BY mp_length, paths DESC
+----
+
+
+
+=== Query 2: Query template
+
+
+[source,cypher]
+----
+MATCH path=(source:GENE)-[i1:`RO:0002434`]->(:GENE)-[:`RO:0002206`]-(:ANAT)-[:`RO:0002206`]-(:GENE)-[:`RO:0002434`]-(target:GENE)
+
+WHERE source.id = 'FlyBase:FBgn0033050' AND target.id = 'HGNC:633' AND ALL(x IN nodes(path) WHERE single(y IN nodes(path) WHERE y = x))
+
+WITH path,i1,
+
+[n IN nodes(path) WHERE n.preflabel IN ['cytoplasm','cytosol','nucleus','metabolism','membrane','protein binding','visible','viable','phenotype']] AS nodes_marked
+
+WHERE size(nodes_marked) = 0 AND toLower(i1.reference_uri) contains 'pubmed/29346549'
+
+RETURN count(distinct path) as paths
+----
+
+
+_Table_
+
+[source,cypher]
+----
+MATCH path=(source:GENE)-[i1:`RO:0002434`]->(:GENE)-[:`RO:0002206`]-(:ANAT)-[:`RO:0002206`]-(:GENE)-[:`RO:0002434`]-(target:GENE)
+
+WHERE source.id = 'FlyBase:FBgn0033050' AND target.id = 'HGNC:633' AND ALL(x IN nodes(path) WHERE single(y IN nodes(path) WHERE y = x))
+
+WITH path,i1,
+
+[n IN nodes(path) WHERE n.preflabel IN ['cytoplasm','cytosol','nucleus','metabolism','membrane','protein binding','visible','viable','phenotype']] AS nodes_marked
+
+WHERE size(nodes_marked) = 0 AND toLower(i1.reference_uri) contains 'pubmed/29346549'
+
+RETURN DISTINCT extract(x in rels(path) | x.property_label) AS types, extract(n in nodes(path) | n.name) AS labels, length(path) AS mp_length, count(distinct path) AS paths
+
+ORDER BY mp_length, paths DESC
+----
+
+
+=== Query 3: Refine query template
+
+
+[source,cypher]
+----
+MATCH path=(source:GENE)-[i1:`RO:0002434`]->(:GENE)-[:`RO:HOM0000017`]-(:GENE)-[:`RO:0002434`]-(:GENE)-[:`RO:0002434`]-(target:GENE)
+
+WHERE source.id = 'FlyBase:FBgn0033050' AND target.id = 'HGNC:633' AND ALL(x IN nodes(path) WHERE single(y IN nodes(path) WHERE y = x))
+
+WITH path,i1,
+
+[n IN nodes(path) WHERE n.preflabel IN ['cytoplasm','cytosol','nucleus','metabolism','membrane','protein binding','visible','viable','phenotype']] AS nodes_marked
+
+WHERE size(nodes_marked) = 0 AND toLower(i1.reference_uri) contains 'pubmed/29346549'
+
+RETURN count(distinct path) as paths
+----
+
+
+
+== QUERIES FOR TRANSCRIPTOME ANALYSIS
+
+
+=== Query for common TFs
+
+
+
+[source,cypher]
+----
+MATCH path=(source:GENE)-[i1:`RO:0002434`]->(ortho:GENE)-[iortho]-(gene:GENE)<-[i2:`RO:0002434`]-(tf:GENE)
+
+WHERE source.id = 'FlyBase:FBgn0033050' AND ALL(x IN nodes(path) WHERE single(y IN nodes(path) WHERE y = x))
+
+WITH path,i1,iortho,i2,tf,gene,
+
+[n IN nodes(path) WHERE n.preflabel IN ['cytoplasm','cytosol','nucleus','metabolism','membrane','protein binding','visible','viable','phenotype']] AS nodes_marked
+
+WHERE size(nodes_marked) = 0
+
+AND toLower(i1.reference_uri) =~ '.*pubmed/29346549.*'
+
+AND toLower(iortho.property_label) CONTAINS 'orthology'
+
+AND toLower(i2.reference_supporting_text) =~ '.*tftargets.*|.*msigdb.*'
+
+RETURN DISTINCT tf.id as TF_id, tf.preflabel as TF_symbol, tf.name as TF_name, tf.description as TF_description, count(distinct gene.preflabel) as Freq
+
+ORDER BY Freq DESC
+----
+
+
+_Summarize frequency and target gene sets for each TF_
+
+
+[source,cypher]
+----
+MATCH path=(source:GENE)-[i1:`RO:0002434`]->(o:GENE)-[iortho]-(g:GENE)<-[i2:`RO:0002434`]-(tf:GENE)
+
+WHERE source.id = 'FlyBase:FBgn0033050' AND ALL(x IN nodes(path) WHERE single(y IN nodes(path) WHERE y = x))
+
+WITH path,i1,iortho,i2,g,tf,
+
+[n IN nodes(path) WHERE n.preflabel IN ['cytoplasm','cytosol','nucleus','metabolism','membrane','protein binding','visible','viable','phenotype']] AS nodes_marked
+
+WHERE size(nodes_marked) = 0
+
+AND toLower(i1.reference_uri) =~ '.*pubmed/29346549.*'
+
+AND toLower(iortho.property_label) CONTAINS 'orthology'
+
+AND toLower(i2.reference_supporting_text) =~ '.*tftargets.*|.*msigdb.*'
+
+RETURN DISTINCT tf.preflabel as TF_symbol, tf.name as TF_name, COLLECT(DISTINCT g.preflabel) as geneset, count(distinct g.preflabel) as genes
+
+ORDER BY genes DESC
+----
+
+
+
+
+=== Query for TF Pathways
+
+
+image::https://www.dropbox.com/s/kvty5e0fuoqdadh/query3_topology_v3.2.png?dl=1[height=1000, width=5000, align="center"]
+
+
+[source,cypher]
+----
+MATCH path=(source:GENE)-[i1:`RO:0002434`]->(o:GENE)-[iortho]-(g:GENE)<-[i2:`RO:0002434`]-(tf:GENE), (g:GENE)-[i]-(pw:PHYS)
+
+WHERE source.id = 'FlyBase:FBgn0033050' AND ALL(x IN nodes(path) WHERE single(y IN nodes(path) WHERE y = x))
+
+WITH path,i1,iortho,i2,g,tf,i,pw,
+
+[n IN nodes(path) WHERE n.preflabel IN ['cytoplasm','cytosol','nucleus','metabolism','membrane','protein binding','visible','viable','phenotype']] AS nodes_marked
+
+WHERE size(nodes_marked) = 0
+
+AND toLower(i1.reference_uri) =~ '.*pubmed/29346549.*'
+
+AND toLower(iortho.property_label) CONTAINS 'orthology'
+
+AND toLower(i2.reference_supporting_text) =~ '.*tftargets.*|.*msigdb.*'
+
+AND toLower(i.property_label) <> 'enables'
+
+RETURN DISTINCT tf.preflabel as TF_symbol, tf.name as TF_name,
+                collect(DISTINCT g.preflabel) as geneset, count(distinct g.preflabel) as genes,
+                collect(DISTINCT pw.preflabel) as pathway, count(distinct pw.preflabel) as pathways 
+                                                                                                                                            ORDER BY genes DESC
+----
+
+
+
+=== Query for TF GO annotations: Cellular function
+
+
+
+[source,cypher]
+----
+MATCH path=(source:GENE)-[i1:`RO:0002434`]->(o:GENE)-[iortho]-(g:GENE)<-[i2:`RO:0002434`]-(tf:GENE), (g:GENE)-[i]-(pw:PHYS)
+
+WHERE source.id = 'FlyBase:FBgn0033050' AND ALL(x IN nodes(path) WHERE single(y IN nodes(path) WHERE y = x))
+
+WITH path,i1,iortho,i2,g,tf,i,pw,
+
+[n IN nodes(path) WHERE n.preflabel IN ['cytoplasm','cytosol','nucleus','metabolism','membrane','protein binding','visible','viable','phenotype']] AS nodes_marked
+
+WHERE size(nodes_marked) = 0
+
+AND toLower(i1.reference_uri) =~ '.*pubmed/29346549.*'
+
+AND toLower(iortho.property_label) CONTAINS 'orthology'
+
+AND toLower(i2.reference_supporting_text) =~ '.*tftargets.*|.*msigdb.*'
+
+AND toLower(i.property_label) = 'enables'
+
+RETURN DISTINCT tf.preflabel as TF_symbol, tf.name as TF_name,
+                collect(DISTINCT g.preflabel) as geneset, count(distinct g.preflabel) as genes,
+                collect(DISTINCT pw.preflabel) as cellular_function, count(distinct pw.preflabel) as cellular_functions
+                                                                                                                                        ORDER BY genes DESC
+----
