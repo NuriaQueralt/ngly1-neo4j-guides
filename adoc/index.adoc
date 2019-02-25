@@ -7,61 +7,38 @@
 == INTRODUCTION
 
 
-=== NGLY1 DEFICIENCY KNOWLEDGE GRAPH
-
-
-**Detail the knowledge content in the structured reviewed**
+=== WHAT IS THE NGLY1 DEFICIENCY KNOWLEDGE GRAPH?
 
 The NGLY1 Deficiency Knowledge Graph is a network of biology, medicine, and chemistry. It contains the current knowledge about the NGLY1 deficiency-CDDG disease curated from the scientific literature and from the biomedical knowledge. The current version 3.2 contains 9,365 nodes of 8 types and 237,027 relationships of 32 types.
 
 We created the NGLY1 Deficiency Knowledge Graph to support translational research on the NGLY1 deficiency. We reviewed and structured information around the clinical profile, the pathophysiology and the pharmacology of the NGLY1 deficiency to help researchers to discover evidence-based explanations for their hypotheses. The third release of the graph organizes curated information from human and animal models 1) manually extracted from the literature; 2) retrieved from https://monarchinitiative.org/[the Monarch Initiative]; 3) transcription factors and their targeted genes from several sources in tftargets and MSigDB; 4) manually contributed by the community from http://100.25.145.12:8181/wiki/Main_Page[the NGLY1 Deficiency wikibase platform]; and integrates it with an experimental expression data from mouse. 
 
 
-=== WHAT KIND OF QUESTIONS WE CAN DO
+=== WHAT KIND OF QUESTIONS CAN WE ANSWER?
 
-**Highlight what we can learn from the knowledge reviewed**
+The knowledge graph can be queried in almost an infinite number of ways.  This guide will demonstrate two such queries as templates for you to customize:
 
-The user can query the knowledge graph asking for paths between entities to discover new hypotheses or extracting data that can shed light or give new ideas. +
+* *Identify mechanistic links between NGLY1 and AQP1.* Researchers have identified a causal relationship between these two genes, but the mechanism of that relationship is not know. Here, we demonstrate how to extract potential mechanistic paths from the knowledge graph.
+* <create similar structure for query #2>
+
+IMPORTANT:  Click the top right **black&white** arrow to go to the next page
 
 
+
+== Identify mechanistic links between NGLY1 and AQP1
+
+Researchers have observed an association between NGLY1 human gene and AQP1 human gene at expression level <add reference here>. Their hypothesis is that both genes are linked through transcriptional regulation and they want to search the knowledge and the expression data integrated in the review to find potential mechanisms. In particular, they want to query the review to extract regulatory paths through genetic interactions that link NGLY1 and AQP1. +
 
 === STYLE THE GRAPH
 
-
 We first style the graph, before playing with it. To load the NGLY1 Deficiency graph style into the Neo4j Browser, run the following command by clicking the box, which will populate the shell, and hitting ```enter``` (or ```return``` in some keyboards). This command only needs to be run once per web browser.
-
 
 [source,cypher]
 ----
 :style http://100.25.145.12:8001/guides/style.grass
 ----
 
-
 TIP:  The user can set up the style of the graph by itself locally in its browser. If you click on any label or relationship above the graph visualization, you can then choose its styling in the area below the graph. Colors, sizes, and captions are selectable from there. Click http://guides.neo4j.com/browser.html[Styling Neo4j Browser Visualization] for more details. 
-
-
-=== STRUCTURE OF THE GUIDE
-
-
-This guide is structured with query pages in the next section, where the guide shows an explicit question and develops a type of query we can formulate to inspect hypotheses from the knowledge in the review. In the last section, the guide develops how to query the graph with some hints and examples to aid the new user. To see how to retrieve connections through regulation between NGLY1-AQP1 go to:
-
-* _Slide 2_: *NGLY1 - AQP1* 
-
-To learn how to query the version 3.2 of the NGLY1 Defiency knowledge graph, go to:
-
-* _Slide 3_: *HOW TO QUERY* 
-
-
-IMPORTANT:  Click the top right **black&white** arrow to go to the next page
-
-
-
-== NGLY1 - AQP1 
-
-
-Researchers have observed an association between NGLY1 human gene and AQP1 human gene at expression level. Their hypothesis is that both genes are linked through transcriptional regulation and they want to search the knowledge and the expression data integrated in the review to find potential mechanisms. In particular, they want to query the review to extract regulatory paths through genetic interactions that link NGLY1 and AQP1. +
-
-
 
 ---
 
@@ -74,6 +51,7 @@ Researchers have observed an association between NGLY1 human gene and AQP1 human
 
 The first think to do is to formulate the query template to answer this question:
 
+// move all dropbox links to github, either relative links to images that have been committed to the repo, or via this github issues trick https://www.youtube.com/watch?v=nvPOUdz5PL4
 image::https://www.dropbox.com/s/qypkrn1l50p83n6/query1_topology_v3.2.png?dl=1[height=100, width=5000, align="center"]
 
 In this query, we specify relations between genes to be of two types: 'interacts with' that will be explicitly either of regulatory origin once filtered by source of provenance to the databases *tftargets* and *MSigDB* or of gene expression origin once filtered by reference to the *PubMed Identifier*, where the experimental fly transcriptome data set was published, or a gene-gene interaction if none of these restrictions applied; and 'in 1 to 1 orthology relationship with' that relates to direct orthology between genes.
@@ -405,6 +383,9 @@ ORDER BY genes DESC
 
 IMPORTANT:  Click the top right **black&white** arrow to go to the next page
 
+
+////
+// I think we should move everything below to an "advanced" guide...
 
 == MORE QUERIES
 
@@ -775,3 +756,4 @@ RETURN DISTINCT tf.preflabel as TF_symbol, tf.name as TF_name,
                 collect(DISTINCT pw.preflabel) as cellular_function, count(distinct pw.preflabel) as cellular_functions
                                                                                                                                         ORDER BY genes DESC
 ----
+////
