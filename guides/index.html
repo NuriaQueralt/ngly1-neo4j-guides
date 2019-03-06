@@ -75,30 +75,6 @@
 
 
 
-   <h4>STYLE THE GRAPH</h4>
-   <div class="paragraph">
-<p>We first style the graph, before playing with it. To load the NGLY1 Deficiency graph style into the Neo4j Browser, run the following command by clicking the box, which will populate the shell, and hitting <code><code>enter</code></code> (or <code><code>return</code></code> in some keyboards). This command only needs to be run once per web browser.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre mode="cypher"  class="highlight pre-scrollable programlisting cm-s-neo code runnable standalone-example ng-binding" data-lang="cypher" lang="cypher"><!--code class="cypher language-cypher"-->:style http://100.25.145.12:8003/guides/style.grass<!--/code--></pre>
-</div>
-</div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-The user can set up the style of the graph by itself locally in its browser. If you click on any label or relationship above the graph visualization, you can then choose its styling in the area below the graph. Colors, sizes, and captions are selectable from there. Click <a href="http://guides.neo4j.com/browser.html">Styling Neo4j Browser Visualization</a> for more details.
-</td>
-</tr>
-</table>
-</div>
-
-
-
    <h4>STRUCTURE OF THE GUIDE</h4>
    <div class="paragraph">
 <p>This guide is structured with query pages in the next section, where the guide shows an explicit question and develops a type of query we can formulate to inspect hypotheses from the knowledge in the review. In the last section, the guide develops how to query the graph with some hints and examples to aid the new user. To see how to retrieve connections through regulation between NGLY1-AQP1 go to:</p>
@@ -106,17 +82,16 @@ The user can set up the style of the graph by itself locally in its browser. If 
 <div class="ulist">
 <ul>
 <li>
-<p><em>Slide 2</em>: <strong>NGLY1 - AQP1</strong></p>
+<p><em>Slide 2</em>: <strong>DATA MODEL</strong></p>
 </li>
-</ul>
-</div>
-<div class="paragraph">
-<p>To learn how to query the version 3.2 of the NGLY1 Defiency knowledge graph, go to:</p>
-</div>
-<div class="ulist">
-<ul>
 <li>
-<p><em>Slide 3</em>: <strong>HOW TO QUERY</strong></p>
+<p><em>Slide 3</em>: <strong>QUERY 1: HYPOTHESIS DISCOVERY RELATING NGLY1 - AQP1</strong></p>
+</li>
+<li>
+<p><em>Slide 4</em>: <strong>QUERY 2: HYPOTHESIS DISCOVERY RELATING AQP1 - DISEASE PHENOTYPES</strong></p>
+</li>
+<li>
+<p><em>Slide 5</em> : <strong>LAST REMARKS</strong></p>
 </li>
 </ul>
 </div>
@@ -140,11 +115,60 @@ Click the top right <strong>black&amp;white</strong> arrow to go to the next pag
 
 <slide class="row-fluid">
   <div class="col-sm-12">
-    <h3>NGLY1 - AQP1</h3>
+    <h3>DATA MODEL</h3>
+    <br/>
+    <div>
+      
+
+
+   <h4>DESCRIPTION</h4>
+   <div class="paragraph">
+<p>Description of the metagraph with a callable neo4j function as image.</p>
+</div>
+
+
+
+   <h4>ORIGINAL DATA SOURCES</h4>
+   <div class="paragraph">
+<p>Description of the orginal data</p>
+</div>
+	</div>
+  </div>
+</slide>
+
+
+
+<slide class="row-fluid">
+  <div class="col-sm-12">
+    <h3>QUERY 1: HYPOTHESIS DISCOVERY RELATING NGLY1 - AQP1</h3>
     <br/>
     <div>
       <div class="paragraph">
 <p>Researchers have observed an association between NGLY1 human gene and AQP1 human gene at expression level. Their hypothesis is that both genes are linked through transcriptional regulation and they want to search the knowledge and the expression data integrated in the review to find potential mechanisms. In particular, they want to query the review to extract regulatory paths through genetic interactions that link NGLY1 and AQP1.<br></p>
+</div>
+
+
+
+   <h4>STYLE THE GRAPH</h4>
+   <div class="paragraph">
+<p>We first style the graph, before playing with it. To load the NGLY1 Deficiency graph style into the Neo4j Browser, run the following command by clicking the box, which will populate the shell, and hitting <code><code>enter</code></code> (or <code><code>return</code></code> in some keyboards). This command only needs to be run once per web browser.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre mode="cypher"  class="highlight pre-scrollable programlisting cm-s-neo code runnable standalone-example ng-binding" data-lang="cypher" lang="cypher"><!--code class="cypher language-cypher"-->:style http://100.25.145.12:8001/guides/style.grass<!--/code--></pre>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+The user can set up the style of the graph by itself locally in its browser. If you click on any label or relationship above the graph visualization, you can then choose its styling in the area below the graph. Colors, sizes, and captions are selectable from there. Click <a href="http://guides.neo4j.com/browser.html">Styling Neo4j Browser Visualization</a> for more details.
+</td>
+</tr>
+</table>
 </div>
 <hr>
 
@@ -449,7 +473,7 @@ Click the top right <strong>black&amp;white</strong> arrow to go to the next pag
 
 <slide class="row-fluid">
   <div class="col-sm-12">
-    <h3>AQP1 - DISEASE MANIFESTATIONS OR ABNORMAL PHENOTYPES</h3>
+    <h3>QUERY 2: HYPOTHESIS DISCOVERY RELATING AQP1 - DISEASE PHENOTYPES</h3>
     <br/>
     <div>
       <div class="paragraph">
@@ -596,10 +620,24 @@ Click the top right <strong>black&amp;white</strong> arrow to go to the next pag
 
 <slide class="row-fluid">
   <div class="col-sm-12">
-    <h3>MORE QUERIES</h3>
+    <h3>LAST REMARKS</h3>
     <br/>
     <div>
       <div class="paragraph">
+<p><strong>Last wrapped up or conclusion section</strong></p>
+</div>
+
+
+
+   <h4>HYPOTHESIS DISCOVERY ON THE NGLY1 DEFICIENCY KNOWLEDGE GRAPH</h4>
+   <div class="paragraph">
+<p>Reviewing knowledge as a graph allows exploration of connections between entities otherwise difficult to query in one step and from only one endpoint. The user can explore knowledge and check the supporting evidence. A graph allow to connect diverse type of nodes and relationships, different domains.</p>
+</div>
+
+
+
+   <h4>MORE QUERIES</h4>
+   <div class="paragraph">
 <p>There are more examples of queries that can be done from traversing the graph looking for paths connecting entities to transcriptome review-expanded summaries. The user can see more examples in notebooks stored in the <a href="https://github.com/NuriaQueralt/ngly1-graph/tree/master/neo4j-graphs/ngly1-v3.2/cypher-queries">GitHub repository project - queries</a>. These notebooks are written in Python programming language and provide an alternative interface to query the graph that allows to tracking queries and results.</p>
 </div>
 <div class="admonitionblock note">
@@ -637,7 +675,10 @@ Click the top right <strong>black&amp;white</strong> arrow to go to the next pag
     <h3>HOW TO QUERY</h3>
     <br/>
     <div>
-      
+      <div class="paragraph">
+<p><strong>Externalize this part</strong></p>
+</div>
+
 
 
    <h4>Exploring with Neo4j</h4>

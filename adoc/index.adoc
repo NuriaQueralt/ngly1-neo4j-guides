@@ -25,6 +25,43 @@ The user can query the knowledge graph asking for paths between entities to disc
 
 
 
+=== STRUCTURE OF THE GUIDE
+
+
+This guide is structured with query pages in the next section, where the guide shows an explicit question and develops a type of query we can formulate to inspect hypotheses from the knowledge in the review. In the last section, the guide develops how to query the graph with some hints and examples to aid the new user. To see how to retrieve connections through regulation between NGLY1-AQP1 go to:
+
+* _Slide 2_: *DATA MODEL*
+
+* _Slide 3_: *QUERY 1: HYPOTHESIS DISCOVERY RELATING NGLY1 - AQP1* 
+
+* _Slide 4_: *QUERY 2: HYPOTHESIS DISCOVERY RELATING AQP1 - DISEASE PHENOTYPES* 
+
+* _Slide 5_ : *LAST REMARKS*
+
+
+IMPORTANT:  Click the top right **black&white** arrow to go to the next page
+
+
+== DATA MODEL
+
+=== DESCRIPTION
+
+Description of the metagraph with a callable neo4j function as image.
+
+=== ORIGINAL DATA SOURCES
+
+Description of the orginal data
+
+
+
+== QUERY 1: HYPOTHESIS DISCOVERY RELATING NGLY1 - AQP1 
+
+
+Researchers have observed an association between NGLY1 human gene and AQP1 human gene at expression level. Their hypothesis is that both genes are linked through transcriptional regulation and they want to search the knowledge and the expression data integrated in the review to find potential mechanisms. In particular, they want to query the review to extract regulatory paths through genetic interactions that link NGLY1 and AQP1. +
+
+
+
+
 === STYLE THE GRAPH
 
 
@@ -40,31 +77,7 @@ We first style the graph, before playing with it. To load the NGLY1 Deficiency g
 TIP:  The user can set up the style of the graph by itself locally in its browser. If you click on any label or relationship above the graph visualization, you can then choose its styling in the area below the graph. Colors, sizes, and captions are selectable from there. Click http://guides.neo4j.com/browser.html[Styling Neo4j Browser Visualization] for more details. 
 
 
-=== STRUCTURE OF THE GUIDE
-
-
-This guide is structured with query pages in the next section, where the guide shows an explicit question and develops a type of query we can formulate to inspect hypotheses from the knowledge in the review. In the last section, the guide develops how to query the graph with some hints and examples to aid the new user. To see how to retrieve connections through regulation between NGLY1-AQP1 go to:
-
-* _Slide 2_: *NGLY1 - AQP1* 
-
-To learn how to query the version 3.2 of the NGLY1 Defiency knowledge graph, go to:
-
-* _Slide 3_: *HOW TO QUERY* 
-
-
-IMPORTANT:  Click the top right **black&white** arrow to go to the next page
-
-
-
-== NGLY1 - AQP1 
-
-
-Researchers have observed an association between NGLY1 human gene and AQP1 human gene at expression level. Their hypothesis is that both genes are linked through transcriptional regulation and they want to search the knowledge and the expression data integrated in the review to find potential mechanisms. In particular, they want to query the review to extract regulatory paths through genetic interactions that link NGLY1 and AQP1. +
-
-
-
 ---
-
 
 === QUERY
 
@@ -283,7 +296,7 @@ ORDER BY Total_paths DESC
 IMPORTANT:  Click the top right **black&white** arrow to go to the next page
 
 
-== AQP1 - DISEASE MANIFESTATIONS OR ABNORMAL PHENOTYPES
+== QUERY 2: HYPOTHESIS DISCOVERY RELATING AQP1 - DISEASE PHENOTYPES
 
 
 Next question that the researcher may want to explore is the connection between the AQP1 and the NGLY1 Deficiency disease phenotypes.
@@ -406,8 +419,15 @@ ORDER BY genes DESC
 IMPORTANT:  Click the top right **black&white** arrow to go to the next page
 
 
-== MORE QUERIES
+== LAST REMARKS
+**Last wrapped up or conclusion section**
 
+
+=== HYPOTHESIS DISCOVERY ON THE NGLY1 DEFICIENCY KNOWLEDGE GRAPH
+Reviewing knowledge as a graph allows exploration of connections between entities otherwise difficult to query in one step and from only one endpoint. The user can explore knowledge and check the supporting evidence. A graph allow to connect diverse type of nodes and relationships, different domains.
+
+
+=== MORE QUERIES
 There are more examples of queries that can be done from traversing the graph looking for paths connecting entities to transcriptome review-expanded summaries. The user can see more examples in notebooks stored in the https://github.com/NuriaQueralt/ngly1-graph/tree/master/neo4j-graphs/ngly1-v3.2/cypher-queries[GitHub repository project - queries]. These notebooks are written in Python programming language and provide an alternative interface to query the graph that allows to tracking queries and results. 
 
 NOTE:  The user should have installed https://jupyter.org/[the Jupyter Notebook] software and the IPython kernel for Python3 to run and visualize the queries provided. 
@@ -416,8 +436,11 @@ NOTE:  The user should have installed https://jupyter.org/[the Jupyter Notebook]
 IMPORTANT:  Click the top right **black&white** arrow to go to the next page
 
 
-== HOW TO QUERY
 
+
+
+== HOW TO QUERY
+**Externalize this part**
 
 === Exploring with Neo4j
 
