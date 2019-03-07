@@ -36,7 +36,7 @@ This guide is structured with query pages in the next section, where the guide s
 
 * _Slide 4_: *QUERY 2: HYPOTHESIS DISCOVERY RELATING AQP1 - DISEASE PHENOTYPES* 
 
-* _Slide 5_ : *LAST REMARKS*
+* _Slide 5_: *LAST REMARKS*
 
 
 IMPORTANT:  Click the top right **black&white** arrow to go to the next page
@@ -45,8 +45,17 @@ IMPORTANT:  Click the top right **black&white** arrow to go to the next page
 == DATA MODEL
 
 === DESCRIPTION
+The picture shows the data model or schema or meta-graph for NGLY1 Knowledge Graph v3.2. The semantics of the concepts in the graph rely on the semantic types that build the https://www.nlm.nih.gov/pubs/factsheets/umlssemn.html[UMLS Semantic Network]. To check the definition of each semantic type abbreviation see the https://metamap.nlm.nih.gov/Docs/SemGroups_2013.txt[UMLS Semantic Groups definitions].
 
-Description of the metagraph with a callable neo4j function as image.
+image::https://www.dropbox.com/s/6p1zykpuexslx8e/ngly1_graph_schema.png?dl=1[height=300,float=center]
+
+For an interactive description of the data model, run the following query:
+
+[source,cypher]
+----
+CALL db.schema()
+----
+
 
 === ORIGINAL DATA SOURCES
 
