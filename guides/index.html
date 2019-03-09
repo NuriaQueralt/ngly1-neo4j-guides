@@ -54,23 +54,36 @@
 
    <h4>NGLY1 DEFICIENCY KNOWLEDGE GRAPH</h4>
    <div class="paragraph">
-<p><strong>Detail the knowledge content in the structured reviewed</strong></p>
+<p>The NGLY1 Deficiency is an ultra-rare genetic disease with no treatment and understanding of the underlying biology. The NGLY1 Deficiency Knowledge Graph is the first knowledge network for NGLY1 Deficiency. It is a network of biological and clinical relations offered as a knowledge resource to the research community to enable discovery on its cause and of its symptoms. It contains and organizes the current knowledge about the NGLY1 deficiency-CDDG disease curated from the scientific literature and from the biomedical knowledge. The current version v3.2 contains 237,027 relationships of 32 types among 9,365 nodes of 8 types (xx genes, xx pathways, &#8230;&#8203;).</p>
 </div>
 <div class="paragraph">
-<p>The NGLY1 Deficiency Knowledge Graph is a network of biology, medicine, and chemistry. It contains the current knowledge about the NGLY1 deficiency-CDDG disease curated from the scientific literature and from the biomedical knowledge. The current version 3.2 contains 9,365 nodes of 8 types and 237,027 relationships of 32 types.</p>
-</div>
-<div class="paragraph">
-<p>We created the NGLY1 Deficiency Knowledge Graph to support translational research on the NGLY1 deficiency. We reviewed and structured information around the clinical profile, the pathophysiology and the pharmacology of the NGLY1 deficiency to help researchers to discover evidence-based explanations for their hypotheses. The third release of the graph organizes curated information from human and animal models 1) manually extracted from the literature; 2) retrieved from <a href="https://monarchinitiative.org/">the Monarch Initiative</a>; 3) transcription factors and their targeted genes from several sources in tftargets and MSigDB; 4) manually contributed by the community from <a href="http://100.25.145.12:8181/wiki/Main_Page">the NGLY1 Deficiency wikibase platform</a>; and integrates it with an experimental expression data from mouse.</p>
+<p>We created the NGLY1 Deficiency Knowledge Graph to support translational research on the NGLY1 deficiency. We reviewed and structured information around the clinical profile and the pathophysiology of the NGLY1 deficiency to help biomedical researchers to discover evidence-based explanations for their hypotheses on its cause and of its symptoms. From free text [Lam et al ref], we structured around 100 associated disease phenotypes and formalized them into the HPO. The third release of the graph organizes curated information from human and animal models 1) manually extracted from the literature; 2) retrieved from <a href="https://monarchinitiative.org/">the Monarch Initiative</a>; 3) transcription factors and their target genes from several sources in tftargets and MSigDB; 4) manually contributed by the community from <a href="http://100.25.145.12:8181/wiki/Main_Page">the NGLY1 Deficiency wikibase platform</a>; and integrates all this heterogeneous knowledge with an experimental gene expression data set from a fruit fly <em>Drosophila melanogaster</em> model of the disease [ref]. Drosophila as a model system has helped us understand a wide range of human conditions, from alcoholism to Alzheimer&#8217;s disease and Rett&#8217;s syndrome. The parallels between the genomes of Drosophila and humans, over about 60%, provides and opportunity to reveal basic genes or processes associated with disease.</p>
 </div>
 
 
 
    <h4>WHAT KIND OF QUESTIONS WE CAN DO</h4>
    <div class="paragraph">
-<p><strong>Highlight what we can learn from the knowledge reviewed</strong></p>
+<p>The network is disease domain specific to NGLY1 deficiency and can be used for different research questions from the analysis of disease gene functions, the investigation of the genetic basis and underlying molecular biology of disease phenotypes, to the discovery of hypothesis. The heterogeneous knowledge reviewed from several external sources can be easily explored interrogating the graph with specific questions. The user can formulate different kind of biomedical complex questions from a single entry point. The integration of new biocurated information and knowledge from authoritative databases with experimental omics data sets allows the user to discover new relations, paths or explanations to help to discover new hypothesis that can explain their observations. The user can query the knowledge graph asking for paths between entities to discover new hypotheses or extracting data that can shed light or give new ideas. Exmples of the kind of questions the user can formulate are:</p>
 </div>
-<div class="paragraph">
-<p>The user can query the knowledge graph asking for paths between entities to discover new hypotheses or extracting data that can shed light or give new ideas.<br></p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>What are the gene functions, gene interactions and cellular processes associated with the perturbed gene expression in Drosophila?</p>
+</li>
+<li>
+<p>What are the human homologs related to the perturbed fly transcriptome in the NGLY1 deficiency model?</p>
+</li>
+<li>
+<p>What are the most common human TFs associated with the genes in the fly transcriptome?</p>
+</li>
+<li>
+<p>Have the homolog genes in human or their gene interactors been associated with NGLY1 Deficiency phenotypes?</p>
+</li>
+<li>
+<p>Can we retrieve explanations or paths linking two entities of interest such as two genes? What are the most common path topologies linking these genes? Are there paths based on regulatory TF-target gene interactions linking two molecular entities of interest in the structured review?</p>
+</li>
+</ol>
 </div>
 
 
@@ -123,6 +136,9 @@ Click the top right <strong>black&amp;white</strong> arrow to go to the next pag
 
    <h4>DESCRIPTION</h4>
    <div class="paragraph">
+<p>The network relates data of 8 types: genes, disease phenotypes, variants, genotypes, pathways, chemicals, anatomy, and organisms with different levels of association expressiveness. Data and relations are described using standard semantics: community-driven ontologies and controlled vocabularies to enable interoperability with external resources and reduce ambiguity.</p>
+</div>
+<div class="paragraph">
 <p>The picture shows the data model or schema or meta-graph for NGLY1 Knowledge Graph v3.2. The semantics of the concepts in the graph rely on the semantic types that build the <a href="https://www.nlm.nih.gov/pubs/factsheets/umlssemn.html">UMLS Semantic Network</a>. To check the definition of each semantic type abbreviation see the <a href="https://metamap.nlm.nih.gov/Docs/SemGroups_2013.txt">UMLS Semantic Groups definitions</a>.</p>
 </div>
 <div class="imageblock" style="float: center;">
@@ -143,7 +159,47 @@ Click the top right <strong>black&amp;white</strong> arrow to go to the next pag
 
    <h4>ORIGINAL DATA SOURCES</h4>
    <div class="paragraph">
-<p>Description of the orginal data</p>
+<p>The NGLY1 Deficiency Knowledge Graph reviews information from recent investigations published in scientific journals, knowledge derived from animal models and data generated in high-throughput experiments. The integrated knowledge and data comes from different external sources including sciencitic literature, knowledge bases and experimental omics data sets and are annotated to its provenance and evidence. The integration is performed by means of vocabulary mapping and normalization. We provide a computational tool for the reproducible generation workflow of the graph, a Python library where each data source has a specific library to prepare edges as a network to be integrated into the NGLY1 Deficiency Knowledge Graph schema.</p>
+</div>
+
+
+
+   <h4>Curation Network</h4>
+   <div class="paragraph">
+<p>Data come from manual curation. It is retrieved from tab files generated by the biocurator. shape of the dataframe.</p>
+</div>
+
+
+
+   <h4>Animal Model Network</h4>
+   <div class="paragraph">
+<p>Data come from the Monarch Initiative Knowledge Base. To translate genotype and phenotype, the knowledge base integrates animal model with human data such as diseases, genes, variants, or phenotypes. It is retrieved through the BioLink API. shape of the dataframe.</p>
+</div>
+
+
+
+   <h4>Regulation Network</h4>
+   <div class="paragraph">
+<p>Data come from the tftargets and the MSigDB databases and consists of transcription factor and target genes known human associations. tftargets is. shape of the dataframe. MSigDB is. shape of the df. In total the regulation network is shape of the df.</p>
+</div>
+
+
+
+   <h4>Transcriptomics Network</h4>
+   <div class="paragraph">
+<p>Data come from an RNA-seq experiment on the perturbed transcriptome in a fly model of NGLY1 Deficiency [ref]. It contains the differential expression at cutoff . shape of the dataframe.</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+Click the top right <strong>black&amp;white</strong> arrow to go to the next page
+</td>
+</tr>
+</table>
 </div>
 	</div>
   </div>
