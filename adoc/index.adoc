@@ -1,63 +1,50 @@
 :author: Núria Queralt Rosinach
 :twitter: nqueralt
 :tags: NGLY1 Deficiency, NGLY1, Hypothesis Generation
-:neo4j-version: 3.0.3
+:neo4j-version: 3.5.3
+//:imagesdir: ./images
 
 
-== INTRODUCTION
+== NGLY1 Deficiency Knowledge Graph in Neo4j
+
+The NGLY1 Deficiency Knowledge Graph is the first knowledge network for NGLY1 Deficiency, which is an ultra-rare genetic disease with neither a treatment nor a clear understanding of the underlying biology. It reviews the current knowledge and data on the NGLY1 Deficiency and it is represented as a single graph for exploration and discovery. Knowledge comes from biocuration of the scientific literature and retrieval from biomedical knowledge bases. This knowledge is integrated with omics data from Drosophila melanogaster model, an animal system that has helped the community understand a wide range of human conditions, from alcoholism to Alzheimer's disease and Rett's syndrome. The parallels between the genomes of Drosophila and humans, over about 60%, provides and opportunity to reveal basic genes or processes associated with disease. This is the Neo4j Web interface for the NGLY1 Deficiency Knowledge Graph to run queries and explore the structured reviewed knowledge and data. The current graph version v3.2 contains 237,027 relationships of 32 types among 9,365 nodes of 8 types (xx genes, xx pathways). The user is interacting with a read-only instance of the graph served by Neo4j, a database technology designed for graphs. For the writable version of the graph, the user should refer to http://100.25.145.12:8181/wiki/Main_Page[NGLY1 Deficiency wikibase instance] of the project, a collaborative and community-editable version of the graph.
+
+{sp}+
+
+//=== Explore reviewed knowledge for hypothesis discovery
+
+=== Discover from the knowledge-data reviewed
+
+The NGLY1 Deficiency Knowledge Graph is a network of biological and clinical relations offered as a knowledge resource to the research community to enable discovery on its cause and of its symptoms. The network is disease domain specific to NGLY1 deficiency and can be used for different research questions from the analysis of disease gene functions, the investigation of the genetic basis and underlying molecular biology of disease phenotypes, to the discovery of hypothesis or explanations linking concepts in the graph. The user can query the knowledge graph asking for paths between entities to discover new hypotheses or extracting data that can shed light or give new ideas. Exmples of the kind of questions the user can formulate are:
+
+----
+    1. What are the gene functions, gene interactions and cellular processes associated with the perturbed gene expression in Drosophila?
+    2. What are the human homologs related to the perturbed fly transcriptome in the NGLY1 deficiency model?
+    3. What are the most common human TFs associated with the genes in the fly transcriptome?
+    4. Have the homolog genes in human or their gene interactors been associated with NGLY1 Deficiency phenotypes?
+    5. Can we retrieve explanations or paths linking two entities of interest such as two genes? What are the most common path topologies linking these genes? Are there paths based on regulatory TF-target gene interactions linking two molecular entities of interest in the structured review?
+----
 
 
-=== NGLY1 DEFICIENCY KNOWLEDGE GRAPH
+{sp}+
 
+=== Data model
 
-
-The NGLY1 Deficiency is an ultra-rare genetic disease with no treatment and understanding of the underlying biology. The NGLY1 Deficiency Knowledge Graph is the first knowledge network for NGLY1 Deficiency. It is a network of biological and clinical relations offered as a knowledge resource to the research community to enable discovery on its cause and of its symptoms. It contains and organizes the current knowledge about the NGLY1 deficiency-CDDG disease curated from the scientific literature and from the biomedical knowledge. The current version v3.2 contains 237,027 relationships of 32 types among 9,365 nodes of 8 types (xx genes, xx pathways, ...).
-
-We created the NGLY1 Deficiency Knowledge Graph to support translational research on the NGLY1 deficiency. We reviewed and structured information around the clinical profile and the pathophysiology of the NGLY1 deficiency to help biomedical researchers to discover evidence-based explanations for their hypotheses on its cause and of its symptoms. From free text [Lam et al ref], we structured around 100 associated disease phenotypes and formalized them into the HPO. The third release of the graph organizes curated information from human and animal models 1) manually extracted from the literature; 2) retrieved from https://monarchinitiative.org/[the Monarch Initiative]; 3) transcription factors and their target genes from several sources in tftargets and MSigDB; 4) manually contributed by the community from http://100.25.145.12:8181/wiki/Main_Page[the NGLY1 Deficiency wikibase platform]; and integrates all this heterogeneous knowledge with an experimental gene expression data set from a fruit fly _Drosophila melanogaster_ model of the disease [ref]. Drosophila as a model system has helped us understand a wide range of human conditions, from alcoholism to Alzheimer's disease and Rett's syndrome. The parallels between the genomes of Drosophila and humans, over about 60%, provides and opportunity to reveal basic genes or processes associated with disease.
-
-
-=== WHAT KIND OF QUESTIONS WE CAN DO
-
-//**Highlight what we can learn from the knowledge reviewed**
-
-The network is disease domain specific to NGLY1 deficiency and can be used for different research questions from the analysis of disease gene functions, the investigation of the genetic basis and underlying molecular biology of disease phenotypes, to the discovery of hypothesis. The heterogeneous knowledge reviewed from several external sources can be easily explored interrogating the graph with specific questions. The user can formulate different kind of biomedical complex questions from a single entry point. The integration of new biocurated information and knowledge from authoritative databases with experimental omics data sets allows the user to discover new relations, paths or explanations to help to discover new hypothesis that can explain their observations. The user can query the knowledge graph asking for paths between entities to discover new hypotheses or extracting data that can shed light or give new ideas. Exmples of the kind of questions the user can formulate are:
-
-1. What are the gene functions, gene interactions and cellular processes associated with the perturbed gene expression in Drosophila?
-2. What are the human homologs related to the perturbed fly transcriptome in the NGLY1 deficiency model?
-3. What are the most common human TFs associated with the genes in the fly transcriptome?
-4. Have the homolog genes in human or their gene interactors been associated with NGLY1 Deficiency phenotypes?
-5. Can we retrieve explanations or paths linking two entities of interest such as two genes? What are the most common path topologies linking these genes? Are there paths based on regulatory TF-target gene interactions linking two molecular entities of interest in the structured review?
-
-+
-
-
-
-=== STRUCTURE OF THE GUIDE
-
-
-This guide is structured with query pages in the next section, where the guide shows an explicit question and develops a type of query we can formulate to inspect hypotheses from the knowledge in the review. In the last section, the guide develops how to query the graph with some hints and examples to aid the new user. To see how to retrieve connections through regulation between NGLY1-AQP1 go to:
-
-* _Slide 2_: *DATA MODEL*
-
-* _Slide 3_: *QUERY 1: HYPOTHESIS DISCOVERY RELATING NGLY1 - AQP1* 
-
-* _Slide 4_: *QUERY 2: HYPOTHESIS DISCOVERY RELATING AQP1 - DISEASE PHENOTYPES* 
-
-* _Slide 5_: *LAST REMARKS*
-
-
-IMPORTANT:  Click the top right **black&white** arrow to go to the next page
-
-
-== DATA MODEL
-
-=== DESCRIPTION
-
-The network relates data of 8 types: genes, disease phenotypes, variants, genotypes, pathways, chemicals, anatomy, and organisms with different levels of association expressiveness. Data and relations are described using standard semantics: community-driven ontologies and controlled vocabularies to enable interoperability with external resources and reduce ambiguity.
 
 The picture shows the data model or schema or meta-graph for NGLY1 Knowledge Graph v3.2. The semantics of the concepts in the graph rely on the semantic types that build the https://www.nlm.nih.gov/pubs/factsheets/umlssemn.html[UMLS Semantic Network]. To check the definition of each semantic type abbreviation see the https://metamap.nlm.nih.gov/Docs/SemGroups_2013.txt[UMLS Semantic Groups definitions].
 
-image::https://www.dropbox.com/s/6p1zykpuexslx8e/ngly1_graph_schema.png?dl=1[height=300,float=center]
+[#img-schema]
+.NGLY1 Deficiency Knowledge Graph v3.2 data model
+[link=https://www.dropbox.com/s/6m1rfik5qqftyvi/ngly1kg_metagraph_2019-03-12.png?dl=0]
+image::https://www.dropbox.com/s/6m1rfik5qqftyvi/ngly1kg_metagraph_2019-03-12.png?dl=1[float=center]
+//My image dir path is {imagesdir} 
+
+//image::metagraph.png[height=300,float=center]
+//image::ngly1kg_metagraph_2019-03-12.png[height=300,float=center]
+//image::https://github.com/NuriaQueralt/ngly1-neo4j-guides/blob/master/guides/images/ngly1kg_metagraph_2019-03-12.png[height=300,float=center]
+//image::https://github.com/NuriaQueralt/ngly1-neo4j-guides/commit/30d901927193d59f624409bab8d329c91aa873a1?dl=1[height=300,float=center]
+
+
 
 For an interactive description of the data model, run the following query:
 
@@ -65,6 +52,40 @@ For an interactive description of the data model, run the following query:
 ----
 CALL db.schema()
 ----
+
+
+
+The network relates data of 8 types: genes, disease phenotypes, variants, genotypes, pathways, chemicals, anatomy, and organisms with different levels of association expressiveness. Data and relations are described using standard semantics: community-driven ontologies and controlled vocabularies to enable interoperability with external resources and reduce ambiguity.
+
+{sp}+
+
+
+=== Structure of the guide
+
+
+
+This guide is structured with query pages in the next section, where the guide shows an explicit question and develops a type of query we can formulate to inspect hypotheses from the knowledge in the review. In the last section, the guide develops how to query the graph with some hints and examples to aid the new user. To see how to retrieve connections through regulation between NGLY1-AQP1 go to:
+
+
+     ** _Slide 2_: *Data sources*
+
+     * _Slide 3_: *Query to explore hypothesis relating NGLY1 and AQP1 genes* 
+
+     * _Slide 4_: *Query to explore hypothesis relating AQP1 gene and NGLY1 Deficiency phenotypes* 
+
+     * _Slide 5_: *Last remarks*
+
+
+
+IMPORTANT:  Click the top right **black&white** arrow to go to the next page
+
+
+== DATA 
+
+
+We reviewed and structured information around the clinical profile and the pathophysiology of the NGLY1 deficiency to help biomedical researchers to discover evidence-based explanations for their hypotheses on its cause and of its symptoms. From free text [Lam et al ref], we structured around 100 associated disease phenotypes and formalized them into the HPO. The third release of the graph organizes curated information from human and animal models 1) manually extracted from the literature; 2) retrieved from https://monarchinitiative.org/[the Monarch Initiative]; 3) transcription factors and their target genes from several sources in tftargets and MSigDB; 4) manually contributed by the community from http://100.25.145.12:8181/wiki/Main_Page[the NGLY1 Deficiency wikibase platform]; and integrates all this heterogeneous knowledge with an experimental gene expression data set from a fruit fly _Drosophila melanogaster_ model of the disease [ref]. 
+
+{sp}+
 
 
 
@@ -90,18 +111,32 @@ Data come from an RNA-seq experiment on the perturbed transcriptome in a fly mod
 
 
 
-IMPORTANT:  Click the top right **black&white** arrow to go to the next page
+IMPORTANT: Click the top right **black&white** arrow to go to the next page
+icon:angle-double-right[]Click the top right **black&white** arrow to go to the next page
 
 
 
-
-== QUERY 1: HYPOTHESIS DISCOVERY RELATING NGLY1 - AQP1 
-
-
-Researchers have observed an association between NGLY1 human gene and AQP1 human gene at expression level. Their hypothesis is that both genes are linked through transcriptional regulation and they want to search the knowledge and the expression data integrated in the review to find potential mechanisms. In particular, they want to query the review to extract regulatory paths through genetic interactions that link NGLY1 and AQP1. +
+== Explore reviewed knowledge for hypothesis discovery
+//== QUERY 1: HYPOTHESIS DISCOVERY RELATING NGLY1 - AQP1 
 
 
+In the following slides, we will query the graph to showcase how to explore this heterogeneous knowledge to extract potential hypotheses focusing on a specific research question.
 
+
+{sp}+
+
+=== RESEARCH QUESTION
+
+
+Consider a researcher wants to determine whether a novel protein (Aquaporin 1, AQP1) is related with the NGLY1 Deficiency. From the experimental observation, there is evidence of an association between NGLY1 and AQP1 genes at expression level in both a mouse model and patient data. The researcher's hypothesis is that both genes are linked through transcriptional regulation and she wants to search the knowledge and the expression data integrated in the review to find potential mechanisms and, if so, to link these mechanisms to the disease phenotypes. To answer this complex question we will perform two different queries:
+
+----
+            1. First we will query for NGLY1-AQP1 genetic association evidence
+            2. Then we will perform a second query to retrieve gene-disease association evidence
+----
+
+
+{sp}+
 
 === STYLE THE GRAPH
 
@@ -117,22 +152,32 @@ We first style the graph, before playing with it. To load the NGLY1 Deficiency g
 
 TIP:  The user can set up the style of the graph by itself locally in its browser. If you click on any label or relationship above the graph visualization, you can then choose its styling in the area below the graph. Colors, sizes, and captions are selectable from there. Click http://guides.neo4j.com/browser.html[Styling Neo4j Browser Visualization] for more details. 
 
+{sp}+
 
----
 
-=== QUERY
+=== QUERY 1: HYPOTHESIS DISCOVERY RELATING NGLY1 - AQP1
 
-In particular researchers are interested in hypothesis that link both entities through gene interactions. To mine the gap of knowledge we will explore for hypothesis that link the perturbed transcriptomic expression on fly model of NGLY1 Deficiency through regulatory TF-target gene interactions to human AQP1. Since we are translating fly biology to human biology we will explore paths with a 2-hop `gene-interacts with` flexibility. 
+
+In particular, the researcher is interested in regulatory hypotheses that link NGLY1 and AQP1 through gene interactions. To mine the gap of knowledge we will explore for paths that link the perturbed transcriptomic expression on fly model of NGLY1 Deficiency through regulatory TF-target gene interactions to human AQP1. Since we are translating fly biology to human biology we will explore paths with a rule of 2-hop `gene-interacts with` to allow certain flexibility.
+
+
+{sp}+
 
 ==== Define the query template
 
 
-The first think to do is to formulate the query template to answer this question:
+The first think to do is to formulate the query template in a structured manner to answer this question:
+
+{sp}+
 
 image::https://www.dropbox.com/s/qypkrn1l50p83n6/query1_topology_v3.2.png?dl=1[height=100, width=5000, align="center"]
 
+{sp}+
+
 In this query, we specify relations between genes to be of two types: 'interacts with' that will be explicitly either of regulatory origin once filtered by source of provenance to the databases *tftargets* and *MSigDB* or of gene expression origin once filtered by reference to the *PubMed Identifier*, where the experimental fly transcriptome data set was published, or a gene-gene interaction if none of these restrictions applied; and 'in 1 to 1 orthology relationship with' that relates to direct orthology between genes.
 
+
+{sp}+
 
 ==== Formulate the query in Cypher
 
@@ -223,10 +268,9 @@ We retrieve paths
 
 {sp}+
 
----
 
 
-=== RESULTS
+=== EXPLORE HYPOTHESES
 
 
 Results can be vizualized in a summary table of a list of properties calculated from all paths or in a graph exposing all the paths. In this case we can explore all paths directly in graph format that looks like:
@@ -267,7 +311,9 @@ image::https://www.dropbox.com/s/v7i3ld0x3cup7nj/query1_table_v3.2.png?dl=1[heig
 
 TIP: If the user wants to list ortholog rna genes, replace `rna` label by `ortholog_rna` in the query to refer to the third node position in the query template.
 
----
+
+
+{sp}+
 
 
 === TRY IT!
@@ -344,16 +390,18 @@ IMPORTANT:  Click the top right **black&white** arrow to go to the next page
 Next question that the researcher may want to explore is the connection between the AQP1 and the NGLY1 Deficiency disease phenotypes.
 
 
----
 
+{sp}+
 
 === QUERY
+
+In particular, the researcher wants to query the review to extract paths from genes to phenotypes that link AQP1-NGLY1 genetic evidence with the NGLY1 Deficiency symptoms.
 
 
 === Define the query template
 
 
-The first think to do is to formulate the query template to answer this question:
+Again, the first think to do is to formulate the query template in a structured manner to answer this question:
 
 
 image::https://www.dropbox.com/s/ch261h9xwpu5zm5/query2_topology_v3.2.png?dl=1[height=600, width=2500, align="center"]
@@ -364,10 +412,10 @@ This query is in two steps.
 === Formulate the query in Cypher
 
 
----
+{sp}+
 
 
-=== RESULTS
+=== EXPLORE HYPOTHESES
 
 
 The resulting paths can be visualized such as
@@ -382,7 +430,7 @@ or can be summarized as a table such as
 image::https://www.dropbox.com/s/vksf6gccraaf92g/query2_table_v3.2.png?dl=1[height=500, width=3000]
 
 
---- 
+{sp}+
 
 
 === TRY IT!
