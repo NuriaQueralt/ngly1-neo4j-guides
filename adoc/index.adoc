@@ -2,6 +2,7 @@
 :twitter: nqueralt
 :tags: NGLY1 Deficiency, NGLY1, Hypothesis Generation
 :neo4j-version: 3.5.3
+:icons: font
 //:imagesdir: ./images
 
 
@@ -93,7 +94,7 @@ The NGLY1 Deficiency Knowledge Graph reviews information from recent investigati
 === ORIGINAL DATA SOURCES
 
 
-We reviewed and structured information with its evidence around the clinical profile and the pathophysiology of the NGLY1 deficiency to help biomedical researchers to discover evidence-based explanations for their hypotheses on its cause and of its symptoms. From free text https://www.ncbi.nlm.nih.gov/pubmed/27388694[Lam _et al_.], we structured around 100 associated disease phenotypes and formalized them into the HPO. The third release of the graph organizes curated information from human and animal models 1) manually extracted from the literature; 2) retrieved from https://monarchinitiative.org/[the Monarch Initiative]; 3) transcription factors and their target genes from several sources in **tftargets** and the Molecular Signatures Database or **MSigDB**; 4) manually contributed by the community from http://100.25.145.12:8181/wiki/Main_Page[the NGLY1 Deficiency wikibase platform]; and integrates all this heterogeneous knowledge with an experimental gene expression data set from a fruit fly _Drosophila melanogaster_ model of the disease https://www.ncbi.nlm.nih.gov/pubmed/29346549[Owings _et al_.].
+We reviewed and structured information with its evidence around the clinical profile and the pathophysiology of the NGLY1 deficiency to help biomedical researchers to discover evidence-based explanations for their hypotheses on its cause and of its symptoms. From free text https://www.ncbi.nlm.nih.gov/pubmed/27388694[Lam _et al_.], we structured around 100 associated disease phenotypes and formalized them into the HPO. The third release of the graph organizes curated information from human and animal models 1) manually extracted from the literature; 2) retrieved from https://monarchinitiative.org/[the Monarch Initiative]; 3) transcription factors and their target genes from several sources in https://github.com/slowkow/tftargets[tftargets] and the http://software.broadinstitute.org/gsea/msigdb[Molecular Signatures Database or MSigDB]; 4) manually contributed by the community from http://100.25.145.12:8181/wiki/Main_Page[the NGLY1 Deficiency wikibase platform]; and integrates all this heterogeneous knowledge with an experimental gene expression data set from a fruit fly _Drosophila melanogaster_ model of the disease https://www.ncbi.nlm.nih.gov/pubmed/29346549[Owings _et al_.].
 
 
 ==== Curation Network
@@ -106,9 +107,9 @@ Data come from the Monarch Initiative Knowledge Base. To translate genotype and 
 ==== Regulation Network 
 Data come from the tftargets and the MSigDB databases and consists of transcription factor and target genes known human associations. 
 
-https://github.com/slowkow/tftargets[**tftargets**] is. shape of the dataframe. 
+**tftargets** is. shape of the dataframe. 
 
-http://software.broadinstitute.org/gsea/msigdb[**MSigDB**] is. shape of the df. In total the regulation network is shape of the df.
+**MSigDB** is. shape of the df. In total the regulation network is shape of the df.
 
 
 ==== Transcriptomics Network
@@ -133,7 +134,7 @@ In the following slides, we will query the graph to showcase how to explore this
 === RESEARCH QUESTION
 
 
-Consider a researcher wants to determine whether a novel protein Aquaporin 1 (AQP1) is related with the NGLY1 Deficiency. From the experimental observation, the researcher has identified a causal association between NGLY1 and AQP1 genes at expression level in both a mouse model and patient data, but the mechanism of that association is not known. The researcher's hypothesis is that both genes are linked through transcriptional regulation and she wants to search the knowledge and the expression data integrated in the review to find potential mechanisms and, if so, to link these mechanisms to the disease phenotypes. Here, we demonstrate how to extract potential mechanistic paths from the knowledge graph. To answer this complex question we will perform two different queries:
+Consider a researcher wants to determine whether a novel protein Aquaporin 1 (AQP1) is related with the NGLY1 Deficiency. From the experimental observation, the researcher has identified a causal association between NGLY1 and AQP1 genes at expression level in both a mouse model and patient data [ref], but the mechanism of that association is not known. The researcher's hypothesis is that both genes are linked through transcriptional regulation and she wants to search the knowledge and the expression data integrated in the review to find potential mechanisms and, if so, to link these mechanisms to the disease phenotypes. Here, we demonstrate how to extract potential mechanistic paths from the knowledge graph. To answer this complex question we will perform two different queries:
 
 ----
             1. First we will query for NGLY1-AQP1 genetic association evidence
@@ -163,7 +164,7 @@ TIP:  The user can set up the style of the graph by itself locally in its browse
 === QUERY 1: HYPOTHESIS DISCOVERY RELATING NGLY1 - AQP1
 //=== Identify mechanistic links between NGLY1 and AQP1
 
-In particular, the researcher is interested in regulatory hypotheses that link NGLY1 and AQP1 through gene interactions. To mine the gap of knowledge we will explore for paths that link the perturbed transcriptomic expression in a fly model of NGLY1 Deficiency through regulatory TF-target gene interactions to human AQP1. Since we are translating fly biology to human biology we will explore paths with a rule of 2-hop `gene-interacts with` to allow certain flexibility.
+In particular, the researcher is interested in regulatory hypotheses that link NGLY1 and AQP1 through gene interactions. To mine the gap of knowledge to identify regulatory mechanistic links, we will explore for paths that link the perturbed transcriptomic expression in a fly model of NGLY1 Deficiency through regulatory TF-target gene interactions to human AQP1. Since we are translating fly biology to human biology we will explore paths with a rule of 2-hop `gene-interacts with` to allow certain flexibility.
 
 
 {sp}+
@@ -182,14 +183,24 @@ image::https://www.dropbox.com/s/qypkrn1l50p83n6/query1_topology_v3.2.png?dl=1[h
 In this query, we specify relations between genes to be of two types: 'interacts with' that will be explicitly either of regulatory origin once filtered by source of provenance to the databases *tftargets* and *MSigDB* or of gene expression origin once filtered by reference to the *PubMed Identifier*, where the experimental fly transcriptome data set was published, or a gene-gene interaction if none of these restrictions applied; and 'in 1 to 1 orthology relationship with' that relates to direct orthology between genes.
 
 
+If the user does not have a clear idea for a query template, he could formulate an open query _a priori_ to retrieve the meta-paths of all links between two entities in the review graph. For an example follow the [link] to the extended tutorial.
+
 {sp}+
 
-==== Formulate the query in Cypher
+==== Formulate the query in Cypher and execute it
 
 
-Once we have a clear query template we can create the query in Cypher to search for mechanistic links based on gene interactions and regulation edges. The following query traverses the graph to find these kind of links in the review:
+Once we have a clear query template we can create the query in Cypher to search for mechanistic links based on gene interactions and regulation edges. The following query traverses the graph to find these kind of links in the review. The query sets the topology of the query, i.e. the meta-path or semantics or the sequence of types of nodes and edges, and the rules and constrains to fire potential explanations.
 
-[%autofit]
+
+
+
+**Execute the query yourself and explore paths that relate NGLY1 and AQP1 through gene interactions**
+
+To execute the query, click the text box below to pre-fill the shell at the top of the screen and then hit `enter` or `return` in the upper right.
+
+
+[source,cypher]
 ----
 MATCH path=(source:GENE)-[i1:`RO:0002434`]->(rna:GENE)-[i2:`RO:HOM0000020`]-(ortholog_rna:GENE)-[i3:`RO:0002434`]-(tf:GENE)-[i4:`RO:0002434`]->(target:GENE)
 
@@ -209,6 +220,11 @@ AND toLower(i4.reference_supporting_text) =~ '.*tftargets.*|.*msigdb.*'
 
 RETURN path
 ----
+
+
+
+{sp}+
+
 
 
 Let's explain this query statement by statement. First, we look for mechanisms that match the query template above, where we define gene interactions with the node type _GENE_ and the edge types  _RO:0002434_ (interacts with) and _RO:HOM0000020_ (in 1 to 1 orthology relationship with):
@@ -281,84 +297,23 @@ We retrieve paths
 Results can be vizualized in a summary table of a list of properties calculated from all paths or in a graph exposing all the paths. In this case we can explore all paths directly in graph format that looks like:
 
 
-image::https://www.dropbox.com/s/bbdg1orj7ztrvup/query1_paths_v3.2.png?dl=1[height=3000, width=10500]
-
-
-If we want to retrieve a summary table with all gene interactors that are expressed gene interactors of Pngl and AQP1 Transcription Factors (TFs) ordered by the total number of paths they appear, the query should be:
-
-
- MATCH path=(source:GENE)-[i1:`RO:0002434`]->(rna:GENE)-[i2:`RO:HOM0000020`]-(ortholog_rna:GENE)-[i3:`RO:0002434`]-(tf:GENE)-[i4:`RO:0002434`]->(target:GENE)
-
- WHERE source.id = 'FlyBase:FBgn0033050' AND target.id = 'HGNC:633' AND ALL(x IN nodes(path) WHERE single(y IN nodes(path) WHERE y = x))
-
- WITH path,rna,tf,
-
- [n IN nodes(path) WHERE n.preflabel IN ['cytoplasm','cytosol','nucleus','metabolism','membrane','protein binding','visible','viable','phenotype']] AS nodes_marked,
-
- [r IN relationships(path) WHERE toLower(r.reference_supporting_text) =~ '.*tftargets.*|.*msigdb.*'] AS interactions
-
- WHERE size(nodes_marked) = 0 AND size(interactions) <> 0
-
- AND toLower(i1.reference_uri) CONTAINS 'pubmed/29346549'
-
- AND toLower(i4.reference_supporting_text) =~ '.*tftargets.*|.*msigdb.*'
-
- RETURN DISTINCT rna.name AS Expressed_gene_name, tf.name AS TF_name, count(distinct path) as Total_paths
-
- ORDER BY Total_paths DESC
-
-
-Which results in the following table:
-
-
-image::https://www.dropbox.com/s/v7i3ld0x3cup7nj/query1_table_v3.2.png?dl=1[height=1000, width=9000]
-
-
-TIP: If the user wants to list ortholog rna genes, replace `rna` label by `ortholog_rna` in the query to refer to the third node position in the query template.
-
-
+image::https://www.dropbox.com/s/bbdg1orj7ztrvup/query1_paths_v3.2.png?dl=1[height=5000, width=15500]
 
 {sp}+
 
-
-=== TRY IT!
-
-
-Execute the query yourself and explore results.
+If we want to retrieve a summary table with for instance all genes that are differentially expressed genes of Pngl and AQP1 Transcription Factors (TFs) ordered by the total number of paths they appear such as:
 
 
-==== Query 1: paths that relate NGLY1 and AQP1 through gene interactions
+
+image::https://www.dropbox.com/s/v7i3ld0x3cup7nj/query1_table_v3.2.png?dl=1[height=1000, width=10000]
+
+{sp}+
+
+the query should be:
 
 
-_Query network_
 
-
-[source,cypher]
-----
-MATCH path=(source:GENE)-[i1:`RO:0002434`]->(rna:GENE)-[i2:`RO:HOM0000020`]-(ortholog_rna:GENE)-[i3:`RO:0002434`]-(tf:GENE)-[i4:`RO:0002434`]->(target:GENE)
-
-WHERE source.id = 'FlyBase:FBgn0033050' AND target.id = 'HGNC:633' AND ALL(x IN nodes(path) WHERE single(y IN nodes(path) WHERE y = x))
-
-WITH path,
-
-[n IN nodes(path) WHERE n.preflabel IN ['cytoplasm','cytosol','nucleus','metabolism','membrane','protein binding','visible','viable','phenotype']] AS nodes_marked,
-
-[r IN relationships(path) WHERE toLower(r.reference_supporting_text) =~ '.*tftargets.*|.*msigdb.*'] AS interactions
-
-WHERE size(nodes_marked) = 0 AND size(interactions) <> 0
-
-AND toLower(i1.reference_uri) CONTAINS 'pubmed/29346549'
-
-AND toLower(i4.reference_supporting_text) =~ '.*tftargets.*|.*msigdb.*'
-
-RETURN path
-----
-
-
-==== Query 2: summary table of gene interactors in the resulting paths
-
-
-_Query network_
+**Execute the query to get a summary table of gene interactors in the resulting paths**
 
 
 [source,cypher]
@@ -384,6 +339,18 @@ RETURN DISTINCT rna.name AS Expressed_gene_name, tf.name AS TF_name, count(disti
 ORDER BY Total_paths DESC
 ----
 
+{sp}+
+
+
+
+TIP: If the user wants to list ortholog rna genes, replace `rna` label by `ortholog_rna` in the query to refer to the third node position in the query template.
+
+
+
+{sp}+
+
+
+
 
 
 IMPORTANT:  Click the top right **black&white** arrow to go to the next page
@@ -392,7 +359,7 @@ IMPORTANT:  Click the top right **black&white** arrow to go to the next page
 == QUERY 2: HYPOTHESIS DISCOVERY RELATING AQP1 - DISEASE PHENOTYPES
 
 
-Next question that the researcher may want to explore is the connection between the AQP1 and the NGLY1 Deficiency disease phenotypes.
+Next question that the researcher want to explore is the connection between the AQP1 and the NGLY1 Deficiency disease phenotypes.
 
 
 
@@ -405,47 +372,23 @@ In particular, the researcher wants to query the review to extract paths from ge
 
 === Define the query template
 
-
 Again, the first think to do is to formulate the query template in a structured manner to answer this question:
 
 
+{sp}+
 image::https://www.dropbox.com/s/ch261h9xwpu5zm5/query2_topology_v3.2.png?dl=1[height=600, width=2500, align="center"]
+{sp}+
 
 This query is in two steps.
 
 
+{sp}+
+
 === Formulate the query in Cypher
+To identify and extract mechanistic links we have to formulate rules in Cypher and execute the query. 
 
 
-{sp}+
-
-
-=== EXPLORE HYPOTHESES
-
-
-The resulting paths can be visualized such as
-
-
-image::https://www.dropbox.com/s/xh14124tnqz0noo/query2_paths_v3.2.png?dl=1[height=500, width=3000]
-
-
-or can be summarized as a table such as
-
-
-image::https://www.dropbox.com/s/vksf6gccraaf92g/query2_table_v3.2.png?dl=1[height=500, width=3000]
-
-
-{sp}+
-
-
-=== TRY IT!
-
-
-==== Query 1
-
-
-_Query network_
-
+**Execute the query and explore paths that relate AQP1 to disease phenotypes**
 
 [source,cypher]
 ----
@@ -475,11 +418,84 @@ RETURN path
 ----
 
 
-==== Query 2
+{sp}+
+
+Let’s explain this query statement by statement. First, we look for mechanisms that match the query template above, where we define gene interactions with the node type GENE and the edge types RO:0002434 (interacts with) and RO:HOM0000020 (in 1 to 1 orthology relationship with):
 
 
-_Query network_
+ MATCH path=(source:GENE)-[i1:`RO:0002434`]->(rna:GENE)-[i2:`RO:HOM0000020`]-(ortholog_rna:GENE)-[i3:`RO:0002434`]-(tf:GENE)-[i4:`RO:0002434`]->(target:GENE)
 
+jfkld;fjd
+
+ WHERE source.id = 'FlyBase:FBgn0033050' AND target.id = 'HGNC:633' AND ALL(x IN nodes(path) WHERE single(y IN nodes(path) WHERE y = x))
+
+jfkdla;fjdl;
+
+ WITH path,ortholog_rna,tf,
+
+fjdklf;jdal;
+
+ [n IN nodes(path) WHERE n.preflabel IN ['cytoplasm','cytosol','nucleus','metabolism','membrane','protein binding','visible','viable','phenotype']] AS nodes_marked,
+
+fjklad;jfkla;
+
+ [r IN relationships(path) WHERE toLower(r.reference_supporting_text) =~ '.*tftargets.*|.*msigdb.*'] AS interactions
+
+fkld'afkda
+
+ WHERE size(nodes_marked) = 0 AND size(interactions) <> 0
+
+fklda;jfal;
+
+ AND toLower(i1.reference_uri) CONTAINS 'pubmed/29346549'
+
+kd;afk;a'
+
+ AND toLower(i4.reference_supporting_text) =~ '.*tftargets.*|.*msigdb.*'
+
+jljfkda;fj
+
+ WITH COLLECT(DISTINCT ortholog_rna.id) + COLLECT(DISTINCT tf.id) AS genes
+
+jfkla;fja
+
+ MATCH path=(:DISO {id: 'DOID:0060728'})-->(ph:DISO)--(g:GENE)
+
+jfkal;fjda;
+
+ WHERE g.id in genes AND ph.id CONTAINS 'HP:'
+
+jkfla;f
+
+ RETURN path
+
+
+{sp}+
+
+=== EXPLORE HYPOTHESES
+
+
+The resulting paths can be graphically visualized such as:
+
+
+
+{sp}+
+image::https://www.dropbox.com/s/xh14124tnqz0noo/query2_paths_v3.2.png?dl=1[height=500, width=3000]
+{sp}+
+
+
+or can be summarized as a table such as:
+
+
+{sp}+
+image::https://www.dropbox.com/s/vksf6gccraaf92g/query2_table_v3.2.png?dl=1[height=500, width=3000]
+
+
+{sp}+
+
+where the query should be:
+
+**Execute the query to get a summary table of phenotypes and the gene list of genes associated with**
 
 [source,cypher]
 ----
@@ -510,16 +526,24 @@ RETURN DISTINCT ph.id AS phenotype_id, ph.preflabel AS phenotype_label, COLLECT(
 ORDER BY genes DESC
 ----
 
+{sp}+
 
 IMPORTANT:  Click the top right **black&white** arrow to go to the next page
 
 
+{sp}+
 == LAST REMARKS
 **Last wrapped up or conclusion section**
 
 
 === HYPOTHESIS DISCOVERY ON THE NGLY1 DEFICIENCY KNOWLEDGE GRAPH
-Reviewing knowledge as a graph allows exploration of connections between entities otherwise difficult to query in one step and from only one endpoint. The user can explore knowledge and check the supporting evidence. A graph allow to connect diverse type of nodes and relationships, different domains.
+Reviewing knowledge as a graph allows exploration of connections between entities otherwise difficult to query in one step and from only one endpoint. The user can explore knowledge and check the supporting evidence. A graph allow to connect diverse type of nodes and relationships, different domains. Some of the sophisticated queries that can be solved now are thanks to the heterogeneous information integrated from different topics (disease phenotypes, regulatory interactions or biological pathways) and sources (curated, animal, experimental evidence)
+
+
+* The context project:
+** KG for discovery
+** link to wikibase
+** engage with the community
 
 
 === MORE QUERIES
