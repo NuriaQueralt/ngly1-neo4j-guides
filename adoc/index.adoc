@@ -8,19 +8,19 @@
 
 == NGLY1 Deficiency Knowledge Graph in Neo4j
 
-The NGLY1 Deficiency Knowledge Graph is the first knowledge network for NGLY1 Deficiency, which is an ultra-rare genetic disease with neither a treatment nor a clear understanding of the underlying biology. It reviews the current knowledge and data on the NGLY1 Deficiency and it is represented as a single graph for exploration and discovery. Knowledge comes from biocuration of the scientific literature and retrieval from biomedical knowledge bases. This knowledge is integrated with omics data from Drosophila melanogaster model, an animal system that has helped the community understand a wide range of human conditions, from alcoholism to Alzheimer's disease and Rett's syndrome. The parallels between the genomes of Drosophila and humans, over about 60%, provides and opportunity to reveal basic genes or processes associated with disease. This is the Neo4j Web interface for the NGLY1 Deficiency Knowledge Graph to run queries and explore the structured reviewed knowledge and data. The current graph version v3.2 contains 237,027 relationships of 32 types among 9,365 nodes of 8 types. The user is interacting with a read-only instance of the graph served by Neo4j, a database technology designed for graphs. For the writable version of the graph, the user should refer to http://100.25.145.12:8181/wiki/Main_Page[NGLY1 Deficiency wikibase instance] of the project, a collaborative and community-editable version of the graph.
+The NGLY1 Deficiency Knowledge Graph is the first knowledge network for the https://rarediseases.info.nih.gov/diseases/12315/deficiency-of-n-glycanase-1[Deficiency of N-glycanase 1 or NGLY1 Deficiency], which is an ultra-rare genetic disease with neither a treatment nor a clear understanding of the underlying biology. It reviews the current knowledge and data on the NGLY1 Deficiency and it is represented as a single graph for exploration and discovery. Knowledge comes from biocuration of the scientific literature and retrieval from biomedical knowledge bases. This knowledge is integrated with omics data from the fruit fly (https://en.wikipedia.org/wiki/Drosophila_melanogaster[_Drosophila melanogaster_]) model, an animal system that has helped the community understand a wide range of human conditions, from alcoholism to Alzheimer's disease and Rett's syndrome (http://modencode.sciencemag.org/drosophila/introduction[_Drosophila_ as a model organism]). The parallels between the genomes of Drosophila and humans, over about 60%, provides and opportunity to reveal basic genes or processes associated with disease. This is the Neo4j Web interface for the NGLY1 Deficiency Knowledge Graph to run queries and explore the structured reviewed knowledge and data. The current graph version v3.2 contains 237,027 relationships of 32 types among 9,365 nodes of 8 types. The user is interacting with a read-only instance of the graph served by Neo4j, a database technology designed for graphs. For the writable version of the graph, the user should refer to http://100.25.145.12:8181/wiki/Main_Page[NGLY1 Deficiency wikibase instance] of the project, a collaborative and community-editable version of the graph.
 
 {sp}+
 
 //=== Explore reviewed knowledge for hypothesis discovery
 
-=== Discover from the knowledge-data reviewed
+=== DISCOVER FROM THE STRUCTURED KNOWLEDGE-DATA REVIEWED
 
 The NGLY1 Deficiency Knowledge Graph is a network of biological and clinical relations offered as a knowledge resource to the research community to enable discovery on its cause and of its symptoms. The network is disease domain specific to NGLY1 deficiency and can be used for different research questions from the analysis of disease gene functions, the investigation of the genetic basis and underlying molecular biology of disease phenotypes, to the discovery of hypothesis or explanations linking concepts in the graph. Examples of the kind of questions the user can formulate are:
 
 ----
     1. What are the most common gene functions, gene interactions, cellular processes or phenotypes associated with the perturbed gene expression in Drosophila?
-    2. What are the human homologs related to the perturbed fly transcriptome in the NGLY1 deficiency model?
+    2. What are the human homologs related to the perturbed fly transcriptome in the NGLY1 Deficiency model?
     3. What are the most common human Transcription Factors (TFs) associated with the genes in the fly transcriptome?
     4. Have the fly transcriptome homolog genes in human or their gene interactors been associated with NGLY1 Deficiency phenotypes?
     5. Can we retrieve explanations or paths linking two entities of interest such as two genes? What are the most common path topologies linking these genes? Are there paths based on regulatory TF-target gene interactions in the structured review?
@@ -30,10 +30,11 @@ The knowledge graph can be queried in almost an infinite number of ways. This gu
 
 {sp}+
 
-=== Data model
+=== DATA MODEL
 
 
-The picture shows the data model or schema or meta-graph for NGLY1 Knowledge Graph v3.2. The semantics of the concepts in the graph rely on the semantic types that build the https://www.nlm.nih.gov/pubs/factsheets/umlssemn.html[UMLS Semantic Network]. To check the definition of each semantic type abbreviation see the https://metamap.nlm.nih.gov/Docs/SemGroups_2013.txt[UMLS Semantic Groups definitions].
+The picture shows the data model or schema or meta-graph for NGLY1 Knowledge Graph v3.2. 
+
 
 [#img-schema]
 .NGLY1 Deficiency Knowledge Graph v3.2 data model
@@ -56,8 +57,36 @@ CALL db.schema()
 ----
 
 
+==== Data types
+
 
 The network relates data of 8 types: genes, disease phenotypes, variants, genotypes, pathways, chemicals, anatomy, and organisms with different levels of association expressiveness. Data and relations are described using standard semantics: community-driven ontologies and controlled vocabularies to enable interoperability with external resources and reduce ambiguity.
+
+The semantics of the concepts in the graph rely on the semantic types that build the https://www.nlm.nih.gov/pubs/factsheets/umlssemn.html[UMLS Semantic Network]. To check the definition of each semantic type abbreviation see the https://metamap.nlm.nih.gov/Docs/SemGroups_2013.txt[UMLS Semantic Groups definitions].
+
+The semantics of the relations rely on the Relation Ontology (RO).
+
+
+==== ID scheme
+
+
+The semantics of the data instances rely on different specific ontologies in function of the concept type:
+
+genes: HGNC
+diseases: DO
+phenotypes: HP
+variants: ClinVar
+pathways: Reactome
+chemicals: ChEBI
+anatomy: UBERON
+
+
+==== Data attributes
+
+
+Node: ID, label, synonyms, description 
+Edge: ID, label, reference, reference_text, ...
+
 
 //{sp}+
 
@@ -82,10 +111,10 @@ The network relates data of 8 types: genes, disease phenotypes, variants, genoty
 IMPORTANT:  Click the top right **black&white** arrow to go to the next page
 
 
-== DATA 
+== Data 
 
 
-The NGLY1 Deficiency Knowledge Graph reviews information from recent investigations published in scientific journals, knowledge derived from animal models and data generated from high-throughput experiments. The integrated knowledge and data comes from different external sources including scientific literature, knowledge bases and experimental omics data sets and are annotated to its provenance and evidence. The integration is performed by means of vocabulary mapping and normalization. We provide a computational tool for the reproducible generation workflow of the graph, a https://github.com/NuriaQueralt/graph-hypothesis-generation-lib[Python library] where each data source has a specific module to prepare edges as a network to be integrated into the NGLY1 Deficiency Knowledge Graph schema.
+The NGLY1 Deficiency Knowledge Graph reviews heterogeneous **knowledge** from basic biological and clinical research in humans and derived from animal models, and **data** generated from high-throughput experiments. The integrated knowledge and data comes from different external sources including scientific literature, knowledge bases and experimental omics data sets and are annotated to its provenance and evidence. The integration is performed by means of vocabulary mapping and normalization. We provide a computational tool for the reproducible generation workflow of the graph, a https://github.com/NuriaQueralt/graph-hypothesis-generation-lib[Python library] where each data source has a specific module to prepare edges as a network to be integrated into the NGLY1 Deficiency Knowledge Graph schema.
 
 {sp}+
 
@@ -94,13 +123,21 @@ The NGLY1 Deficiency Knowledge Graph reviews information from recent investigati
 === ORIGINAL DATA SOURCES
 
 
-We reviewed and structured information with its evidence around the clinical profile and the pathophysiology of the NGLY1 deficiency to help biomedical researchers to discover evidence-based explanations for their hypotheses on its cause and of its symptoms. From free text https://www.ncbi.nlm.nih.gov/pubmed/27388694[Lam _et al_.], we structured around 100 associated disease phenotypes and formalized them into the HPO. The third release of the graph organizes curated information from human and animal models 1) manually extracted from the literature; 2) retrieved from https://monarchinitiative.org/[the Monarch Initiative]; 3) transcription factors and their target genes from several sources in https://github.com/slowkow/tftargets[tftargets] and the http://software.broadinstitute.org/gsea/msigdb[Molecular Signatures Database or MSigDB]; 4) manually contributed by the community from http://100.25.145.12:8181/wiki/Main_Page[the NGLY1 Deficiency wikibase platform]; and integrates all this heterogeneous knowledge with an experimental gene expression data set from a fruit fly _Drosophila melanogaster_ model of the disease https://www.ncbi.nlm.nih.gov/pubmed/29346549[Owings _et al_.].
+We reviewed and structured information with its evidence around the clinical profile and the pathophysiology of the NGLY1 Deficiency to help biomedical researchers to discover evidence-based explanations for their hypotheses on its cause and of its symptoms. 
 
+We assembled **human** knowledge about basic molecular biology, cys-regulation, and disease phenotypes extracted by biocuration of publications in pubmed, retrieved from databases, and knowledge of domain experts. We derived knowledge from **animal models** assembling homologs and ortholog-phenotypes from the Monarch knowledge base. This knowledge is complemented and gives structure to new experimental transcriptomics data from recent studies.
+
+The third release of the graph organizes information from human and animal models 1) manually extracted from investigations published in scientific journals; 2) retrieved from https://monarchinitiative.org/[the Monarch Initiative]; 3) transcription factors and their target genes from several sources in https://github.com/slowkow/tftargets[tftargets] and the http://software.broadinstitute.org/gsea/msigdb[Molecular Signatures Database or MSigDB]; 4) manually contributed by the community from http://100.25.145.12:8181/wiki/Main_Page[the NGLY1 Deficiency wikibase platform]; and integrates all this heterogeneous knowledge with an experimental gene expression data set from a fruit fly _Drosophila melanogaster_ model of the disease https://www.ncbi.nlm.nih.gov/pubmed/29346549[Owings _et al_.].
+
+
+The information is assembled and organized according the types and source of networks:
 
 ==== Curation Network
 Data come from manual curation. It is retrieved from tab files generated by the biocurator. shape of the dataframe. 
 
-==== Animal Model Network
+From free text https://www.ncbi.nlm.nih.gov/pubmed/27388694[Lam _et al_.], we structured around 100 associated disease phenotypes and formalized them into the HPO. 
+
+==== Monarch Network
 Data come from the Monarch Initiative Knowledge Base. To translate genotype and phenotype, the knowledge base integrates animal model with human data such as diseases, genes, variants, or phenotypes. It is retrieved through the BioLink API. shape of the dataframe.
 
 
@@ -116,9 +153,13 @@ Data come from the tftargets and the MSigDB databases and consists of transcript
 Data come from an RNA-seq experiment on the perturbed transcriptome in a fly model of NGLY1 Deficiency [ref]. It contains the differential expression at cutoff . shape of the dataframe.
 
 
+=== DATA STATISTICS
+
+Source - Nodes - Edges
+
+
 
 IMPORTANT: Click the top right **black&white** arrow to go to the next page
-icon:angle-double-right[]Click the top right **black&white** arrow to go to the next page
 
 
 
@@ -291,7 +332,7 @@ We retrieve paths
 
 
 
-=== EXPLORE HYPOTHESES
+==== Explore hypotheses
 
 
 Results can be vizualized in a summary table of a list of properties calculated from all paths or in a graph exposing all the paths. In this case we can explore all paths directly in graph format that looks like:
@@ -353,30 +394,23 @@ TIP: If the user wants to list ortholog rna genes, replace `rna` label by `ortho
 
 
 
-IMPORTANT:  Click the top right **black&white** arrow to go to the next page
 
 
-== QUERY 2: HYPOTHESIS DISCOVERY RELATING AQP1 - DISEASE PHENOTYPES
+=== QUERY 2: HYPOTHESIS DISCOVERY RELATING AQP1 - DISEASE PHENOTYPES
 
 
-Next question that the researcher want to explore is the connection between the AQP1 and the NGLY1 Deficiency disease phenotypes.
+Next question that the researcher want to explore is the connection between the AQP1 and the NGLY1 Deficiency disease phenotypes. In particular, the researcher wants to query the review to extract paths from genes to phenotypes that link AQP1-NGLY1 genetic evidence with the NGLY1 Deficiency symptoms.
 
 
-
-{sp}+
-
-=== QUERY
-
-In particular, the researcher wants to query the review to extract paths from genes to phenotypes that link AQP1-NGLY1 genetic evidence with the NGLY1 Deficiency symptoms.
-
-
-=== Define the query template
+==== Define the query template
 
 Again, the first think to do is to formulate the query template in a structured manner to answer this question:
 
 
 {sp}+
+
 image::https://www.dropbox.com/s/ch261h9xwpu5zm5/query2_topology_v3.2.png?dl=1[height=600, width=2500, align="center"]
+
 {sp}+
 
 This query is in two steps.
@@ -384,11 +418,11 @@ This query is in two steps.
 
 {sp}+
 
-=== Formulate the query in Cypher
+==== Formulate the query in Cypher and execute it
 To identify and extract mechanistic links we have to formulate rules in Cypher and execute the query. 
 
 
-**Execute the query and explore paths that relate AQP1 to disease phenotypes**
+**Execute the query yourself and explore paths that relate AQP1 to disease phenotypes**
 
 [source,cypher]
 ----
@@ -472,7 +506,7 @@ jkfla;f
 
 {sp}+
 
-=== EXPLORE HYPOTHESES
+==== Explore Hypotheses
 
 
 The resulting paths can be graphically visualized such as:
@@ -480,7 +514,9 @@ The resulting paths can be graphically visualized such as:
 
 
 {sp}+
+
 image::https://www.dropbox.com/s/xh14124tnqz0noo/query2_paths_v3.2.png?dl=1[height=500, width=3000]
+
 {sp}+
 
 
@@ -488,6 +524,7 @@ or can be summarized as a table such as:
 
 
 {sp}+
+
 image::https://www.dropbox.com/s/vksf6gccraaf92g/query2_table_v3.2.png?dl=1[height=500, width=3000]
 
 
@@ -532,7 +569,12 @@ IMPORTANT:  Click the top right **black&white** arrow to go to the next page
 
 
 {sp}+
-== LAST REMARKS
+
+
+
+== Last remarks
+
+
 **Last wrapped up or conclusion section**
 
 
@@ -559,7 +601,6 @@ For advanced exploration of the graph please, run the following command by click
 NOTE:  The user should have installed https://jupyter.org/[the Jupyter Notebook] software and the IPython kernel for Python3 to run and visualize the queries provided. 
 
 
-IMPORTANT:  Click the top right **black&white** arrow to go to the next page
 
 
 
