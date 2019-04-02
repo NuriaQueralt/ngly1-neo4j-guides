@@ -73,11 +73,17 @@ The semantics of the relations rely on the Relation Ontology (RO).
 The semantics of the data instances rely on different specific ontologies in function of the concept type:
 
 genes: HGNC
+
 diseases: DO
+
 phenotypes: HP
+
 variants: ClinVar
+
 pathways: Reactome
+
 chemicals: ChEBI
+
 anatomy: UBERON
 
 
@@ -85,6 +91,7 @@ anatomy: UBERON
 
 
 Node: ID, label, synonyms, description 
+
 Edge: ID, label, reference, reference_text, ...
 
 
@@ -221,10 +228,10 @@ image::https://www.dropbox.com/s/qypkrn1l50p83n6/query1_topology_v3.2.png?dl=1[h
 
 {sp}+
 
-In this query, we specify relations between genes to be of two types: 'interacts with' that will be explicitly either of regulatory origin once filtered by source of provenance to the databases *tftargets* and *MSigDB* or of gene expression origin once filtered by reference to the *PubMed Identifier*, where the experimental fly transcriptome data set was published, or a gene-gene interaction if none of these restrictions applied; and 'in 1 to 1 orthology relationship with' that relates to direct orthology between genes.
+In this template, we specify relations between genes to be of two types: 1) `'interacts with'` that with the use of filters on edge attributes will be explicitly either of _regulatory_ origin once filtered by source of provenance to the databases *tftargets* and *MSigDB*, or of _gene expression_ origin once filtered by reference to the *PubMed Identifier*, where the experimental fly transcriptome data set was published, or of a general _gene-gene interaction_ origin if none of these restrictions applied; and 2) `'in 1 to 1 orthology relationship with'` that relates to direct orthology between genes.
 
 
-If the user does not have a clear idea for a query template, he could formulate an open query _a priori_ to retrieve the meta-paths of all links between two entities in the review graph. For an example follow the [link] to the extended tutorial.
+If the user does not have a clear idea for a query template, she/he could formulate an open query _a priori_ to retrieve the meta-paths of all links between two entities in the review graph. For an example of how to query the graph to retrieve metapaths, go to the 4th slide in the extended tutorial (find how to access the extended tutorial in the next slide).
 
 {sp}+
 
@@ -268,61 +275,61 @@ RETURN path
 
 
 
-Let's explain this query statement by statement. First, we look for mechanisms that match the query template above, where we define gene interactions with the node type _GENE_ and the edge types  _RO:0002434_ (interacts with) and _RO:HOM0000020_ (in 1 to 1 orthology relationship with):
+Let's explain this query statement by statement. First, we look for mechanisms that match the query template above, where we define gene interactions with the node type _GENE_ and the edge types  _RO:0002434_ (`interacts with`) and _RO:HOM0000020_ (`in 1 to 1 orthology relationship with`):
 
 
  MATCH path=(source:GENE)-[i1:`RO:0002434`]->(rna:GENE)-[i2:`RO:HOM0000020`]-(ortholog_rna:GENE)-[i3:`RO:0002434`]-(tf:GENE)-[i4:`RO:0002434`]->(target:GENE)
 
 
-We define the source and target nodes with the identifier (id). The source is Pngl (FlyBase:FBgn0033050), which is the fly ortholog of the human gene NGLY1, (HGNC:17646) and the target is the human gene AQP1 (HGNC:633)
+Then, we filter to specific source and target nodes with the _identifier_ (`id`) node attribute. The source is Pngl (FlyBase:FBgn0033050), which is the fly ortholog of the human gene NGLY1, (HGNC:17646) and the target is the human gene AQP1 (HGNC:633):
 
 
  WHERE source.id = 'FlyBase:FBgn0033050' AND target.id = 'HGNC:633'
 
 
-and we impose that every every node instance is traversed only once in the path.
+and we impose that every every node instance is traversed only once in the path using the following rule:
 
 
  AND ALL(x IN nodes(path) WHERE single(y IN nodes(path) WHERE y = x))
 
 
-We extract some features from each path to then filter them
+We extract some features from each path to then filter them, using the 'path' variable:
 
 
  WITH path,
 
 
-We mark nodes with too general meaning
+We extract nodes with too general meaning as _nodes_marked_:
 
 
  [ n IN nodes(path) WHERE n.preflabel IN ['cytoplasm','cytosol','nucleus','metabolism','membrane','protein binding','visible','viable','phenotype'] ] AS nodes_marked,
 
 
-We mark regulatory edges through the "reference_supporting_text" edge provenance attribute
+We extract regulatory edges filtering by the `reference_supporting_text` edge provenance attribute as _interactions_:
 
 
  [ r IN relationships(path) WHERE toLower(r.reference_supporting_text) =~ '.*tftargets.*|.*msigdb.*' ] AS interactions
 
 
-We filter paths that only content specific node instances and at least have one regulatory edge
+We filter paths that only content specific node instances and at least have one regulatory edge:
 
 
  WHERE size(nodes_marked) = 0 AND size(interactions) <> 0
 
 
-We filter paths that the first edge, named in the path pattern as 'i1', is a transcriptomic interaction from the experimental dataset published in the reference id PMID:29346549. We filter it by publication provenance using the `reference_uri` edge attribute
+We filter paths that the first edge, named in the path pattern as 'i1', is a transcriptomic interaction from the experimental dataset published in the PubMed id "PMID:29346549". We filter it by reference provenance using the `reference_uri` edge attribute:
 
 
  AND toLower(i1.reference_uri) CONTAINS 'pubmed/29346549'
 
 
-We filter paths that the fourth edge, named as 'i4', is a TF --> GENE regulatory interaction. We define a specific directionality of the interaction to keep the TF function towards AQP1. We filter it by source provenance using the `reference_supporting_text` edge attribute
+We filter paths that the fourth edge, named as 'i4', is a TF -> GENE regulatory interaction. We define a specific directionality of the interaction to keep the TF function towards AQP1. We filter it by source provenance using the `reference_supporting_text` edge attribute:
 
 
  AND toLower(i4.reference_supporting_text) =~ '.*tftargets.*|.*msigdb.*'
 
 
-We retrieve paths
+Last, we retrieve paths:
 
 
  RETURN path
@@ -399,7 +406,7 @@ TIP: If the user wants to list ortholog rna genes, replace `rna` label by `ortho
 === QUERY 2: HYPOTHESIS DISCOVERY RELATING AQP1 - DISEASE PHENOTYPES
 
 
-Next question that the researcher want to explore is the connection between the AQP1 and the NGLY1 Deficiency disease phenotypes. In particular, the researcher wants to query the review to extract paths from genes to phenotypes that link AQP1-NGLY1 genetic evidence with the NGLY1 Deficiency symptoms.
+Next question that the researcher wants to explore is the connection between the AQP1 and the NGLY1 Deficiency disease phenotypes. In particular, the researcher wants to query the review to extract paths from genes to phenotypes that link the AQP1-NGLY1 genetic association evidence obtained in the query 1 with the NGLY1 Deficiency phenotypes.
 
 
 ==== Define the query template
@@ -413,13 +420,13 @@ image::https://www.dropbox.com/s/ch261h9xwpu5zm5/query2_topology_v3.2.png?dl=1[h
 
 {sp}+
 
-This query is in two steps.
+The logics of this query is in two steps: 1) to collect first the genetic evidence linking NGLY1 to AQP1 via regulatory hypothesis retrieved from qurey 1, and 2) from this gene collection to retrieve those genes that have association evidence with the disease phenotypes. Consequently, in the first step we have to define again the template used in query 1, and in the second step we define a new template, where we specify a first disease-phenotype relation for the NGLY1 Deficiency disease node and its associated phenoytpes and an open relation from these phenotypes to the genes collected in the query 1.
 
 
 {sp}+
 
 ==== Formulate the query in Cypher and execute it
-To identify and extract mechanistic links we have to formulate rules in Cypher and execute the query. 
+With the query template defined, we can develop the query in Cypher. To identify and extract gene to phenotype mechanistic links we have to formulate rules in Cypher that follows the logics of the hypothesis, and execute the query. The following query traverses the graph to infer plausible associations of the AQP1 gene with the NGLY1 Deficiency phenotypes from the regulatory hypothesis. The query sets the topology of the hypothesis and the rules and constraints to fire potential explanations.
 
 
 **Execute the query yourself and explore paths that relate AQP1 to disease phenotypes**
@@ -454,52 +461,52 @@ RETURN path
 
 {sp}+
 
-Let’s explain this query statement by statement. First, we look for mechanisms that match the query template above, where we define gene interactions with the node type GENE and the edge types RO:0002434 (interacts with) and RO:HOM0000020 (in 1 to 1 orthology relationship with):
+Let’s explain this query statement by statement. First, we look for mechanisms that match the first query template above, where we define gene interactions with the node type _GENE_ and the edge types _RO:0002434_ (`interacts with`) and _RO:HOM0000020_ (`in 1 to 1 orthology relationship with`):
 
 
  MATCH path=(source:GENE)-[i1:`RO:0002434`]->(rna:GENE)-[i2:`RO:HOM0000020`]-(ortholog_rna:GENE)-[i3:`RO:0002434`]-(tf:GENE)-[i4:`RO:0002434`]->(target:GENE)
 
-jfkld;fjd
+Then, we filter to the specific _Pngl_ source and _NGLY1_ target nodes and the no loops in the path rule:
 
  WHERE source.id = 'FlyBase:FBgn0033050' AND target.id = 'HGNC:633' AND ALL(x IN nodes(path) WHERE single(y IN nodes(path) WHERE y = x))
 
-jfkdla;fjdl;
+To apply rules we need to extract some features from the path, using the 'path', 'ortholog_rna' and 'tf' variables:
 
  WITH path,ortholog_rna,tf,
 
-fjdklf;jdal;
+We extract nodes with too general semantics as _nodes_marked_:
 
  [n IN nodes(path) WHERE n.preflabel IN ['cytoplasm','cytosol','nucleus','metabolism','membrane','protein binding','visible','viable','phenotype']] AS nodes_marked,
 
-fjklad;jfkla;
+We extract regulatory edges as _interactions_:
 
  [r IN relationships(path) WHERE toLower(r.reference_supporting_text) =~ '.*tftargets.*|.*msigdb.*'] AS interactions
 
-fkld'afkda
+We then filter paths that only have specific semantics and at least one regulatory TF-gene edge:
 
  WHERE size(nodes_marked) = 0 AND size(interactions) <> 0
 
-fklda;jfal;
+We filter paths where the first edge is a transcriptomic gene-gene interaction in the fly model:
 
  AND toLower(i1.reference_uri) CONTAINS 'pubmed/29346549'
 
-kd;afk;a'
+We finally apply the filter that the last edge in the topology has to be a TF-gene regulatory interaction:
 
  AND toLower(i4.reference_supporting_text) =~ '.*tftargets.*|.*msigdb.*'
 
-jljfkda;fj
+All the rules applied til this point are exactly the query 1 to retrieve the regulatory genetic evidence between NGLY1 and AQP1. From this statement, starts the logics to link this regulatory gene connections to the phenotypes of the disease. The following statement collects a list of all the human genes involved in the regulatory connections as _genes_:
 
  WITH COLLECT(DISTINCT ortholog_rna.id) + COLLECT(DISTINCT tf.id) AS genes
 
-jfkla;fja
+First, we look for all the genes in the graph that have an association of any type with the disease phenotypes. We keep those paths that match the NGLY1 Deficiency disease node, defining the node type _DISO_ and the node `id` attribute to _DOID:0060728_ (the DOID of the NGLY1 Deficiency), with its associated phenotypes using an open edge type to a disease phenotype node type with the _DISO_ label, and from these disease phenotypes we match those edges (open type) that relate the disease phenotypes to gene node types using the _GENE_ label. In this template we named the associated NGLY1 Deficiency disease phenotypes as 'ph' and their associated genes as 'g'.
 
  MATCH path=(:DISO {id: 'DOID:0060728'})-->(ph:DISO)--(g:GENE)
 
-jfkal;fjda;
+Then, we apply the rule to filter the paths to only human genes that are in the regulatory hypothesis, i.e. in the `genes` list, and to specifically _human_ disease phenotypes, which are identified by the Human Phenotype ontology (HP) that uses the standard id prefix format annotation `HP`:
 
  WHERE g.id in genes AND ph.id CONTAINS 'HP:'
 
-jkfla;f
+Last, we retrieve paths:
 
  RETURN path
 
@@ -509,7 +516,7 @@ jkfla;f
 ==== Explore Hypotheses
 
 
-The resulting paths can be graphically visualized such as:
+The resulting gene-phenotype links can be graphically visualized such as:
 
 
 

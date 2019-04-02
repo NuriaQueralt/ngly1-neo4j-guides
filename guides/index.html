@@ -119,21 +119,35 @@
 <p>The semantics of the data instances rely on different specific ontologies in function of the concept type:</p>
 </div>
 <div class="paragraph">
-<p>genes: HGNC
-diseases: DO
-phenotypes: HP
-variants: ClinVar
-pathways: Reactome
-chemicals: ChEBI
-anatomy: UBERON</p>
+<p>genes: HGNC</p>
+</div>
+<div class="paragraph">
+<p>diseases: DO</p>
+</div>
+<div class="paragraph">
+<p>phenotypes: HP</p>
+</div>
+<div class="paragraph">
+<p>variants: ClinVar</p>
+</div>
+<div class="paragraph">
+<p>pathways: Reactome</p>
+</div>
+<div class="paragraph">
+<p>chemicals: ChEBI</p>
+</div>
+<div class="paragraph">
+<p>anatomy: UBERON</p>
 </div>
 
 
 
    <h4>Data attributes</h4>
    <div class="paragraph">
-<p>Node: ID, label, synonyms, description
-Edge: ID, label, reference, reference_text, &#8230;&#8203;</p>
+<p>Node: ID, label, synonyms, description</p>
+</div>
+<div class="paragraph">
+<p>Edge: ID, label, reference, reference_text, &#8230;&#8203;</p>
 </div>
 <div class="admonitionblock important">
 <table>
@@ -325,10 +339,10 @@ The user can set up the style of the graph by itself locally in its browser. If 
 <p><br></p>
 </div>
 <div class="paragraph">
-<p>In this query, we specify relations between genes to be of two types: 'interacts with' that will be explicitly either of regulatory origin once filtered by source of provenance to the databases <strong>tftargets</strong> and <strong>MSigDB</strong> or of gene expression origin once filtered by reference to the <strong>PubMed Identifier</strong>, where the experimental fly transcriptome data set was published, or a gene-gene interaction if none of these restrictions applied; and 'in 1 to 1 orthology relationship with' that relates to direct orthology between genes.</p>
+<p>In this template, we specify relations between genes to be of two types: 1) <code>'interacts with'</code> that with the use of filters on edge attributes will be explicitly either of <em>regulatory</em> origin once filtered by source of provenance to the databases <strong>tftargets</strong> and <strong>MSigDB</strong>, or of <em>gene expression</em> origin once filtered by reference to the <strong>PubMed Identifier</strong>, where the experimental fly transcriptome data set was published, or of a general <em>gene-gene interaction</em> origin if none of these restrictions applied; and 2) <code>'in 1 to 1 orthology relationship with'</code> that relates to direct orthology between genes.</p>
 </div>
 <div class="paragraph">
-<p>If the user does not have a clear idea for a query template, he could formulate an open query <em>a priori</em> to retrieve the meta-paths of all links between two entities in the review graph. For an example follow the [link] to the extended tutorial.</p>
+<p>If the user does not have a clear idea for a query template, she/he could formulate an open query <em>a priori</em> to retrieve the meta-paths of all links between two entities in the review graph. For an example of how to query the graph to retrieve metapaths, go to the 4th slide in the extended tutorial (find how to access the extended tutorial in the next slide).</p>
 </div>
 <div class="paragraph">
 <p><br></p>
@@ -371,7 +385,7 @@ RETURN path<!--/code--></pre>
 <p><br></p>
 </div>
 <div class="paragraph">
-<p>Let&#8217;s explain this query statement by statement. First, we look for mechanisms that match the query template above, where we define gene interactions with the node type <em>GENE</em> and the edge types  <em>RO:0002434</em> (interacts with) and <em>RO:HOM0000020</em> (in 1 to 1 orthology relationship with):</p>
+<p>Let&#8217;s explain this query statement by statement. First, we look for mechanisms that match the query template above, where we define gene interactions with the node type <em>GENE</em> and the edge types  <em>RO:0002434</em> (<code>interacts with</code>) and <em>RO:HOM0000020</em> (<code>in 1 to 1 orthology relationship with</code>):</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -379,7 +393,7 @@ RETURN path<!--/code--></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>We define the source and target nodes with the identifier (id). The source is Pngl (FlyBase:FBgn0033050), which is the fly ortholog of the human gene NGLY1, (HGNC:17646) and the target is the human gene AQP1 (HGNC:633)</p>
+<p>Then, we filter to specific source and target nodes with the <em>identifier</em> (<code>id</code>) node attribute. The source is Pngl (FlyBase:FBgn0033050), which is the fly ortholog of the human gene NGLY1, (HGNC:17646) and the target is the human gene AQP1 (HGNC:633):</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -387,7 +401,7 @@ RETURN path<!--/code--></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>and we impose that every every node instance is traversed only once in the path.</p>
+<p>and we impose that every every node instance is traversed only once in the path using the following rule:</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -395,7 +409,7 @@ RETURN path<!--/code--></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>We extract some features from each path to then filter them</p>
+<p>We extract some features from each path to then filter them, using the 'path' variable:</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -403,7 +417,7 @@ RETURN path<!--/code--></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>We mark nodes with too general meaning</p>
+<p>We extract nodes with too general meaning as <em>nodes_marked</em>:</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -411,7 +425,7 @@ RETURN path<!--/code--></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>We mark regulatory edges through the "reference_supporting_text" edge provenance attribute</p>
+<p>We extract regulatory edges filtering by the <code>reference_supporting_text</code> edge provenance attribute as <em>interactions</em>:</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -419,7 +433,7 @@ RETURN path<!--/code--></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>We filter paths that only content specific node instances and at least have one regulatory edge</p>
+<p>We filter paths that only content specific node instances and at least have one regulatory edge:</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -427,7 +441,7 @@ RETURN path<!--/code--></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>We filter paths that the first edge, named in the path pattern as 'i1', is a transcriptomic interaction from the experimental dataset published in the reference id PMID:29346549. We filter it by publication provenance using the <code>reference_uri</code> edge attribute</p>
+<p>We filter paths that the first edge, named in the path pattern as 'i1', is a transcriptomic interaction from the experimental dataset published in the PubMed id "PMID:29346549". We filter it by reference provenance using the <code>reference_uri</code> edge attribute:</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -435,7 +449,7 @@ RETURN path<!--/code--></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>We filter paths that the fourth edge, named as 'i4', is a TF -&#8594; GENE regulatory interaction. We define a specific directionality of the interaction to keep the TF function towards AQP1. We filter it by source provenance using the <code>reference_supporting_text</code> edge attribute</p>
+<p>We filter paths that the fourth edge, named as 'i4', is a TF &#8594; GENE regulatory interaction. We define a specific directionality of the interaction to keep the TF function towards AQP1. We filter it by source provenance using the <code>reference_supporting_text</code> edge attribute:</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -443,7 +457,7 @@ RETURN path<!--/code--></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>We retrieve paths</p>
+<p>Last, we retrieve paths:</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -531,7 +545,7 @@ If the user wants to list ortholog rna genes, replace <code>rna</code> label by 
 
    <h4>QUERY 2: HYPOTHESIS DISCOVERY RELATING AQP1 - DISEASE PHENOTYPES</h4>
    <div class="paragraph">
-<p>Next question that the researcher want to explore is the connection between the AQP1 and the NGLY1 Deficiency disease phenotypes. In particular, the researcher wants to query the review to extract paths from genes to phenotypes that link AQP1-NGLY1 genetic evidence with the NGLY1 Deficiency symptoms.</p>
+<p>Next question that the researcher wants to explore is the connection between the AQP1 and the NGLY1 Deficiency disease phenotypes. In particular, the researcher wants to query the review to extract paths from genes to phenotypes that link the AQP1-NGLY1 genetic association evidence obtained in the query 1 with the NGLY1 Deficiency phenotypes.</p>
 </div>
 
 
@@ -552,7 +566,7 @@ If the user wants to list ortholog rna genes, replace <code>rna</code> label by 
 <p><br></p>
 </div>
 <div class="paragraph">
-<p>This query is in two steps.</p>
+<p>The logics of this query is in two steps: 1) to collect first the genetic evidence linking NGLY1 to AQP1 via regulatory hypothesis retrieved from qurey 1, and 2) from this gene collection to retrieve those genes that have association evidence with the disease phenotypes. Consequently, in the first step we have to define again the template used in query 1, and in the second step we define a new template, where we specify a first disease-phenotype relation for the NGLY1 Deficiency disease node and its associated phenoytpes and an open relation from these phenotypes to the genes collected in the query 1.</p>
 </div>
 <div class="paragraph">
 <p><br></p>
@@ -562,7 +576,7 @@ If the user wants to list ortholog rna genes, replace <code>rna</code> label by 
 
    <h4>Formulate the query in Cypher and execute it</h4>
    <div class="paragraph">
-<p>To identify and extract mechanistic links we have to formulate rules in Cypher and execute the query.</p>
+<p>With the query template defined, we can develop the query in Cypher. To identify and extract gene to phenotype mechanistic links we have to formulate rules in Cypher that follows the logics of the hypothesis, and execute the query. The following query traverses the graph to infer plausible associations of the AQP1 gene with the NGLY1 Deficiency phenotypes from the regulatory hypothesis. The query sets the topology of the hypothesis and the rules and constraints to fire potential explanations.</p>
 </div>
 <div class="paragraph">
 <p><strong>Execute the query yourself and explore paths that relate AQP1 to disease phenotypes</strong></p>
@@ -598,7 +612,7 @@ RETURN path<!--/code--></pre>
 <p><br></p>
 </div>
 <div class="paragraph">
-<p>Let’s explain this query statement by statement. First, we look for mechanisms that match the query template above, where we define gene interactions with the node type GENE and the edge types RO:0002434 (interacts with) and RO:HOM0000020 (in 1 to 1 orthology relationship with):</p>
+<p>Let’s explain this query statement by statement. First, we look for mechanisms that match the first query template above, where we define gene interactions with the node type <em>GENE</em> and the edge types <em>RO:0002434</em> (<code>interacts with</code>) and <em>RO:HOM0000020</em> (<code>in 1 to 1 orthology relationship with</code>):</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -606,7 +620,7 @@ RETURN path<!--/code--></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>jfkld;fjd</p>
+<p>Then, we filter to the specific <em>Pngl</em> source and <em>NGLY1</em> target nodes and the no loops in the path rule:</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -614,7 +628,7 @@ RETURN path<!--/code--></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>jfkdla;fjdl;</p>
+<p>To apply rules we need to extract some features from the path, using the 'path', 'ortholog_rna' and 'tf' variables:</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -622,7 +636,7 @@ RETURN path<!--/code--></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>fjdklf;jdal;</p>
+<p>We extract nodes with too general semantics as <em>nodes_marked</em>:</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -630,7 +644,7 @@ RETURN path<!--/code--></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>fjklad;jfkla;</p>
+<p>We extract regulatory edges as <em>interactions</em>:</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -638,7 +652,7 @@ RETURN path<!--/code--></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>fkld&#8217;afkda</p>
+<p>We then filter paths that only have specific semantics and at least one regulatory TF-gene edge:</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -646,7 +660,7 @@ RETURN path<!--/code--></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>fklda;jfal;</p>
+<p>We filter paths where the first edge is a transcriptomic gene-gene interaction in the fly model:</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -654,7 +668,7 @@ RETURN path<!--/code--></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>kd;afk;a'</p>
+<p>We finally apply the filter that the last edge in the topology has to be a TF-gene regulatory interaction:</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -662,7 +676,7 @@ RETURN path<!--/code--></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>jljfkda;fj</p>
+<p>All the rules applied til this point are exactly the query 1 to retrieve the regulatory genetic evidence between NGLY1 and AQP1. From this statement, starts the logics to link this regulatory gene connections to the phenotypes of the disease. The following statement collects a list of all the human genes involved in the regulatory connections as <em>genes</em>:</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -670,7 +684,7 @@ RETURN path<!--/code--></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>jfkla;fja</p>
+<p>First, we look for all the genes that have an association of any type with the disease phenotypes. We keep those paths that match the NGLY1 Deficiency disease node, defining the node type <em>DISO</em> and the node <code>id</code> attribute to <em>DOID:0060728</em> (the DOID of the NGLY1 Deficiency), with its associated phenotypes using an open edge type to a disease phenotype node type with the <em>DISO</em> label, and from these disease phenotypes we match those edges (open type) that relate the disease phenotypes to gene node types using the <em>GENE</em> label. In this template we named the associated NGLY1 Deficiency disease phenotypes as 'ph' and their associated genes as 'g'.</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -678,7 +692,7 @@ RETURN path<!--/code--></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>jfkal;fjda;</p>
+<p>Then, we apply the rule to filter the paths to only human genes that are in the regulatory hypothesis, i.e. in the <code>genes</code> list, and to specifically <em>human</em> disease phenotypes, which are identified by the Human Phenotype ontology (HP) that uses the standard id prefix format annotation <code>HP</code>:</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -686,7 +700,7 @@ RETURN path<!--/code--></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>jkfla;f</p>
+<p>Last, we retrieve paths:</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -701,7 +715,7 @@ RETURN path<!--/code--></pre>
 
    <h4>Explore Hypotheses</h4>
    <div class="paragraph">
-<p>The resulting paths can be graphically visualized such as:</p>
+<p>The resulting gene-phenotype links can be graphically visualized such as:</p>
 </div>
 <div class="paragraph">
 <p><br></p>
