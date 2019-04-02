@@ -580,19 +580,21 @@ IMPORTANT:  Click the top right **black&white** arrow to go to the next page
 
 
 == Last remarks
-
-
-**Last wrapped up or conclusion section**
+//**Last wrapped up or conclusion section**
 
 
 === HYPOTHESIS DISCOVERY ON THE NGLY1 DEFICIENCY KNOWLEDGE GRAPH
-Reviewing knowledge as a graph allows exploration of connections between entities otherwise difficult to query in one step and from only one endpoint. The user can explore knowledge and check the supporting evidence. A graph allow to connect diverse type of nodes and relationships, different domains. Some of the sophisticated queries that can be solved now are thanks to the heterogeneous information integrated from different topics (disease phenotypes, regulatory interactions or biological pathways) and sources (curated, animal, experimental evidence)
+
+//* structuring the current knowledge as a graph (structured reviews)
+The NGLY1 Deficiency Knowledge Graph is a *structured review* of the current knowledge around this ultra-rare disease. Reviewing and structuring knowledge as a graph allows exploration of connections between entities otherwise difficult to query in one step and from only one endpoint. The user can explore explicit and implicit knowledge and check the supporting evidence. A graph allows to connect diverse type of nodes and relationships, different sources and importantly different domains and knowledge graphs. Some of the sophisticated queries that can be solved now are thanks to the heterogeneous information integrated from different topics (disease phenotypes, regulatory interactions or biological pathways) and sources (curated, animal, experimental evidence). We showcase how the graph can be interrogated to mine the gap of knowledge from gene to phenotype for instance. Integrating structured knowledge with omics data has the value to anchor data in a conceptual frame to aid interpretation and to facilitate discovery of new knowledge from experimental data in context. 
 
 
-* The context project:
-** KG for discovery
-** link to wikibase
-** engage with the community
+==== The context project
+The development of the NGLY1 Deficiency Knowledge Graph is embedded in a project to support researchers for *discovery*. Our pursuit is to review the current knowledge around a disease and to make it actionable for humans and machines for translational use.  The knowledge and data landscape of the structured review can be extended with the further development of the https://github.com/NuriaQueralt/graph-hypothesis-generation-lib[Python library]. New module(s) can be added per new knowledge/data resource or topic to the GitHub version by the bioinformatics community. This library allows researchers to (re)-create and reproduce structured reviews, and the queries and hypothesis workflow generated in https://github.com/NuriaQueralt/graph-hypothesis-generation-lib/blob/master/plan/graph_v3.2_v20190312.ipynb[notebooks]. The graph has also a community-editable http://100.25.145.12:8181/wiki/Main_Page[NGLY1 Deficiency *wikibase*] interface intended to _engage with the NGLY1 Deficiency research and patient&family community_ to expand the review with *expert knowledge*. Tracking biomedical with expert knowledge as a knowledge graph is a current strategy for knowledge-driven discovery and precision medicine. 
+
+//** KG for discovery
+//** link to wikibase (expert knowledge)
+//** engage with the community
 
 
 === MORE QUERIES
