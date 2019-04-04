@@ -7,7 +7,6 @@
 
 
 == HOW TO QUERY
-**Externalize this part**
 
 === Exploring with Neo4j
 
@@ -21,7 +20,7 @@ You are currently interacting with the NGLY1 knowledge graph through the Neo4j b
 MATCH (n) RETURN * LIMIT 100
 ----
 
-
+{sp}+
 
 IMPORTANT:  Click the top right **black&white** arrow to go to the next page
 
@@ -40,9 +39,14 @@ In this page we provide the data model of our semantic graph and some example qu
 The data model is the abstraction of how knowledge is represented in the graph and it is necessary to run more interesting queries. The following picture shows the data model or schema for NGLY1 Knowledge Graph v3.0. The semantics of the concepts in the graph rely on the semantic types that build the https://www.nlm.nih.gov/pubs/factsheets/umlssemn.html[UMLS Semantic Network]. To check the definition of each semantic type abbreviation see the https://metamap.nlm.nih.gov/Docs/SemGroups_2013.txt[UMLS Semantic Groups definitions].
 
 
-image::https://www.dropbox.com/s/6p1zykpuexslx8e/ngly1_graph_schema.png?dl=1[height=300,float=center]
+[#img-schema]                                                                                                           
+.NGLY1 Deficiency Knowledge Graph v3.2 data model                                                                       
+[link=https://www.dropbox.com/s/6m1rfik5qqftyvi/ngly1kg_metagraph_2019-03-12.png?dl=0]                                  
+image::https://www.dropbox.com/s/6m1rfik5qqftyvi/ngly1kg_metagraph_2019-03-12.png?dl=1[float=center]   
+//image::https://www.dropbox.com/s/6p1zykpuexslx8e/ngly1_graph_schema.png?dl=1[height=300,float=center]
 //image::images/ngly1_graph_schema.svg[height=300,float=center]
 
+{sp}+ 
 
 === Retrieve information about the data model
 
@@ -84,8 +88,8 @@ ORDER BY freq DESC
 ---- 
 
 
+{sp}+ 
 
-Click the top right black&white arrow to go to the next page.
 IMPORTANT:  Click the top right **black&white** arrow to go to the next page
 
 
@@ -105,8 +109,9 @@ Hypotheses are derived from exploring the evidence connecting a source-target pa
 To query the graph we have to use the Cypher query language. This language allows us to query nodes, node attributes, relationships between nodes and attributes of these relationships. We can perform open queries (without a specific query template), which are usually computationally less efficient for large graphs. Alternatively, we can be more specific and search for explicit nodes and connection patterns using semantics and a query template, which makes queries more efficient in large data graphs. The data model shows how things are meaningfully represented and related to each other and it is the base to use semantics in the query. To illustrate how to query for specific semantic connections the NGLY1 Knowledge Graph, we provide some examples in Cypher using specific query templates. We do not provide a tutorial for the Cypher language. To learn how to query using Cypher the user should refer to external sources like https://neo4j.com/developer/cypher-query-language/[The Neo4j's introduction to Cypher]
 
 
+{sp}+
 
-Click the top right black&white arrow to go to the next page.
+IMPORTANT:  Click the top right **black&white** arrow to go to the next page
 
 == QUERIES FOR GRAPH TRAVERSAL ANALYSIS. QUERY EXAMPLE: NGLY1 --- AQP1 PATHS
 
@@ -116,34 +121,7 @@ To solve a question we explore and search the review by querying the graph. Let'
 === Open query: extraction of metapaths
 
 
-=== Query template
-
-To structure the query in Cypher, it is important to first formulate the question in natural language and then translate it in a query template.
-
-
-==== Query in Cypher
-
-Once we have a clear idea of the query template, it is easier to formulated in a structured way in Cypher.
-
-
-==== Results
-
-The results appear below the command shell as a graph or as a table. Results are only exportable as files: graphic (PNG, SVG, ..) or structured (CVS, ..) formats. 
-
-WARNING:   The current Neo4j Browser does not provide ``session`` services, thus there is not option to save any session.
-
-
-=== Refine query template
-
-==== Query in Cypher
-
-==== Results
-
-
-== DIY: **Execute the query and explore yourself!**
-
-
-=== Query 1: Open query
+_Open query_
 
 
 [source,cypher]
@@ -182,8 +160,17 @@ ORDER BY mp_length, paths DESC
 ----
 
 
+=== Query template
 
-=== Query 2: Query template
+To structure the query in Cypher, it is important to first formulate the question in natural language and then translate it in a query template.
+
+
+==== Query in Cypher
+
+Once we have a clear idea of the query template, it is easier to formulated in a structured way in Cypher.
+
+
+_Query template_
 
 
 [source,cypher]
@@ -200,6 +187,11 @@ WHERE size(nodes_marked) = 0 AND toLower(i1.reference_uri) contains 'pubmed/2934
 
 RETURN count(distinct path) as paths
 ----
+
+
+
+
+==== Results
 
 
 _Table_
@@ -222,7 +214,15 @@ ORDER BY mp_length, paths DESC
 ----
 
 
-=== Query 3: Refine query template
+
+=== Refine query template
+
+==== Query in Cypher
+
+The query in Cypher is:
+
+
+_Refine query template_
 
 
 [source,cypher]
@@ -241,6 +241,18 @@ RETURN count(distinct path) as paths
 ----
 
 
+
+==== Results
+
+The results appear below the command shell as a graph or as a table. Results are only exportable as files: graphic (PNG, SVG, ..) or structured (CVS, ..) formats. 
+
+WARNING:   The current Neo4j Browser does not provide ``session`` services, thus there is not option to save any session.
+
+
+
+{sp}+
+
+IMPORTANT:  Click the top right **black&white** arrow to go to the next page
 
 == QUERIES FOR TRANSCRIPTOME ANALYSIS
 
@@ -301,6 +313,7 @@ ORDER BY genes DESC
 
 
 
+{sp}+
 
 === Query for TF Pathways
 
@@ -335,6 +348,7 @@ RETURN DISTINCT tf.preflabel as TF_symbol, tf.name as TF_name,
 ----
 
 
+{sp}+
 
 === Query for TF GO annotations: Cellular function
 

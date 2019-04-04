@@ -98,56 +98,92 @@
 <pre mode="cypher"  class="highlight pre-scrollable programlisting cm-s-neo code runnable standalone-example ng-binding" data-lang="cypher" lang="cypher"><!--code class="cypher language-cypher"-->CALL db.schema()<!--/code--></pre>
 </div>
 </div>
+<div class="paragraph">
+<p><br></p>
+</div>
 
 
 
    <h4>Data types</h4>
    <div class="paragraph">
-<p>The network relates data of 8 types: genes, disease phenotypes, variants, genotypes, pathways, chemicals, anatomy, and organisms with different levels of association expressiveness. Data and relations are described using standard semantics: community-driven ontologies and controlled vocabularies to enable interoperability with external resources and reduce ambiguity.</p>
+<p>The network relates data of 8 types: <strong>genes</strong> (<code>GENE</code>), <strong>disease phenotypes</strong> (<code>DISO</code>), <strong>variants</strong> (<code>VARI</code>), <strong>genotypes</strong> (<code>GENO</code>), <strong>pathways</strong> (<code>PHYS</code>), <strong>chemicals</strong> (<code>CHEM</code>), <strong>anatomy</strong> (<code>ANAT</code>), and <strong>organisms</strong> (<code>LIVB</code>) with different levels of association expressiveness (32 edge types). Data and relations are described using standard semantics: community-driven ontologies and controlled vocabularies to enable interoperability with external resources and reduce ambiguity.</p>
 </div>
 <div class="paragraph">
-<p>The semantics of the concepts in the graph rely on the semantic types that build the <a href="https://www.nlm.nih.gov/pubs/factsheets/umlssemn.html">UMLS Semantic Network</a>. To check the definition of each semantic type abbreviation see the <a href="https://metamap.nlm.nih.gov/Docs/SemGroups_2013.txt">UMLS Semantic Groups definitions</a>.</p>
+<p>The semantics of the concepts in the graph rely on the semantic types that build the <a href="https://www.nlm.nih.gov/pubs/factsheets/umlssemn.html">UMLS Semantic Network</a>. To check the definition of each semantic type abbreviation see the <a href="https://metamap.nlm.nih.gov/Docs/SemGroups_2013.txt">UMLS Semantic Groups definitions</a>. The semantics of the relations rely basically on the <a href="http://www.obofoundry.org/ontology/ro.html">Relation Ontology (RO)</a>.</p>
 </div>
 <div class="paragraph">
-<p>The semantics of the relations rely on the Relation Ontology (RO).</p>
+<p><br></p>
 </div>
 
 
 
    <h4>ID scheme</h4>
    <div class="paragraph">
-<p>The semantics of the data instances rely on different specific ontologies in function of the concept type:</p>
+<p>The semantics of the data instances rely on 87 different specific ontologies and vocabularies in function of the concept type:</p>
 </div>
+<table class="table tableblock frame-all grid-all" style="width: 100%;">
+<caption class="title">Table 1. Relation of data instance and ID scheme namespaces used</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Node type</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>ID scheme</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Genes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">HGNC, NCBI Gene, FlyBase, ZFIN, MGI, RGD, XenBase, WormBase, UniProt, SGD, Ensembl, React, InterPro, EC, GO</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Diseases phenotypes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MP, FBbt, HP, ZP, WBPhenotype, FBcv, AQTLTrait, MONDO, OMIM, DOID, APO, Orphanet</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Variants</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ClinVar, SO</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Genotype</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Monarch, Coriell, MMRRC</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Pathways</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">GO, Reactome, KEGG, MESH, CHEBI, FOODON, HP</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Chemicals</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ChEBI, DrugBank, HMDB, UMLS</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Anatomy</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">UBERON, CL, GO, EDAM</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Organism</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">NCBITaxon</p></td>
+</tr>
+</tbody>
+</table>
 <div class="paragraph">
-<p>genes: HGNC</p>
-</div>
-<div class="paragraph">
-<p>diseases: DO</p>
-</div>
-<div class="paragraph">
-<p>phenotypes: HP</p>
-</div>
-<div class="paragraph">
-<p>variants: ClinVar</p>
-</div>
-<div class="paragraph">
-<p>pathways: Reactome</p>
-</div>
-<div class="paragraph">
-<p>chemicals: ChEBI</p>
-</div>
-<div class="paragraph">
-<p>anatomy: UBERON</p>
+<p><br></p>
 </div>
 
 
 
    <h4>Data attributes</h4>
    <div class="paragraph">
-<p>Node: ID, label, synonyms, description</p>
+<p>The graph data are created as two different data structures: nodes and edges. Their data attributes are:</p>
 </div>
 <div class="paragraph">
-<p>Edge: ID, label, reference, reference_text, &#8230;&#8203;</p>
+<p><strong>Node</strong>: id, preflabel, name, description</p>
+</div>
+<div class="paragraph">
+<p><strong>Edge</strong>: property_label, property_uri, reference_uri, reference_supporting_text, reference_date</p>
+</div>
+<div class="paragraph">
+<p><br></p>
 </div>
 <div class="admonitionblock important">
 <table>
@@ -176,6 +212,9 @@ Click the top right <strong>black&amp;white</strong> arrow to go to the next pag
 <p>The NGLY1 Deficiency Knowledge Graph reviews heterogeneous <strong>knowledge</strong> from basic biological and clinical research in humans and derived from animal models, and <strong>data</strong> generated from high-throughput experiments. The integrated knowledge and data comes from different external sources including scientific literature, knowledge bases and experimental omics data sets and are annotated to its provenance and evidence. The integration is performed by means of vocabulary mapping and normalization. We provide a computational tool for the reproducible generation workflow of the graph, a <a href="https://github.com/NuriaQueralt/graph-hypothesis-generation-lib">Python library</a> where each data source has a specific module to prepare edges as a network to be integrated into the NGLY1 Deficiency Knowledge Graph schema.</p>
 </div>
 <div class="paragraph">
+<p>We reviewed and structured <em>knowledge</em> with its evidence around the clinical profile and the pathophysiology of the NGLY1 Deficiency to help biomedical researchers to discover evidence-based explanations for their hypotheses on its cause and of its symptoms. We assembled <strong>human</strong> diverse knowledge about basic molecular biology, cys-regulation, and clinical disease phenotypes extracted by biocuration of publications in scientific journals, retrieved from databases, and knowledge from domain experts. We derived knowledge from <strong>animal models</strong> assembling homologs and ortholog-phenotypes from the Monarch knowledge base. This knowledge is complemented and gives structure to new experimental transcriptomics <em>data</em> from recent studies on Fruit Fly model.</p>
+</div>
+<div class="paragraph">
 <p><br></p>
 </div>
 
@@ -183,13 +222,7 @@ Click the top right <strong>black&amp;white</strong> arrow to go to the next pag
 
    <h4>ORIGINAL DATA SOURCES</h4>
    <div class="paragraph">
-<p>We reviewed and structured information with its evidence around the clinical profile and the pathophysiology of the NGLY1 Deficiency to help biomedical researchers to discover evidence-based explanations for their hypotheses on its cause and of its symptoms.</p>
-</div>
-<div class="paragraph">
-<p>We assembled <strong>human</strong> knowledge about basic molecular biology, cys-regulation, and disease phenotypes extracted by biocuration of publications in pubmed, retrieved from databases, and knowledge of domain experts. We derived knowledge from <strong>animal models</strong> assembling homologs and ortholog-phenotypes from the Monarch knowledge base. This knowledge is complemented and gives structure to new experimental transcriptomics data from recent studies.</p>
-</div>
-<div class="paragraph">
-<p>The third release of the graph organizes information from human and animal models 1) manually extracted from investigations published in scientific journals; 2) retrieved from <a href="https://monarchinitiative.org/">the Monarch Initiative</a>; 3) transcription factors and their target genes from several sources in <a href="https://github.com/slowkow/tftargets">tftargets</a> and the <a href="http://software.broadinstitute.org/gsea/msigdb">Molecular Signatures Database or MSigDB</a>; 4) manually contributed by the community from <a href="http://100.25.145.12:8181/wiki/Main_Page">the NGLY1 Deficiency wikibase platform</a>; and integrates all this heterogeneous knowledge with an experimental gene expression data set from a fruit fly <em>Drosophila melanogaster</em> model of the disease <a href="https://www.ncbi.nlm.nih.gov/pubmed/29346549">Owings <em>et al</em>.</a>.</p>
+<p>The third release of the graph organizes information from human and animal models 1) manually extracted from investigations published in <a href="https://www.ncbi.nlm.nih.gov/pubmed/">PubMed</a>; 2) retrieved from <a href="https://monarchinitiative.org/">the Monarch Initiative</a>; 3) transcription factors and their target genes from several sources in <a href="https://github.com/slowkow/tftargets">tftargets</a> and the <a href="http://software.broadinstitute.org/gsea/msigdb">Molecular Signatures Database or MSigDB</a>; 4) manually contributed by the community from <a href="http://100.25.145.12:8181/wiki/Main_Page">the NGLY1 Deficiency wikibase platform</a>; and integrates all this heterogeneous knowledge with an experimental gene expression data set from a fruit fly <em>Drosophila melanogaster</em> model of the disease <a href="https://www.ncbi.nlm.nih.gov/pubmed/29346549">Owings <em>et al</em>.</a>.</p>
 </div>
 <div class="paragraph">
 <p>The information is assembled and organized according the types and source of networks:</p>
@@ -199,44 +232,120 @@ Click the top right <strong>black&amp;white</strong> arrow to go to the next pag
 
    <h4>Curation Network</h4>
    <div class="paragraph">
-<p>Data come from manual curation. It is retrieved from tab files generated by the biocurator. shape of the dataframe.</p>
-</div>
-<div class="paragraph">
-<p>From free text <a href="https://www.ncbi.nlm.nih.gov/pubmed/27388694">Lam <em>et al</em>.</a>, we structured around 100 associated disease phenotypes and formalized them into the HPO.</p>
+<p>Data come from manual curation. We manually curated <a href="https://www.ncbi.nlm.nih.gov/pubmed/24651605">Enns <em>et al</em>., 2014</a> and <a href="https://www.ncbi.nlm.nih.gov/pubmed/27388694">Lam <em>et al</em>., 2017</a> publications to capture the known pathophysiology and clinical phenotypic spectrum of the disease. From free text in Lam <em>et al</em>., we structured around 100 associated disease phenotypes and formalized them into the HPO. Data are retrieved from tabulated files generated by the biocurator.</p>
 </div>
 
 
 
    <h4>Monarch Network</h4>
    <div class="paragraph">
-<p>Data come from the Monarch Initiative Knowledge Base. To translate genotype and phenotype, the knowledge base integrates animal model with human data such as diseases, genes, variants, or phenotypes. It is retrieved through the BioLink API. shape of the dataframe.</p>
+<p>Data come from the Monarch Initiative Knowledge Base. To translate genotype and phenotype, the knowledge base semantically integrates animal model with human data such as diseases, genes, variants, or phenotypes. They are retrieved through the BioLink API.</p>
 </div>
 
 
 
    <h4>Regulation Network</h4>
    <div class="paragraph">
-<p>Data come from the tftargets and the MSigDB databases and consists of transcription factor and target genes known human associations.</p>
+<p>Data come from the tftargets and the MSigDB databases and consist of known human transcription factor and target genes associations.</p>
 </div>
 <div class="paragraph">
-<p><strong>tftargets</strong> is. shape of the dataframe.</p>
+<p><strong>tftargets</strong> R package provides TF-genes associations data from 6 databases with different type of evidence. We retrieved only data from TRED, ENCODE, Neph2012 and TRRUST databases because they have reliable curated or experimental evidence. Data are retrieved from the GitHub tftargets repository as a bulk download.</p>
 </div>
 <div class="paragraph">
-<p><strong>MSigDB</strong> is. shape of the df. In total the regulation network is shape of the df.</p>
+<p><strong>MSigDB</strong> is a collection of annotated gene sets for use with GSEA software. Data are retrieved from the MSigDB web site as a bulk download.</p>
 </div>
 
 
 
    <h4>Transcriptomics Network</h4>
    <div class="paragraph">
-<p>Data come from an RNA-seq experiment on the perturbed transcriptome in a fly model of NGLY1 Deficiency [ref]. It contains the differential expression at cutoff . shape of the dataframe.</p>
+<p>Data come from an RNA-seq experiment on the perturbed transcriptome in a fly model of NGLY1 Deficiency <a href="https://www.ncbi.nlm.nih.gov/pubmed/29346549">Owings <em>et al</em>., 2018</a>. It contains the differential expression at cutoffs of absolute fold change &gt; 1.5 and false discovery rate &lt; 0.05. Data are retrieved from data authors by request.</p>
+</div>
+<div class="paragraph">
+<p><br></p>
 </div>
 
 
 
    <h4>DATA STATISTICS</h4>
    <div class="paragraph">
-<p>Source - Nodes - Edges</p>
+<p>In the following table we show the dimensions of each network before integration into the graph, and the dimensions of the final NGLY1 Deficiency Knowledge Graph (KG) and the statistics of each data source finally integrated.</p>
+</div>
+<div class="paragraph">
+<p><br></p>
+</div>
+<table class="table tableblock frame-topbot grid-rows" style="width: 100%;">
+<caption class="title">Table 2. Data statistics per network</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Source</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Nodes</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Edges</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong><em>Before integration</em></strong></p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Curation</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">302</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">362</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Monarch</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4,644</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">32,715</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Regulation</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">16,963</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">197,267</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Transcriptomics_</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">386</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">386</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong><em>After integration</em></strong></p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">NGLY1 Deficiency KG</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">9,365</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">237,027</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Curation</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">302</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">362</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Monarch</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4,644</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">226,556</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Regulation</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4,226</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">9,723</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Transcriptomics</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">386</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">386</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p><br></p>
 </div>
 <div class="admonitionblock important">
 <table>

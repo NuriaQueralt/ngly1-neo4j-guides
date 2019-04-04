@@ -49,10 +49,7 @@
     <h3>HOW TO QUERY</h3>
     <br/>
     <div>
-      <div class="paragraph">
-<p><strong>Externalize this part</strong></p>
-</div>
-
+      
 
 
    <h4>Exploring with Neo4j</h4>
@@ -66,6 +63,9 @@
 <div class="content">
 <pre mode="cypher"  class="highlight pre-scrollable programlisting cm-s-neo code runnable standalone-example ng-binding" data-lang="cypher" lang="cypher"><!--code class="cypher language-cypher"-->MATCH (n) RETURN * LIMIT 100<!--/code--></pre>
 </div>
+</div>
+<div class="paragraph">
+<p><br></p>
 </div>
 <div class="admonitionblock important">
 <table>
@@ -100,10 +100,14 @@ Click the top right <strong>black&amp;white</strong> arrow to go to the next pag
    <div class="paragraph">
 <p>The data model is the abstraction of how knowledge is represented in the graph and it is necessary to run more interesting queries. The following picture shows the data model or schema for NGLY1 Knowledge Graph v3.0. The semantics of the concepts in the graph rely on the semantic types that build the <a href="https://www.nlm.nih.gov/pubs/factsheets/umlssemn.html">UMLS Semantic Network</a>. To check the definition of each semantic type abbreviation see the <a href="https://metamap.nlm.nih.gov/Docs/SemGroups_2013.txt">UMLS Semantic Groups definitions</a>.</p>
 </div>
-<div class="imageblock" style="float: center;">
+<div id="img-schema" class="imageblock" style="float: center;">
 <div class="content">
-<img src="https://www.dropbox.com/s/6p1zykpuexslx8e/ngly1_graph_schema.png?dl=1" alt="ngly1 graph schema" height="300">
+<a class="image" href="https://www.dropbox.com/s/6m1rfik5qqftyvi/ngly1kg_metagraph_2019-03-12.png?dl=0"><img src="https://www.dropbox.com/s/6m1rfik5qqftyvi/ngly1kg_metagraph_2019-03-12.png?dl=1" alt="ngly1kg metagraph 2019 03 12"></a>
 </div>
+<div class="title">Figure 1. NGLY1 Deficiency Knowledge Graph v3.2 data model</div>
+</div>
+<div class="paragraph">
+<p><br></p>
 </div>
 
 
@@ -144,8 +148,19 @@ ORDER BY freq DESC<!--/code--></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Click the top right black&amp;white arrow to go to the next page.
-IMPORTANT:  Click the top right <strong>black&amp;white</strong> arrow to go to the next page</p>
+<p><br></p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+Click the top right <strong>black&amp;white</strong> arrow to go to the next page
+</td>
+</tr>
+</table>
 </div>
 	</div>
   </div>
@@ -173,7 +188,19 @@ IMPORTANT:  Click the top right <strong>black&amp;white</strong> arrow to go to 
 <p>To query the graph we have to use the Cypher query language. This language allows us to query nodes, node attributes, relationships between nodes and attributes of these relationships. We can perform open queries (without a specific query template), which are usually computationally less efficient for large graphs. Alternatively, we can be more specific and search for explicit nodes and connection patterns using semantics and a query template, which makes queries more efficient in large data graphs. The data model shows how things are meaningfully represented and related to each other and it is the base to use semantics in the query. To illustrate how to query for specific semantic connections the NGLY1 Knowledge Graph, we provide some examples in Cypher using specific query templates. We do not provide a tutorial for the Cypher language. To learn how to query using Cypher the user should refer to external sources like <a href="https://neo4j.com/developer/cypher-query-language/">The Neo4j&#8217;s introduction to Cypher</a></p>
 </div>
 <div class="paragraph">
-<p>Click the top right black&amp;white arrow to go to the next page.</p>
+<p><br></p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+Click the top right <strong>black&amp;white</strong> arrow to go to the next page
+</td>
+</tr>
+</table>
 </div>
 	</div>
   </div>
@@ -193,70 +220,10 @@ IMPORTANT:  Click the top right <strong>black&amp;white</strong> arrow to go to 
 
 
    <h4>Open query: extraction of metapaths</h4>
-   
-
-
-
-   <h4>Query template</h4>
    <div class="paragraph">
-<p>To structure the query in Cypher, it is important to first formulate the question in natural language and then translate it in a query template.</p>
+<p><em>Open query</em></p>
 </div>
-
-
-
-   <h4>Query in Cypher</h4>
-   <div class="paragraph">
-<p>Once we have a clear idea of the query template, it is easier to formulated in a structured way in Cypher.</p>
-</div>
-
-
-
-   <h4>Results</h4>
-   <div class="paragraph">
-<p>The results appear below the command shell as a graph or as a table. Results are only exportable as files: graphic (PNG, SVG, ..) or structured (CVS, ..) formats.</p>
-</div>
-<div class="admonitionblock warning">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-warning" title="Warning"></i>
-</td>
-<td class="content">
-The current Neo4j Browser does not provide <code>session</code> services, thus there is not option to save any session.
-</td>
-</tr>
-</table>
-</div>
-
-
-
-   <h4>Refine query template</h4>
-   
-
-
-   <h4>Query in Cypher</h4>
-   
-
-
-
-   <h4>Results</h4>
-   
-	</div>
-  </div>
-</slide>
-
-
-
-<slide class="row-fluid">
-  <div class="col-sm-12">
-    <h3>DIY: <strong>Execute the query and explore yourself!</strong></h3>
-    <br/>
-    <div>
-      
-
-
-   <h4>Query 1: Open query</h4>
-   <div class="listingblock">
+<div class="listingblock">
 <div class="content">
 <pre mode="cypher"  class="highlight pre-scrollable programlisting cm-s-neo code runnable standalone-example ng-binding" data-lang="cypher" lang="cypher"><!--code class="cypher language-cypher"-->MATCH path=(source:GENE)-[i1:`RO:0002434`]-&gt;(:GENE)-[*..3]-(target:GENE)
 
@@ -294,8 +261,21 @@ ORDER BY mp_length, paths DESC<!--/code--></pre>
 
 
 
-   <h4>Query 2: Query template</h4>
-   <div class="listingblock">
+   <h4>Query template</h4>
+   <div class="paragraph">
+<p>To structure the query in Cypher, it is important to first formulate the question in natural language and then translate it in a query template.</p>
+</div>
+
+
+
+   <h4>Query in Cypher</h4>
+   <div class="paragraph">
+<p>Once we have a clear idea of the query template, it is easier to formulated in a structured way in Cypher.</p>
+</div>
+<div class="paragraph">
+<p><em>Query template</em></p>
+</div>
+<div class="listingblock">
 <div class="content">
 <pre mode="cypher"  class="highlight pre-scrollable programlisting cm-s-neo code runnable standalone-example ng-binding" data-lang="cypher" lang="cypher"><!--code class="cypher language-cypher"-->MATCH path=(source:GENE)-[i1:`RO:0002434`]-&gt;(:GENE)-[:`RO:0002206`]-(:ANAT)-[:`RO:0002206`]-(:GENE)-[:`RO:0002434`]-(target:GENE)
 
@@ -310,7 +290,11 @@ WHERE size(nodes_marked) = 0 AND toLower(i1.reference_uri) contains 'pubmed/2934
 RETURN count(distinct path) as paths<!--/code--></pre>
 </div>
 </div>
-<div class="paragraph">
+
+
+
+   <h4>Results</h4>
+   <div class="paragraph">
 <p><em>Table</em></p>
 </div>
 <div class="listingblock">
@@ -333,8 +317,18 @@ ORDER BY mp_length, paths DESC<!--/code--></pre>
 
 
 
-   <h4>Query 3: Refine query template</h4>
-   <div class="listingblock">
+   <h4>Refine query template</h4>
+   
+
+
+   <h4>Query in Cypher</h4>
+   <div class="paragraph">
+<p>The query in Cypher is:</p>
+</div>
+<div class="paragraph">
+<p><em>Refine query template</em></p>
+</div>
+<div class="listingblock">
 <div class="content">
 <pre mode="cypher"  class="highlight pre-scrollable programlisting cm-s-neo code runnable standalone-example ng-binding" data-lang="cypher" lang="cypher"><!--code class="cypher language-cypher"-->MATCH path=(source:GENE)-[i1:`RO:0002434`]-&gt;(:GENE)-[:`RO:HOM0000017`]-(:GENE)-[:`RO:0002434`]-(:GENE)-[:`RO:0002434`]-(target:GENE)
 
@@ -348,6 +342,40 @@ WHERE size(nodes_marked) = 0 AND toLower(i1.reference_uri) contains 'pubmed/2934
 
 RETURN count(distinct path) as paths<!--/code--></pre>
 </div>
+</div>
+
+
+
+   <h4>Results</h4>
+   <div class="paragraph">
+<p>The results appear below the command shell as a graph or as a table. Results are only exportable as files: graphic (PNG, SVG, ..) or structured (CVS, ..) formats.</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+The current Neo4j Browser does not provide <code>session</code> services, thus there is not option to save any session.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p><br></p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+Click the top right <strong>black&amp;white</strong> arrow to go to the next page
+</td>
+</tr>
+</table>
 </div>
 	</div>
   </div>
@@ -413,6 +441,9 @@ RETURN DISTINCT tf.preflabel as TF_symbol, tf.name as TF_name, COLLECT(DISTINCT 
 ORDER BY genes DESC<!--/code--></pre>
 </div>
 </div>
+<div class="paragraph">
+<p><br></p>
+</div>
 
 
 
@@ -447,6 +478,9 @@ RETURN DISTINCT tf.preflabel as TF_symbol, tf.name as TF_name,
                 collect(DISTINCT pw.preflabel) as pathway, count(distinct pw.preflabel) as pathways
                                                                                                                                             ORDER BY genes DESC<!--/code--></pre>
 </div>
+</div>
+<div class="paragraph">
+<p><br></p>
 </div>
 
 

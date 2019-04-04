@@ -56,46 +56,53 @@ For an interactive description of the data model, run the following query:
 CALL db.schema()
 ----
 
+{sp}+
 
 ==== Data types
 
 
-The network relates data of 8 types: genes, disease phenotypes, variants, genotypes, pathways, chemicals, anatomy, and organisms with different levels of association expressiveness. Data and relations are described using standard semantics: community-driven ontologies and controlled vocabularies to enable interoperability with external resources and reduce ambiguity.
+The network relates data of 8 types: *genes* (`GENE`), *disease phenotypes* (`DISO`), *variants* (`VARI`), *genotypes* (`GENO`), *pathways* (`PHYS`), *chemicals* (`CHEM`), *anatomy* (`ANAT`), and *organisms* (`LIVB`) with different levels of association expressiveness (32 edge types). Data and relations are described using standard semantics: community-driven ontologies and controlled vocabularies to enable interoperability with external resources and reduce ambiguity.
 
-The semantics of the concepts in the graph rely on the semantic types that build the https://www.nlm.nih.gov/pubs/factsheets/umlssemn.html[UMLS Semantic Network]. To check the definition of each semantic type abbreviation see the https://metamap.nlm.nih.gov/Docs/SemGroups_2013.txt[UMLS Semantic Groups definitions].
+The semantics of the concepts in the graph rely on the semantic types that build the https://www.nlm.nih.gov/pubs/factsheets/umlssemn.html[UMLS Semantic Network]. To check the definition of each semantic type abbreviation see the https://metamap.nlm.nih.gov/Docs/SemGroups_2013.txt[UMLS Semantic Groups definitions]. The semantics of the relations rely basically on the http://www.obofoundry.org/ontology/ro.html[Relation Ontology (RO)].
 
-The semantics of the relations rely on the Relation Ontology (RO).
 
+
+{sp}+
 
 ==== ID scheme
 
 
-The semantics of the data instances rely on different specific ontologies in function of the concept type:
+The semantics of the data instances rely on 87 different specific ontologies and vocabularies in function of the concept type:
 
-genes: HGNC
+.Relation of data instance and ID scheme namespaces used
+|===
+| *Node type* | *ID scheme* 
+| Genes | HGNC, NCBI Gene, FlyBase, ZFIN, MGI, RGD, XenBase, WormBase, UniProt, SGD, Ensembl, React, InterPro, EC, GO
+| Diseases phenotypes | MP, FBbt, HP, ZP, WBPhenotype, FBcv, AQTLTrait, MONDO, OMIM, DOID, APO, Orphanet 
+| Variants | ClinVar, SO
+| Genotype | Monarch, Coriell, MMRRC
+| Pathways | GO, Reactome, KEGG, MESH, CHEBI, FOODON, HP
+| Chemicals | ChEBI, DrugBank, HMDB, UMLS
+| Anatomy | UBERON, CL, GO, EDAM
+| Organism | NCBITaxon
+|===
 
-diseases: DO
 
-phenotypes: HP
 
-variants: ClinVar
 
-pathways: Reactome
-
-chemicals: ChEBI
-
-anatomy: UBERON
-
+{sp}+
 
 ==== Data attributes
 
 
-Node: ID, label, synonyms, description 
+The graph data are created as two different data structures: nodes and edges. Their data attributes are:
 
-Edge: ID, label, reference, reference_text, ...
+*Node*: id, preflabel, name, description 
+
+*Edge*: property_label, property_uri, reference_uri, reference_supporting_text, reference_date 
 
 
-//{sp}+
+{sp}+
 
 
 //=== Structure of the guide
@@ -123,48 +130,71 @@ IMPORTANT:  Click the top right **black&white** arrow to go to the next page
 
 The NGLY1 Deficiency Knowledge Graph reviews heterogeneous **knowledge** from basic biological and clinical research in humans and derived from animal models, and **data** generated from high-throughput experiments. The integrated knowledge and data comes from different external sources including scientific literature, knowledge bases and experimental omics data sets and are annotated to its provenance and evidence. The integration is performed by means of vocabulary mapping and normalization. We provide a computational tool for the reproducible generation workflow of the graph, a https://github.com/NuriaQueralt/graph-hypothesis-generation-lib[Python library] where each data source has a specific module to prepare edges as a network to be integrated into the NGLY1 Deficiency Knowledge Graph schema.
 
-{sp}+
 
+We reviewed and structured _knowledge_ with its evidence around the clinical profile and the pathophysiology of the NGLY1 Deficiency to help biomedical researchers to discover evidence-based explanations for their hypotheses on its cause and of its symptoms. We assembled **human** diverse knowledge about basic molecular biology, cys-regulation, and clinical disease phenotypes extracted by biocuration of publications in scientific journals, retrieved from databases, and knowledge from domain experts. We derived knowledge from **animal models** assembling homologs and ortholog-phenotypes from the Monarch knowledge base. This knowledge is complemented and gives structure to new experimental transcriptomics _data_ from recent studies on Fruit Fly model.
+
+
+
+{sp}+
 
 
 === ORIGINAL DATA SOURCES
 
 
-We reviewed and structured information with its evidence around the clinical profile and the pathophysiology of the NGLY1 Deficiency to help biomedical researchers to discover evidence-based explanations for their hypotheses on its cause and of its symptoms. 
 
-We assembled **human** knowledge about basic molecular biology, cys-regulation, and disease phenotypes extracted by biocuration of publications in pubmed, retrieved from databases, and knowledge of domain experts. We derived knowledge from **animal models** assembling homologs and ortholog-phenotypes from the Monarch knowledge base. This knowledge is complemented and gives structure to new experimental transcriptomics data from recent studies.
-
-The third release of the graph organizes information from human and animal models 1) manually extracted from investigations published in scientific journals; 2) retrieved from https://monarchinitiative.org/[the Monarch Initiative]; 3) transcription factors and their target genes from several sources in https://github.com/slowkow/tftargets[tftargets] and the http://software.broadinstitute.org/gsea/msigdb[Molecular Signatures Database or MSigDB]; 4) manually contributed by the community from http://100.25.145.12:8181/wiki/Main_Page[the NGLY1 Deficiency wikibase platform]; and integrates all this heterogeneous knowledge with an experimental gene expression data set from a fruit fly _Drosophila melanogaster_ model of the disease https://www.ncbi.nlm.nih.gov/pubmed/29346549[Owings _et al_.].
+The third release of the graph organizes information from human and animal models 1) manually extracted from investigations published in https://www.ncbi.nlm.nih.gov/pubmed/[PubMed]; 2) retrieved from https://monarchinitiative.org/[the Monarch Initiative]; 3) transcription factors and their target genes from several sources in https://github.com/slowkow/tftargets[tftargets] and the http://software.broadinstitute.org/gsea/msigdb[Molecular Signatures Database or MSigDB]; 4) manually contributed by the community from http://100.25.145.12:8181/wiki/Main_Page[the NGLY1 Deficiency wikibase platform]; and integrates all this heterogeneous knowledge with an experimental gene expression data set from a fruit fly _Drosophila melanogaster_ model of the disease https://www.ncbi.nlm.nih.gov/pubmed/29346549[Owings _et al_.].
 
 
 The information is assembled and organized according the types and source of networks:
 
 ==== Curation Network
-Data come from manual curation. It is retrieved from tab files generated by the biocurator. shape of the dataframe. 
-
-From free text https://www.ncbi.nlm.nih.gov/pubmed/27388694[Lam _et al_.], we structured around 100 associated disease phenotypes and formalized them into the HPO. 
+Data come from manual curation. We manually curated https://www.ncbi.nlm.nih.gov/pubmed/24651605[Enns _et al_., 2014] and https://www.ncbi.nlm.nih.gov/pubmed/27388694[Lam _et al_., 2017] publications to capture the known pathophysiology and clinical phenotypic spectrum of the disease. From free text in Lam _et al_., we structured around 100 associated disease phenotypes and formalized them into the HPO. Data are retrieved from tabulated files generated by the biocurator.
 
 ==== Monarch Network
-Data come from the Monarch Initiative Knowledge Base. To translate genotype and phenotype, the knowledge base integrates animal model with human data such as diseases, genes, variants, or phenotypes. It is retrieved through the BioLink API. shape of the dataframe.
+Data come from the Monarch Initiative Knowledge Base. To translate genotype and phenotype, the knowledge base semantically integrates animal model with human data such as diseases, genes, variants, or phenotypes. They are retrieved through the BioLink API. 
 
 
 ==== Regulation Network 
-Data come from the tftargets and the MSigDB databases and consists of transcription factor and target genes known human associations. 
+Data come from the tftargets and the MSigDB databases and consist of known human transcription factor and target genes associations. 
 
-**tftargets** is. shape of the dataframe. 
+**tftargets** R package provides TF-genes associations data from 6 databases with different type of evidence. We retrieved only data from TRED, ENCODE, Neph2012 and TRRUST databases because they have reliable curated or experimental evidence. Data are retrieved from the GitHub tftargets repository as a bulk download.
 
-**MSigDB** is. shape of the df. In total the regulation network is shape of the df.
+**MSigDB** is a collection of annotated gene sets for use with GSEA software. Data are retrieved from the MSigDB web site as a bulk download.
 
 
 ==== Transcriptomics Network
-Data come from an RNA-seq experiment on the perturbed transcriptome in a fly model of NGLY1 Deficiency [ref]. It contains the differential expression at cutoff . shape of the dataframe.
+Data come from an RNA-seq experiment on the perturbed transcriptome in a fly model of NGLY1 Deficiency https://www.ncbi.nlm.nih.gov/pubmed/29346549[Owings _et al_., 2018]. It contains the differential expression at cutoffs of absolute fold change > 1.5 and false discovery rate < 0.05. Data are retrieved from data authors by request.
 
+
+{sp}+
 
 === DATA STATISTICS
 
-Source - Nodes - Edges
+
+In the following table we show the dimensions of each network before integration into the graph, and the dimensions of the final NGLY1 Deficiency Knowledge Graph (KG) and the statistics of each data source finally integrated.
+
+{sp}+
+
+.Data statistics per network
+[cols=",,",frame=topbot,grid=rows]
+|===
+|*Source* | *Nodes* | *Edges*
+|*_Before integration_* | |
+|Curation | 302 | 362
+|Monarch | 4,644 | 32,715
+|Regulation | 16,963 | 197,267
+|Transcriptomics_ | 386 | 386
+|*_After integration_* | |
+|NGLY1 Deficiency KG | 9,365 | 237,027
+|Curation | 302 | 362
+|Monarch | 4,644 | 226,556
+|Regulation | 4,226 | 9,723
+|Transcriptomics | 386 | 386
+|===
 
 
+
+{sp}+
 
 IMPORTANT: Click the top right **black&white** arrow to go to the next page
 
