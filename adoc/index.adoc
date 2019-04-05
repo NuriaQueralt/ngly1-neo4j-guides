@@ -666,12 +666,12 @@ Our project is based on three components a knowledge graph to represent and mana
 
 - We integrated and represented existing knowledge and data as a knowledge graph on the particular topic of a specific rare disease.
 - The knowledge graph makes knowledge and data more accessible to the NGLY1 Deficiency community.
-- The use of semantics makes the knowledge graph linkable and interoperable to other resources such as other rare disease knowledge graphs.
+- The use of semantics makes the knowledge graph linkable and *interoperable* to other resources such as other rare disease knowledge graphs.
 - The knowledge graph allows to ingest crowdsourced statements from the NGLY1 Deficiency Wikibase.
 - The knowledge graph allows graph processing to query entities, their relations to their attributes or to other entities, along with provenance and evidence of where that knowledge was obtained.
 - Multi-dimensional complicated information can be now easily queried without specialized knowledge in an interactive way. Based on answers, users can take analysis in new directions and hypothesis.
-- We deployed the knowledge graph on GitHub as flat files, and on an online Neo4j Browser to make it findable, accessible and queryable-usable. 
-- We implemented a Python library to make the creation and use of the knowledge graph more reproducible.
+- We deployed the knowledge graph on GitHub as flat files, and on an online Neo4j Browser to make it *findable*, *accessible* and queryable-usable. 
+- We implemented a Python library to make the creation and use of the knowledge graph more *reproducible*.
 - We created a FAIR knowledge graph to the benefit of humans and machines.
 
 === MORE QUERIES
