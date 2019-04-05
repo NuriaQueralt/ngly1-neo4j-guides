@@ -259,10 +259,12 @@ TIP:  The user can set up the style of the graph by itself locally in its browse
 {sp}+
 
 
-=== QUERY 1: HYPOTHESIS DISCOVERY RELATING NGLY1 - AQP1
+=== QUERY 1: HYPOTHESIS DISCOVERY RELATING TWO GENES
 //=== Identify mechanistic links between NGLY1 and AQP1
 
-In particular, the researcher is interested in regulatory hypotheses that link NGLY1 and AQP1 through gene interactions. To mine the gap of knowledge to identify regulatory mechanistic links, we will explore for paths that link the perturbed transcriptomic expression in a fly model of NGLY1 Deficiency through regulatory TF-target gene interactions to human AQP1. Since we are translating fly biology to human biology we will explore paths with a rule of 2-hop `gene-interacts with` to allow certain flexibility.
+This first query describes the situation where a link between two genes has been experimentally confirmed but the mechanism is unknown.  For example, researchers have recently identified that AQP1 and NGLY1 are functionally related. Here, we show how the NGLY1 Knowledge Graph can be used to identify mechanistic hypotheses.
+
+In particular, we are searching for regulatory hypotheses that link NGLY1 and AQP1 through gene regulatory interactions. To mine the gap of knowledge to identify regulatory mechanistic links, we will explore for paths that link the perturbed transcriptomic expression in a fly model of NGLY1 Deficiency through regulatory TF-target gene interactions to human AQP1. Since we are translating fly biology to human biology we will explore paths with a rule of 2-hop `gene-interacts with` to allow certain flexibility.
 
 
 {sp}+
@@ -302,7 +304,7 @@ To execute the query, click the text box below to pre-fill the shell at the top 
 ----
 MATCH path=(source:GENE)-[i1:`RO:0002434`]->(rna:GENE)-[i2:`RO:HOM0000020`]-(ortholog_rna:GENE)-[i3:`RO:0002434`]-(tf:GENE)-[i4:`RO:0002434`]->(target:GENE)
 
-WHERE source.id = 'FlyBase:FBgn0033050' AND target.id = 'HGNC:633' AND ALL(x IN nodes(path) WHERE single(y IN nodes(path) WHERE y = x))
+WHERE source.preflabel = 'Pngl' AND target.preflabel = 'AQP1' AND ALL(x IN nodes(path) WHERE single(y IN nodes(path) WHERE y = x))
 
 WITH path,
 
