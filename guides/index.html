@@ -65,10 +65,10 @@
 <div class="listingblock">
 <div class="content">
 <pre>    1. What are the most common gene functions, gene interactions, cellular processes or phenotypes associated with the perturbed gene expression in Drosophila?
-    2. What are the human homologs related to the perturbed fly transcriptome in the NGLY1 Deficiency model?
+    2. What are the human homologs related to the perturbed transcriptome in the NGLY1 Deficiency fly model?
     3. What are the most common human Transcription Factors (TFs) associated with the genes in the fly transcriptome?
     4. Have the fly transcriptome homolog genes in human or their gene interactors been associated with NGLY1 Deficiency phenotypes?
-    5. Can we retrieve explanations or paths linking two entities of interest such as two genes? What are the most common path topologies linking these genes? Are there paths based on regulatory TF-target gene interactions in the structured review?</pre>
+    5. Can we retrieve explanations or paths linking two entities of interest such as two genes? What are the most common path topologies or _metapaths_ linking these genes? Are there paths based on regulatory TF-target gene interactions in the structured review?</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -176,11 +176,53 @@
    <div class="paragraph">
 <p>The graph data are created as two different data structures: nodes and edges. Their data attributes are:</p>
 </div>
-<div class="paragraph">
-<p><strong>Node</strong>: id, preflabel, name, description</p>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Node</strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>id</code>: Entity identifier in an domain specific ontology or controlled vocabulary.</p>
+</li>
+<li>
+<p><code>preflabel</code>: Preferred human-readable label for the entity. In case of genes, this is the gene symbol.</p>
+</li>
+<li>
+<p><code>name</code>: Common known term used by the community to refer to the entity.</p>
+</li>
+<li>
+<p><code>description</code>: Short sentence describing the entity.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Edge</strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>property_label</code>: Preferred human-readable label for the property or type of association in the edge.</p>
+</li>
+<li>
+<p><code>property_uri</code>: <a href="https://en.wikipedia.org/wiki/Uniform_Resource_Identifier">Uniform Resource Identifier (URI)</a> to identify the property. URIs are the Web standard identifier and allow accessing to metadata by dereferrencing them, and linking to other data in the Web.</p>
+</li>
+<li>
+<p><code>reference_uri</code>: URI to identify the reference where the association (edge) is claimed, i.e. the provenance.</p>
+</li>
+<li>
+<p><code>reference_supporting_text</code>: Sentence extracted from the reference where the edge is stated, i.e. the evidence.</p>
+</li>
+<li>
+<p><code>reference_date</code>: Date of publication of the reference of the edge.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
 </div>
 <div class="paragraph">
-<p><strong>Edge</strong>: property_label, property_uri, reference_uri, reference_supporting_text, reference_date</p>
+<p><em>NOTE</em>: The attribute(s) do not appear in the graphical interface when the valued is null.</p>
 </div>
 <div class="paragraph">
 <p><br></p>
@@ -212,7 +254,7 @@ Click the top right <strong>black&amp;white</strong> arrow to go to the next pag
 <p>The NGLY1 Deficiency Knowledge Graph reviews heterogeneous <strong>knowledge</strong> from basic biological and clinical research in humans and derived from animal models, and <strong>data</strong> generated from high-throughput experiments. The integrated knowledge and data comes from different external sources including scientific literature, knowledge bases and experimental omics data sets and are annotated to its provenance and evidence. The integration is performed by means of vocabulary mapping and normalization. We provide a computational tool for the reproducible generation workflow of the graph, a <a href="https://github.com/NuriaQueralt/graph-hypothesis-generation-lib">Python library</a> where each data source has a specific module to prepare edges as a network to be integrated into the NGLY1 Deficiency Knowledge Graph schema.</p>
 </div>
 <div class="paragraph">
-<p>We reviewed and structured <em>knowledge</em> with its evidence around the clinical profile and the pathophysiology of the NGLY1 Deficiency to help biomedical researchers to discover evidence-based explanations for their hypotheses on its cause and of its symptoms. We assembled <strong>human</strong> diverse knowledge about basic molecular biology, cys-regulation, and clinical disease phenotypes extracted by biocuration of publications in scientific journals, retrieved from databases, and knowledge from domain experts. We derived knowledge from <strong>animal models</strong> assembling homologs and ortholog-phenotypes from the Monarch knowledge base. This knowledge is complemented and gives structure to new experimental transcriptomics <em>data</em> from recent studies on Fruit Fly model.</p>
+<p>We reviewed and structured <em>knowledge</em> with its evidence around the clinical profile and the pathophysiology of the NGLY1 Deficiency to help biomedical researchers to discover evidence-based explanations for their hypotheses on its cause and of its symptoms. We assembled <strong>human</strong> diverse knowledge about basic molecular biology, cys-regulation, and clinical disease phenotypes extracted by biocuration of publications in scientific journals, retrieved from databases, and knowledge from domain experts. We derived knowledge from <strong>animal models</strong> assembling homologs and ortholog-phenotypes. This knowledge is complemented and gives structure to new experimental transcriptomics <em>data</em> from recent studies.</p>
 </div>
 <div class="paragraph">
 <p><br></p>
@@ -222,24 +264,54 @@ Click the top right <strong>black&amp;white</strong> arrow to go to the next pag
 
    <h4>ORIGINAL DATA SOURCES</h4>
    <div class="paragraph">
-<p>The third release of the graph organizes information from human and animal models 1) manually extracted from investigations published in <a href="https://www.ncbi.nlm.nih.gov/pubmed/">PubMed</a>; 2) retrieved from <a href="https://monarchinitiative.org/">the Monarch Initiative</a>; 3) transcription factors and their target genes from several sources in <a href="https://github.com/slowkow/tftargets">tftargets</a> and the <a href="http://software.broadinstitute.org/gsea/msigdb">Molecular Signatures Database or MSigDB</a>; 4) manually contributed by the community from <a href="http://100.25.145.12:8181/wiki/Main_Page">the NGLY1 Deficiency wikibase platform</a>; and integrates all this heterogeneous knowledge with an experimental gene expression data set from a fruit fly <em>Drosophila melanogaster</em> model of the disease <a href="https://www.ncbi.nlm.nih.gov/pubmed/29346549">Owings <em>et al</em>.</a>.</p>
+<p>The third release of the graph organizes information as edges from human and animal models 1) manually extracted from investigations published in <a href="https://www.ncbi.nlm.nih.gov/pubmed/">PubMed</a>; 2) retrieved from <a href="https://monarchinitiative.org/">the Monarch Initiative</a>; 3) transcription factor regulation from several sources in <a href="https://github.com/slowkow/tftargets">tftargets</a> and the <a href="http://software.broadinstitute.org/gsea/msigdb">Molecular Signatures Database or MSigDB</a>; 4) manually contributed by the community from <a href="http://100.25.145.12:8181/wiki/Main_Page">the NGLY1 Deficiency wikibase platform</a>; and integrates all this heterogeneous knowledge with an experimental gene expression data set from a fruit fly <em>Drosophila melanogaster</em> model of the disease <a href="https://www.ncbi.nlm.nih.gov/pubmed/29346549">Owings <em>et al</em>.</a>. We have ingested existing data into a knowledge graph creating first several networks, which type of content is:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Knowledge:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Human heterogeneous edges: curation, Monarch and regulation networks</p>
+</li>
+<li>
+<p>Animal model homologs and ortholog-phenotypes edges: Monarch network</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Data:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Omics edges: transcriptomics network</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
 </div>
 <div class="paragraph">
-<p>The information is assembled and organized according the types and source of networks:</p>
+<p><br></p>
+</div>
+<div class="paragraph">
+<p>Networks are assembled and organized according the types and source of edges:</p>
 </div>
 
 
 
    <h4>Curation Network</h4>
    <div class="paragraph">
-<p>Data come from manual curation. We manually curated <a href="https://www.ncbi.nlm.nih.gov/pubmed/24651605">Enns <em>et al</em>., 2014</a> and <a href="https://www.ncbi.nlm.nih.gov/pubmed/27388694">Lam <em>et al</em>., 2017</a> publications to capture the known pathophysiology and clinical phenotypic spectrum of the disease. From free text in Lam <em>et al</em>., we structured around 100 associated disease phenotypes and formalized them into the HPO. Data are retrieved from tabulated files generated by the biocurator.</p>
+<p>Data come from manual curation. We manually curated <a href="https://www.ncbi.nlm.nih.gov/pubmed/24651605">Enns <em>et al</em>., 2014</a> and <a href="https://www.ncbi.nlm.nih.gov/pubmed/27388694">Lam <em>et al</em>., 2017</a> publications to capture the known pathophysiology and clinical phenotypic spectrum of the disease. From free text in Lam <em>et al</em>., we structured around 100 associated disease phenotypes and formalized them into the HPO. Data are retrieved from <a href="https://github.com/NuriaQueralt/graph-hypothesis-generation-lib/tree/master/plan/curation/data/v20180118">tabulated files</a> generated by the biocurator.</p>
 </div>
 
 
 
    <h4>Monarch Network</h4>
    <div class="paragraph">
-<p>Data come from the Monarch Initiative Knowledge Base. To translate genotype and phenotype, the knowledge base semantically integrates animal model with human data such as diseases, genes, variants, or phenotypes. They are retrieved through the BioLink API.</p>
+<p>Data come from the Monarch Initiative Knowledge Base. To translate genotype and phenotype, the knowledge base semantically integrates animal model with human data such as diseases, genes, variants, or phenotypes. They are retrieved through the BioLink API. Data are obtained for specific seed nodes requested by NGLY1 Deficiency researchers using the <a href="https://github.com/NuriaQueralt/graph-hypothesis-generation-lib/blob/master/plan/graph_v3.2_v20190312.ipynb">workflow</a>.</p>
 </div>
 
 
@@ -249,17 +321,17 @@ Click the top right <strong>black&amp;white</strong> arrow to go to the next pag
 <p>Data come from the tftargets and the MSigDB databases and consist of known human transcription factor and target genes associations.</p>
 </div>
 <div class="paragraph">
-<p><strong>tftargets</strong> R package provides TF-genes associations data from 6 databases with different type of evidence. We retrieved only data from TRED, ENCODE, Neph2012 and TRRUST databases because they have reliable curated or experimental evidence. Data are retrieved from the GitHub tftargets repository as a bulk download.</p>
+<p><strong>tftargets</strong> R package provides TF-genes associations data from 6 databases with different type of evidence. We retrieved only data from TRED, ENCODE, Neph2012 and TRRUST databases because they have reliable curated or experimental evidence. Data are retrieved from the GitHub tftargets repository as a bulk download. Data come from the <a href="https://github.com/slowkow/tftargets/blob/master/data/tftargets.rda">tftargets.rda files</a> and provenance from the <a href="https://github.com/slowkow/tftargets/blob/master/data-raw/TRRUST/trrust_rawdata.txt.gz">TRRUST raw data file</a>.</p>
 </div>
 <div class="paragraph">
-<p><strong>MSigDB</strong> is a collection of annotated gene sets for use with GSEA software. Data are retrieved from the MSigDB web site as a bulk download.</p>
+<p><strong>MSigDB</strong> is a collection of annotated gene sets for use with GSEA software. Data are retrieved from the MSigDB web site as a bulk download. We use the C3:TFT gene set collection from the <a href="https://github.com/NuriaQueralt/graph-hypothesis-generation-lib/blob/master/plan/regulation/msigdb/data/c3.tft.v6.1.entrez.gmt">entrez genes ids GMT file</a>.</p>
 </div>
 
 
 
    <h4>Transcriptomics Network</h4>
    <div class="paragraph">
-<p>Data come from an RNA-seq experiment on the perturbed transcriptome in a fly model of NGLY1 Deficiency <a href="https://www.ncbi.nlm.nih.gov/pubmed/29346549">Owings <em>et al</em>., 2018</a>. It contains the differential expression at cutoffs of absolute fold change &gt; 1.5 and false discovery rate &lt; 0.05. Data are retrieved from data authors by request.</p>
+<p>Data come from an RNA-seq experiment on the perturbed transcriptome in a fly model of NGLY1 Deficiency <a href="https://www.ncbi.nlm.nih.gov/pubmed/29346549">Owings <em>et al</em>., 2018</a>. It contains the differential expression at cutoffs of absolute fold change &gt; 1.5 and false discovery rate &lt; 0.05. Data are retrieved from data authors by request. Data are obtained from the <a href="https://github.com/NuriaQueralt/graph-hypothesis-generation-lib/blob/master/plan/transcriptomics/ngly1-fly-chow-2018/data/supp_table_1.csv">CSV file</a>.</p>
 </div>
 <div class="paragraph">
 <p><br></p>
@@ -344,6 +416,35 @@ Click the top right <strong>black&amp;white</strong> arrow to go to the next pag
 </tr>
 </tbody>
 </table>
+<div class="paragraph">
+<p><br></p>
+</div>
+
+
+
+   <h4>DATA AVAILABILITY</h4>
+   <div class="paragraph">
+<p>Files used to build the NGLY1 Deficiency Knowledge graph v3.2 are available at:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Curation network files: <em>link</em></p>
+</li>
+<li>
+<p>Monarch network files: <em>link</em></p>
+</li>
+<li>
+<p>Regulation network files: <em>link</em></p>
+</li>
+<li>
+<p>Transcriptomics network files: <em>link</em></p>
+</li>
+<li>
+<p>NGLY1 Deficiency Knowledge Graph files: <a href="https://github.com/NuriaQueralt/ngly1-graph/tree/master/neo4j-graphs/ngly1-v3.2/import/ngly1"><em>link</em></a></p>
+</li>
+</ul>
+</div>
 <div class="paragraph">
 <p><br></p>
 </div>

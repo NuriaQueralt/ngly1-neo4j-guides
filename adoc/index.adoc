@@ -20,10 +20,10 @@ The NGLY1 Deficiency Knowledge Graph is a network of biological and clinical rel
 
 ----
     1. What are the most common gene functions, gene interactions, cellular processes or phenotypes associated with the perturbed gene expression in Drosophila?
-    2. What are the human homologs related to the perturbed fly transcriptome in the NGLY1 Deficiency model?
+    2. What are the human homologs related to the perturbed transcriptome in the NGLY1 Deficiency fly model?
     3. What are the most common human Transcription Factors (TFs) associated with the genes in the fly transcriptome?
     4. Have the fly transcriptome homolog genes in human or their gene interactors been associated with NGLY1 Deficiency phenotypes?
-    5. Can we retrieve explanations or paths linking two entities of interest such as two genes? What are the most common path topologies linking these genes? Are there paths based on regulatory TF-target gene interactions in the structured review?
+    5. Can we retrieve explanations or paths linking two entities of interest such as two genes? What are the most common path topologies or _metapaths_ linking these genes? Are there paths based on regulatory TF-target gene interactions in the structured review?
 ----
 
 The knowledge graph can be queried in almost an infinite number of ways. This guide will demonstrate two such queries as templates for you to customize.
@@ -97,9 +97,21 @@ The semantics of the data instances rely on 87 different specific ontologies and
 
 The graph data are created as two different data structures: nodes and edges. Their data attributes are:
 
-*Node*: id, preflabel, name, description 
+* *Node*
+    - `id`: Entity identifier in an domain specific ontology or controlled vocabulary.
+    - `preflabel`: Preferred human-readable label for the entity. In case of genes, this is the gene symbol.
+    - `name`: Common known term used by the community to refer to the entity.
+    - `description`: Short sentence describing the entity. 
 
-*Edge*: property_label, property_uri, reference_uri, reference_supporting_text, reference_date 
+* *Edge*
+    - `property_label`: Preferred human-readable label for the property or type of association in the edge.
+    - `property_uri`: https://en.wikipedia.org/wiki/Uniform_Resource_Identifier[Uniform Resource Identifier (URI)] to identify the property. URIs are the Web standard identifier and allow accessing to metadata by dereferrencing them, and linking to other data in the Web. 
+    - `reference_uri`: URI to identify the reference where the association (edge) is claimed, i.e. the provenance.
+    - `reference_supporting_text`: Sentence extracted from the reference where the edge is stated, i.e. the evidence.
+    - `reference_date`: Date of publication of the reference of the edge.
+
+
+_NOTE_: The attribute(s) do not appear in the graphical interface when the valued is null.
 
 
 {sp}+
@@ -131,7 +143,7 @@ IMPORTANT:  Click the top right **black&white** arrow to go to the next page
 The NGLY1 Deficiency Knowledge Graph reviews heterogeneous **knowledge** from basic biological and clinical research in humans and derived from animal models, and **data** generated from high-throughput experiments. The integrated knowledge and data comes from different external sources including scientific literature, knowledge bases and experimental omics data sets and are annotated to its provenance and evidence. The integration is performed by means of vocabulary mapping and normalization. We provide a computational tool for the reproducible generation workflow of the graph, a https://github.com/NuriaQueralt/graph-hypothesis-generation-lib[Python library] where each data source has a specific module to prepare edges as a network to be integrated into the NGLY1 Deficiency Knowledge Graph schema.
 
 
-We reviewed and structured _knowledge_ with its evidence around the clinical profile and the pathophysiology of the NGLY1 Deficiency to help biomedical researchers to discover evidence-based explanations for their hypotheses on its cause and of its symptoms. We assembled **human** diverse knowledge about basic molecular biology, cys-regulation, and clinical disease phenotypes extracted by biocuration of publications in scientific journals, retrieved from databases, and knowledge from domain experts. We derived knowledge from **animal models** assembling homologs and ortholog-phenotypes from the Monarch knowledge base. This knowledge is complemented and gives structure to new experimental transcriptomics _data_ from recent studies on Fruit Fly model.
+We reviewed and structured _knowledge_ with its evidence around the clinical profile and the pathophysiology of the NGLY1 Deficiency to help biomedical researchers to discover evidence-based explanations for their hypotheses on its cause and of its symptoms. We assembled **human** diverse knowledge about basic molecular biology, cys-regulation, and clinical disease phenotypes extracted by biocuration of publications in scientific journals, retrieved from databases, and knowledge from domain experts. We derived knowledge from **animal models** assembling homologs and ortholog-phenotypes. This knowledge is complemented and gives structure to new experimental transcriptomics _data_ from recent studies.
 
 
 
@@ -142,28 +154,39 @@ We reviewed and structured _knowledge_ with its evidence around the clinical pro
 
 
 
-The third release of the graph organizes information from human and animal models 1) manually extracted from investigations published in https://www.ncbi.nlm.nih.gov/pubmed/[PubMed]; 2) retrieved from https://monarchinitiative.org/[the Monarch Initiative]; 3) transcription factors and their target genes from several sources in https://github.com/slowkow/tftargets[tftargets] and the http://software.broadinstitute.org/gsea/msigdb[Molecular Signatures Database or MSigDB]; 4) manually contributed by the community from http://100.25.145.12:8181/wiki/Main_Page[the NGLY1 Deficiency wikibase platform]; and integrates all this heterogeneous knowledge with an experimental gene expression data set from a fruit fly _Drosophila melanogaster_ model of the disease https://www.ncbi.nlm.nih.gov/pubmed/29346549[Owings _et al_.].
+The third release of the graph organizes information as edges from human and animal models 1) manually extracted from investigations published in https://www.ncbi.nlm.nih.gov/pubmed/[PubMed]; 2) retrieved from https://monarchinitiative.org/[the Monarch Initiative]; 3) transcription factor regulation from several sources in https://github.com/slowkow/tftargets[tftargets] and the http://software.broadinstitute.org/gsea/msigdb[Molecular Signatures Database or MSigDB]; 4) manually contributed by the community from http://100.25.145.12:8181/wiki/Main_Page[the NGLY1 Deficiency wikibase platform]; and integrates all this heterogeneous knowledge with an experimental gene expression data set from a fruit fly _Drosophila melanogaster_ model of the disease https://www.ncbi.nlm.nih.gov/pubmed/29346549[Owings _et al_.]. We have ingested existing data into a knowledge graph creating first several networks, which type of content is:
+
+* Knowledge:
+    - Human heterogeneous edges: curation, Monarch and regulation networks
+    - Animal model homologs and ortholog-phenotypes edges: Monarch network
+
+* Data:
+    - Omics edges: transcriptomics network
 
 
-The information is assembled and organized according the types and source of networks:
+{sp}+
+
+Networks are assembled and organized according the types and source of edges:
+
 
 ==== Curation Network
-Data come from manual curation. We manually curated https://www.ncbi.nlm.nih.gov/pubmed/24651605[Enns _et al_., 2014] and https://www.ncbi.nlm.nih.gov/pubmed/27388694[Lam _et al_., 2017] publications to capture the known pathophysiology and clinical phenotypic spectrum of the disease. From free text in Lam _et al_., we structured around 100 associated disease phenotypes and formalized them into the HPO. Data are retrieved from tabulated files generated by the biocurator.
+Data come from manual curation. We manually curated https://www.ncbi.nlm.nih.gov/pubmed/24651605[Enns _et al_., 2014] and https://www.ncbi.nlm.nih.gov/pubmed/27388694[Lam _et al_., 2017] publications to capture the known pathophysiology and clinical phenotypic spectrum of the disease. From free text in Lam _et al_., we structured around 100 associated disease phenotypes and formalized them into the HPO. Data are retrieved from https://github.com/NuriaQueralt/graph-hypothesis-generation-lib/tree/master/plan/curation/data/v20180118[tabulated files] generated by the biocurator.
+
 
 ==== Monarch Network
-Data come from the Monarch Initiative Knowledge Base. To translate genotype and phenotype, the knowledge base semantically integrates animal model with human data such as diseases, genes, variants, or phenotypes. They are retrieved through the BioLink API. 
+Data come from the Monarch Initiative Knowledge Base. To translate genotype and phenotype, the knowledge base semantically integrates animal model with human data such as diseases, genes, variants, or phenotypes. They are retrieved through the BioLink API. Data are obtained for specific seed nodes requested by NGLY1 Deficiency researchers using the https://github.com/NuriaQueralt/graph-hypothesis-generation-lib/blob/master/plan/graph_v3.2_v20190312.ipynb[workflow]. 
 
 
 ==== Regulation Network 
 Data come from the tftargets and the MSigDB databases and consist of known human transcription factor and target genes associations. 
 
-**tftargets** R package provides TF-genes associations data from 6 databases with different type of evidence. We retrieved only data from TRED, ENCODE, Neph2012 and TRRUST databases because they have reliable curated or experimental evidence. Data are retrieved from the GitHub tftargets repository as a bulk download.
+**tftargets** R package provides TF-genes associations data from 6 databases with different type of evidence. We retrieved only data from TRED, ENCODE, Neph2012 and TRRUST databases because they have reliable curated or experimental evidence. Data are retrieved from the GitHub tftargets repository as a bulk download. Data come from the https://github.com/slowkow/tftargets/blob/master/data/tftargets.rda[tftargets.rda files] and provenance from the https://github.com/slowkow/tftargets/blob/master/data-raw/TRRUST/trrust_rawdata.txt.gz[TRRUST raw data file].
 
-**MSigDB** is a collection of annotated gene sets for use with GSEA software. Data are retrieved from the MSigDB web site as a bulk download.
+**MSigDB** is a collection of annotated gene sets for use with GSEA software. Data are retrieved from the MSigDB web site as a bulk download. We use the C3:TFT gene set collection from the https://github.com/NuriaQueralt/graph-hypothesis-generation-lib/blob/master/plan/regulation/msigdb/data/c3.tft.v6.1.entrez.gmt[entrez genes ids GMT file]. 
 
 
 ==== Transcriptomics Network
-Data come from an RNA-seq experiment on the perturbed transcriptome in a fly model of NGLY1 Deficiency https://www.ncbi.nlm.nih.gov/pubmed/29346549[Owings _et al_., 2018]. It contains the differential expression at cutoffs of absolute fold change > 1.5 and false discovery rate < 0.05. Data are retrieved from data authors by request.
+Data come from an RNA-seq experiment on the perturbed transcriptome in a fly model of NGLY1 Deficiency https://www.ncbi.nlm.nih.gov/pubmed/29346549[Owings _et al_., 2018]. It contains the differential expression at cutoffs of absolute fold change > 1.5 and false discovery rate < 0.05. Data are retrieved from data authors by request. Data are obtained from the https://github.com/NuriaQueralt/graph-hypothesis-generation-lib/blob/master/plan/transcriptomics/ngly1-fly-chow-2018/data/supp_table_1.csv[CSV file].
 
 
 {sp}+
@@ -192,6 +215,17 @@ In the following table we show the dimensions of each network before integration
 |Transcriptomics | 386 | 386
 |===
 
+
+{sp}+
+
+=== DATA AVAILABILITY
+Files used to build the NGLY1 Deficiency Knowledge graph v3.2 are available at:
+
+- Curation network files: _link_
+- Monarch network files: _link_
+- Regulation network files: _link_
+- Transcriptomics network files: _link_
+- NGLY1 Deficiency Knowledge Graph files: https://github.com/NuriaQueralt/ngly1-graph/tree/master/neo4j-graphs/ngly1-v3.2/import/ngly1[_link_]
 
 
 {sp}+
