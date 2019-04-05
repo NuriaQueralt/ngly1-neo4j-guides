@@ -234,10 +234,10 @@ In the following slides, we will query the graph to showcase how to explore this
 
 Consider a researcher wants to determine whether a novel protein Aquaporin 1 (AQP1) is related with the NGLY1 Deficiency. From the experimental observation, the researcher has identified a causal association between NGLY1 and AQP1 genes at expression level in both a mouse model and patient data [ref], but the mechanism of that association is not known. The researcher's hypothesis is that both genes are linked through transcriptional regulation and she wants to search the knowledge and the expression data integrated in the review to find potential mechanisms and, if so, to link these mechanisms to the disease phenotypes. Here, we demonstrate how to extract potential mechanistic paths from the knowledge graph. To answer this complex question we will perform two different queries:
 
-----
+****
             1. First we will query for NGLY1-AQP1 genetic association evidence
             2. Then we will perform a second query to retrieve gene-disease association evidence
-----
+****
 
 
 {sp}+
