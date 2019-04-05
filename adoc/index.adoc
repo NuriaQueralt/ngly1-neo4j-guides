@@ -20,13 +20,13 @@ This is the Neo4j Web interface for the NGLY1 Deficiency Knowledge Graph to run 
 
 The NGLY1 Deficiency Knowledge Graph is a network of biological and clinical relations offered as a knowledge resource to the research community to enable discovery on its cause and of its symptoms. The network is disease domain specific to NGLY1 deficiency and can be used for different research questions from the analysis of disease gene functions, the investigation of the genetic basis and underlying molecular biology of disease phenotypes, to the discovery of hypothesis or explanations linking concepts in the graph. Examples of the kind of questions the user can formulate are:
 
-----
+****
     1. What are the most common gene functions, gene interactions, cellular processes or phenotypes associated with the perturbed gene expression in Drosophila?
     2. What are the human homologs related to the perturbed transcriptome in the NGLY1 Deficiency fly model?
     3. What are the most common human Transcription Factors (TFs) associated with the genes in the fly transcriptome?
     4. Have the fly transcriptome homolog genes in human or their gene interactors been associated with NGLY1 Deficiency phenotypes?
     5. Can we retrieve explanations or paths linking two entities of interest such as two genes? What are the most common path topologies or metapaths linking these genes? Are there paths based on regulatory TF-target gene interactions in the structured review?
-----
+****
 
 The knowledge graph can be queried in almost an infinite number of ways. This guide will demonstrate two such queries as templates for you to customize.
 
