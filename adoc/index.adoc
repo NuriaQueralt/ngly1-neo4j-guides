@@ -454,6 +454,7 @@ TIP: If the user wants to list ortholog rna genes, replace `rna` label by `ortho
 
 
 
+== Explore reviewed knowledge for hypothesis discovery (continued)
 
 === QUERY 2: HYPOTHESIS DISCOVERY RELATING AQP1 - DISEASE PHENOTYPES
 
