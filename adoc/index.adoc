@@ -8,7 +8,9 @@
 
 == NGLY1 Deficiency Knowledge Graph in Neo4j
 
-The NGLY1 Deficiency Knowledge Graph is the first knowledge network for the https://rarediseases.info.nih.gov/diseases/12315/deficiency-of-n-glycanase-1[Deficiency of N-glycanase 1 or NGLY1 Deficiency], which is an ultra-rare genetic disease with neither a treatment nor a clear understanding of the underlying biology. It reviews the current knowledge and data on the NGLY1 Deficiency and it is represented as a single graph for exploration and discovery. Knowledge comes from biocuration of the scientific literature and retrieval from biomedical knowledge bases. This knowledge is integrated with omics data from the fruit fly (https://en.wikipedia.org/wiki/Drosophila_melanogaster[_Drosophila melanogaster_]) model, an animal system that has helped the community understand a wide range of human conditions, from alcoholism to Alzheimer's disease and Rett's syndrome (http://modencode.sciencemag.org/drosophila/introduction[_Drosophila_ as a model organism]). The fruit fly genetics and biology are also used in the Model Organisms Screening Center for the https://undiagnosed.hms.harvard.edu/research/model-organisms-phase-ii/[Undiagnosed Diseases Network] to tackle rare and undiagnosed diseases. The parallels between the genomes of Drosophila and humans, over about 60%, provides and opportunity to reveal basic genes or processes associated with disease. This is the Neo4j Web interface for the NGLY1 Deficiency Knowledge Graph to run queries and explore the structured reviewed knowledge and data. The current graph version v3.2 contains 237,027 relationships of 32 types among 9,365 nodes of 8 types. The user is interacting with a read-only instance of the graph served by Neo4j, a database technology designed for graphs. For the writable version of the graph, the user should refer to http://100.25.145.12:8181/wiki/Main_Page[NGLY1 Deficiency wikibase instance] of the project, a collaborative and community-editable version of the graph.
+The NGLY1 Deficiency Knowledge Graph is the first knowledge network for the https://rarediseases.info.nih.gov/diseases/12315/deficiency-of-n-glycanase-1[Deficiency of N-glycanase 1 or NGLY1 Deficiency], which is an ultra-rare genetic disease with neither a treatment nor a clear understanding of the underlying biology. It reviews the current knowledge and data on the NGLY1 Deficiency and it is represented as a single graph for exploration and discovery. Knowledge comes from biocuration of the scientific literature and retrieval from biomedical knowledge bases. This knowledge is integrated with omics data from the fruit fly (https://en.wikipedia.org/wiki/Drosophila_melanogaster[_Drosophila melanogaster_]) model, an animal system that has helped the community understand a wide range of human conditions, from alcoholism to Alzheimer's disease and Rett's syndrome (http://modencode.sciencemag.org/drosophila/introduction[_Drosophila_ as a model organism]). The fruit fly genetics and biology are also used in the Model Organisms Screening Center for the https://undiagnosed.hms.harvard.edu/research/model-organisms-phase-ii/[Undiagnosed Diseases Network] to tackle rare and undiagnosed diseases. The parallels between the genomes of Drosophila and humans, over about 60%, provides an opportunity to reveal basic genes or processes associated with disease. 
+
+This is the Neo4j Web interface for the NGLY1 Deficiency Knowledge Graph to run queries and explore the structured reviewed knowledge and data. The current graph version v3.2 contains 237,027 relationships of 32 types among 9,365 nodes of 8 types. This application provides read-only access to the graph. To contribute new information to the graph, the user should refer to http://100.25.145.12:8181/wiki/Main_Page[NGLY1 Deficiency wikibase instance] of the project, a collaborative and community-editable version of the graph.
 
 {sp}+
 
@@ -18,13 +20,13 @@ The NGLY1 Deficiency Knowledge Graph is the first knowledge network for the http
 
 The NGLY1 Deficiency Knowledge Graph is a network of biological and clinical relations offered as a knowledge resource to the research community to enable discovery on its cause and of its symptoms. The network is disease domain specific to NGLY1 deficiency and can be used for different research questions from the analysis of disease gene functions, the investigation of the genetic basis and underlying molecular biology of disease phenotypes, to the discovery of hypothesis or explanations linking concepts in the graph. Examples of the kind of questions the user can formulate are:
 
-----
+****
     1. What are the most common gene functions, gene interactions, cellular processes or phenotypes associated with the perturbed gene expression in Drosophila?
     2. What are the human homologs related to the perturbed transcriptome in the NGLY1 Deficiency fly model?
     3. What are the most common human Transcription Factors (TFs) associated with the genes in the fly transcriptome?
     4. Have the fly transcriptome homolog genes in human or their gene interactors been associated with NGLY1 Deficiency phenotypes?
     5. Can we retrieve explanations or paths linking two entities of interest such as two genes? What are the most common path topologies or metapaths linking these genes? Are there paths based on regulatory TF-target gene interactions in the structured review?
-----
+****
 
 The knowledge graph can be queried in almost an infinite number of ways. This guide will demonstrate two such queries as templates for you to customize.
 
@@ -232,10 +234,10 @@ In the following slides, we will query the graph to showcase how to explore this
 
 Consider a researcher wants to determine whether a novel protein Aquaporin 1 (AQP1) is related with the NGLY1 Deficiency. From the experimental observation, the researcher has identified a causal association between NGLY1 and AQP1 genes at expression level in both a mouse model and patient data [ref], but the mechanism of that association is not known. The researcher's hypothesis is that both genes are linked through transcriptional regulation and she wants to search the knowledge and the expression data integrated in the review to find potential mechanisms and, if so, to link these mechanisms to the disease phenotypes. Here, we demonstrate how to extract potential mechanistic paths from the knowledge graph. To answer this complex question we will perform two different queries:
 
-----
+****
             1. First we will query for NGLY1-AQP1 genetic association evidence
             2. Then we will perform a second query to retrieve gene-disease association evidence
-----
+****
 
 
 {sp}+
@@ -257,10 +259,12 @@ TIP:  The user can set up the style of the graph by itself locally in its browse
 {sp}+
 
 
-=== QUERY 1: HYPOTHESIS DISCOVERY RELATING NGLY1 - AQP1
+=== QUERY 1: HYPOTHESIS DISCOVERY RELATING TWO GENES
 //=== Identify mechanistic links between NGLY1 and AQP1
 
-In particular, the researcher is interested in regulatory hypotheses that link NGLY1 and AQP1 through gene interactions. To mine the gap of knowledge to identify regulatory mechanistic links, we will explore for paths that link the perturbed transcriptomic expression in a fly model of NGLY1 Deficiency through regulatory TF-target gene interactions to human AQP1. Since we are translating fly biology to human biology we will explore paths with a rule of 2-hop `gene-interacts with` to allow certain flexibility.
+This first query describes the situation where a link between two genes has been experimentally confirmed but the mechanism is unknown.  For example, researchers have recently identified that AQP1 and NGLY1 are functionally related. Here, we show how the NGLY1 Knowledge Graph can be used to identify mechanistic hypotheses.
+
+In particular, we are searching for regulatory hypotheses that link NGLY1 and AQP1 through gene regulatory interactions. To mine the gap of knowledge to identify regulatory mechanistic links, we will explore for paths that link the perturbed transcriptomic expression in a fly model of NGLY1 Deficiency through regulatory TF-target gene interactions to human AQP1. Since we are translating fly biology to human biology we will explore paths with a rule of 2-hop `gene-interacts with` to allow certain flexibility.
 
 
 {sp}+
@@ -300,7 +304,7 @@ To execute the query, click the text box below to pre-fill the shell at the top 
 ----
 MATCH path=(source:GENE)-[i1:`RO:0002434`]->(rna:GENE)-[i2:`RO:HOM0000020`]-(ortholog_rna:GENE)-[i3:`RO:0002434`]-(tf:GENE)-[i4:`RO:0002434`]->(target:GENE)
 
-WHERE source.id = 'FlyBase:FBgn0033050' AND target.id = 'HGNC:633' AND ALL(x IN nodes(path) WHERE single(y IN nodes(path) WHERE y = x))
+WHERE source.preflabel = 'Pngl' AND target.preflabel = 'AQP1' AND ALL(x IN nodes(path) WHERE single(y IN nodes(path) WHERE y = x))
 
 WITH path,
 
@@ -450,6 +454,7 @@ TIP: If the user wants to list ortholog rna genes, replace `rna` label by `ortho
 
 
 
+== Explore reviewed knowledge for hypothesis discovery (continued)
 
 === QUERY 2: HYPOTHESIS DISCOVERY RELATING AQP1 - DISEASE PHENOTYPES
 
