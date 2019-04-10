@@ -18,7 +18,7 @@ This is the Neo4j Web interface for the NGLY1 Deficiency Knowledge Graph to run 
 
 === DISCOVER FROM THE STRUCTURED KNOWLEDGE-DATA REVIEWED
 
-The NGLY1 Deficiency Knowledge Graph is a network of biological and clinical relations offered as a knowledge resource to the research community to enable discovery on its cause and of its symptoms. The network is disease domain specific to NGLY1 deficiency and can be used for different research questions from the analysis of disease gene functions, the investigation of the genetic basis and underlying molecular biology of disease phenotypes, to the discovery of hypothesis or explanations linking concepts in the graph. Examples of the kind of questions the user can formulate are:
+The NGLY1 Deficiency Knowledge Graph is a network of biological and clinical relations offered as a knowledge resource to the research community to enable discovery on its cause and of its symptoms. The network is disease domain specific to NGLY1 Deficiency and can be used for different research questions from the analysis of disease gene functions, the investigation of the genetic basis and underlying molecular biology of disease phenotypes, to the discovery of hypothesis or explanations linking concepts in the graph. Examples of the kind of questions the user can formulate are:
 
 ****
     1. What are the most common gene functions, gene interactions, cellular processes or phenotypes associated with the perturbed gene expression in Drosophila?
@@ -232,7 +232,7 @@ In the following slides, we will query the graph to showcase how to explore this
 === RESEARCH QUESTION
 
 
-Consider a researcher wants to determine whether a novel protein Aquaporin 1 (AQP1) is related with the NGLY1 Deficiency. From the experimental observation, the researcher has identified a causal association between NGLY1 and AQP1 genes at expression level in both a mouse model and patient data [ref], but the mechanism of that association is not known. The researcher's hypothesis is that both genes are linked through transcriptional regulation and she wants to search the knowledge and the expression data integrated in the review to find potential mechanisms and, if so, to link these mechanisms to the disease phenotypes. Here, we demonstrate how to extract potential mechanistic paths from the knowledge graph. To answer this complex question we will perform two different queries:
+Consider a researcher wants to determine whether a novel protein Aquaporin 1 (AQP1) is related with the NGLY1 Deficiency. From the experimental observation, the researcher has identified a causal association between NGLY1 and AQP1 genes at expression level in both a mouse model and patient data, but the mechanism of that association is not known. The researcher's hypothesis is that both genes are linked through transcriptional regulation and she wants to search the knowledge and the expression data integrated in the review to find potential mechanisms and, if so, to link these mechanisms to the disease phenotypes. Here, we demonstrate how to extract potential mechanistic paths from the knowledge graph. To answer this complex question we will perform two different queries:
 
 ****
             1. First we will query for NGLY1-AQP1 genetic association evidence
@@ -242,8 +242,10 @@ Consider a researcher wants to determine whether a novel protein Aquaporin 1 (AQ
 
 {sp}+
 
-=== STYLE THE GRAPH
+=== SETTING UP THE NEO4J BROWSER
 
+
+You are currently interacting with the NGLY1 Deficiency knowledge graph through the Neo4j Browser, which provides a web interface to the database where you can run queries and explore the connected knowledge.
 
 We first style the graph, before playing with it. To load the NGLY1 Deficiency graph style into the Neo4j Browser, run the following command by clicking the box, which will populate the shell, and hitting ```enter``` (or ```return``` in some keyboards). This command only needs to be run once per web browser.
 
@@ -254,7 +256,10 @@ We first style the graph, before playing with it. To load the NGLY1 Deficiency g
 ----
 
 
-TIP:  The user can set up the style of the graph by itself locally in its browser. If you click on any label or relationship above the graph visualization, you can then choose its styling in the area below the graph. Colors, sizes, and captions are selectable from there. To reset a style the user can execute `:style reset`. Click http://guides.neo4j.com/browser.html[Styling Neo4j Browser Visualization] for more details. 
+TIP:  The user can set up the style of the graph by itself locally in its browser. If you click on any label or relationship above the graph visualization, you can then choose its styling in the area below the graph. Colors, sizes, and captions are selectable from there. To reset a style the user can execute `:style reset`. Click http://guides.neo4j.com/browser.html[Styling Neo4j Browser Visualization] for more details.
+
+
+To explore the knowledge graph, go first to the browser settings at the bottom of the left frame and de-select the `Connect result nodes` option to get only the explicit connecting paths. This action needs to be done every time the user opens the browser.
 
 {sp}+
 

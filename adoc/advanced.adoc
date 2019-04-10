@@ -13,11 +13,11 @@
 
 https://neo4j.com/[Neo4j] is a graph database management system developed by Neo Technology, Inc. A https://en.wikipedia.org/wiki/Graph_database[graph database] is a database that uses graph structures for semantic queries with nodes, edges and properties to represent and store data. https://en.wikipedia.org/wiki/Cypher_Query_Language[Cypher] is the query language for Neo4j's graphs. To follow this guide you should be able to read and understand Cypher queries.
 
-You are currently interacting with the NGLY1 knowledge graph through the Neo4j browser, which provides a web interface to the database where you can run queries and explore the connected knowledge. To explore the whole NGLY1 knowledge graph, click on the following block to copy-paste the query into the shell and run it:
+You are currently interacting with the NGLY1 Deficiency knowledge graph through the Neo4j Browser, which provides a web interface to the database where you can run queries and explore the connected knowledge. To explore the whole NGLY1 knowledge graph, click on the following block to copy-paste the query into the shell and run it:
 
 [source,cypher]
 ----
-MATCH (n) RETURN * LIMIT 100
+MATCH path=(n)--() RETURN path LIMIT 10
 ----
 
 {sp}+
