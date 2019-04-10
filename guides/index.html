@@ -521,7 +521,7 @@ Click the top right <strong>black&amp;white</strong> arrow to go to the next pag
 
 
 
-   <h4>SETTING UP THE NEO4J BROWSER</h4>
+   <h4>SET UP THE NEO4J BROWSER</h4>
    <div class="paragraph">
 <p>You are currently interacting with the NGLY1 Deficiency knowledge graph through the Neo4j Browser, which provides a web interface to the database where you can run queries and explore the connected knowledge.</p>
 </div>
@@ -544,6 +544,9 @@ The user can set up the style of the graph by itself locally in its browser. If 
 </td>
 </tr>
 </table>
+</div>
+<div class="paragraph">
+<p> <br></p>
 </div>
 <div class="paragraph">
 <p>To explore the knowledge graph, go first to the browser settings at the bottom of the left frame and de-select the <code>Connect result nodes</code> option to get only the explicit connecting paths. This action needs to be done every time the user opens the browser.</p>
@@ -1066,21 +1069,21 @@ Click the top right <strong>black&amp;white</strong> arrow to go to the next pag
 
    <h4>HYPOTHESIS DISCOVERY ON THE NGLY1 DEFICIENCY KNOWLEDGE GRAPH</h4>
    <div class="paragraph">
-<p>The NGLY1 Deficiency Knowledge Graph is a <strong>structured review</strong> of the current knowledge around this ultra-rare disease. Reviewing and structuring knowledge as a graph allows exploration of connections between entities otherwise difficult to query in one step and from only one endpoint. The user can explore explicit and implicit knowledge and check the supporting evidence. A graph allows to connect diverse type of nodes and relationships, different sources and importantly different domains and knowledge graphs. Some of the sophisticated queries that can be solved now are thanks to the heterogeneous information integrated from different topics (disease phenotypes, regulatory interactions or biological pathways) and sources (curated, animal, experimental evidence). We showcase how the graph can be interrogated to mine the gap of knowledge from gene to phenotype for instance. Integrating structured knowledge with omics data has the value to anchor data in a conceptual frame to aid interpretation and to facilitate discovery of new knowledge from experimental data in context.</p>
+<p>The NGLY1 Deficiency Knowledge Graph is a <strong>structured review</strong> of the current knowledge around this ultra-rare disease. Reviewing and structuring knowledge as a graph allows exploration of connections between entities otherwise difficult to query in one step and from only one endpoint. The user can explore explicit and implicit knowledge and check the supporting evidence. A graph allows to connect diverse types of nodes and relationships, different sources and importantly different domains and knowledge graphs. Some of the sophisticated queries that can be solved now are thanks to the heterogeneous information integrated from different topics (disease phenotypes, regulatory interactions or biological pathways) and sources (curated, animal, experimental evidence). We showcase how the graph can be interrogated to mine the gap of knowledge from gene to phenotype for instance. Integrating structured knowledge with omics data has the value to anchor data in a conceptual knowledge collection to aid interpretation and to facilitate discovery of new knowledge from experimental data in context.</p>
 </div>
 
 
 
-   <h4>The context project</h4>
+   <h4>The neo4j browser application</h4>
    <div class="paragraph">
-<p>The development of the NGLY1 Deficiency Knowledge Graph is embedded in a project to support researchers for <strong>discovery</strong>. Our pursuit is to review the current knowledge around a disease and to make it actionable for humans and machines to accelerate discoveries in the basic sciences for translational use.  The knowledge and data landscape of the structured review can be extended with the further development of the <a href="https://github.com/NuriaQueralt/graph-hypothesis-generation-lib">Python library</a>. New module(s) can be added per new knowledge/data resource or topic to the GitHub version by the bioinformatics community. This library allows researchers to (re)-create and reproduce structured reviews, and the queries and hypothesis workflow generated in <a href="https://github.com/NuriaQueralt/graph-hypothesis-generation-lib/blob/master/plan/graph_v3.2_v20190312.ipynb">notebooks</a>. The graph has also a community-editable <a href="http://100.25.145.12:8181/wiki/Main_Page">NGLY1 Deficiency <strong>wikibase</strong></a> interface intended to <em>engage with the NGLY1 Deficiency research and patient&amp;family community</em> to expand the review with <strong>expert knowledge</strong>. Tracking biomedical with expert knowledge as a knowledge graph is a current strategy for knowledge-driven discovery and precision medicine.</p>
+<p>The development of the NGLY1 Deficiency Knowledge Graph and its deployment into the Neo4j Browser application has been done to support researchers for <strong>discovery</strong>. The Neo4j Browser allows exploration through the Cypher query language, and visualization. Remarkably, Neo4j allows to store our graph and offers drivers for languages such as Python to communicate with the connected knowledge and data. Our pursuit is to review the current knowledge around a disease and to make it actionable for humans and machines to accelerate discoveries in the basic sciences for translational use. The knowledge and data landscape of the structured review cannot be extended interactively using the Neo4j Browser. The graph has also a community-editable <a href="http://100.25.145.12:8181/wiki/Main_Page">NGLY1 Deficiency <strong>wikibase</strong></a> interface intended to <em>engage with the NGLY1 Deficiency research and patient&amp;family community</em> to expand the review with <strong>expert knowledge</strong>. Both graphs applications are synchronized to share the same content. Tracking biomedical with expert knowledge as a knowledge graph is a current strategy for knowledge-driven discovery and precision medicine.</p>
 </div>
 
 
 
    <h4>To wrap up</h4>
    <div class="paragraph">
-<p>Our project is based on three components a knowledge graph to represent and manage knowledge and data, a Python library to automatically create and query the knowledge graph, and a Wikibase instance to make the graph editable by the community. The goals achieved by this work are:</p>
+<p>We offer a disease specific knowledge graph to represent and manage knowledge and data around the NGLY1 deficiency, and a web interface application served by Neo4j for exploration and visualization:</p>
 </div>
 <div class="ulist">
 <ul>
