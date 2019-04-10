@@ -35,7 +35,7 @@ The knowledge graph can be queried in almost an infinite number of ways. This gu
 === DATA MODEL
 
 
-The picture shows the data model or schema or meta-graph for NGLY1 Knowledge Graph v3.2. 
+The picture shows the data model or schema or meta-graph for NGLY1 Deficiency Knowledge Graph v3.2. 
 
 
 [#img-schema]
@@ -268,7 +268,7 @@ To explore the knowledge graph, go first to the browser settings at the bottom o
 === QUERY 1: HYPOTHESIS DISCOVERY RELATING TWO GENES
 //=== Identify mechanistic links between NGLY1 and AQP1
 
-This first query describes the situation where a link between two genes has been experimentally confirmed but the mechanism is unknown.  For example, researchers have recently identified that AQP1 and NGLY1 are functionally related. Here, we show how the NGLY1 Knowledge Graph can be used to identify mechanistic hypotheses.
+This first query describes the situation where a link between two genes has been experimentally confirmed but the mechanism is unknown.  For example, researchers have recently identified that AQP1 and NGLY1 are functionally related. Here, we show how the NGLY1 Deficiency Knowledge Graph can be used to identify mechanistic hypotheses.
 
 In particular, we are searching for regulatory hypotheses that link NGLY1 and AQP1 through gene regulatory interactions. To mine the gap of knowledge to identify regulatory mechanistic links, we will explore for paths that link the perturbed transcriptomic expression in a fly model of NGLY1 Deficiency through regulatory TF-target gene interactions to human AQP1. Since we are translating fly biology to human biology we will explore paths with a rule of 2-hop `gene-interacts with` to allow certain flexibility.
 
@@ -339,7 +339,12 @@ Let's explain this query statement by statement. First, we look for mechanisms t
  MATCH path=(source:GENE)-[i1:`RO:0002434`]->(rna:GENE)-[i2:`RO:HOM0000020`]-(ortholog_rna:GENE)-[i3:`RO:0002434`]-(tf:GENE)-[i4:`RO:0002434`]->(target:GENE)
 
 
-Then, we filter to specific source and target nodes with the _identifier_ (`id`) node attribute. The source is Pngl (FlyBase:FBgn0033050), which is the fly ortholog of the human gene NGLY1, (HGNC:17646) and the target is the human gene AQP1 (HGNC:633):
+Then, we filter to specific source and target nodes with the _preferred label_ (`preflabel`) node attribute. The source is Pngl (FlyBase:FBgn0033050), which is the fly ortholog of the human gene NGLY1, (HGNC:17646) and the target is the human gene AQP1 (HGNC:633):
+
+ WHERE source.preflabel = 'Pngl' AND target.preflabel = 'AQP1'
+
+
+Alternatively, we could also use the _identifier_ (`id`) node attribute to filter to specific entities without ambiguity:
 
 
  WHERE source.id = 'FlyBase:FBgn0033050' AND target.id = 'HGNC:633'

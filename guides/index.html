@@ -99,7 +99,7 @@
 
    <h4>DATA MODEL</h4>
    <div class="paragraph">
-<p>The picture shows the data model or schema or meta-graph for NGLY1 Knowledge Graph v3.2.</p>
+<p>The picture shows the data model or schema or meta-graph for NGLY1 Deficiency Knowledge Graph v3.2.</p>
 </div>
 <div id="img-schema" class="imageblock" style="float: center;">
 <div class="content">
@@ -559,7 +559,7 @@ The user can set up the style of the graph by itself locally in its browser. If 
 
    <h4>QUERY 1: HYPOTHESIS DISCOVERY RELATING TWO GENES</h4>
    <div class="paragraph">
-<p>This first query describes the situation where a link between two genes has been experimentally confirmed but the mechanism is unknown.  For example, researchers have recently identified that AQP1 and NGLY1 are functionally related. Here, we show how the NGLY1 Knowledge Graph can be used to identify mechanistic hypotheses.</p>
+<p>This first query describes the situation where a link between two genes has been experimentally confirmed but the mechanism is unknown.  For example, researchers have recently identified that AQP1 and NGLY1 are functionally related. Here, we show how the NGLY1 Deficiency Knowledge Graph can be used to identify mechanistic hypotheses.</p>
 </div>
 <div class="paragraph">
 <p>In particular, we are searching for regulatory hypotheses that link NGLY1 and AQP1 through gene regulatory interactions. To mine the gap of knowledge to identify regulatory mechanistic links, we will explore for paths that link the perturbed transcriptomic expression in a fly model of NGLY1 Deficiency through regulatory TF-target gene interactions to human AQP1. Since we are translating fly biology to human biology we will explore paths with a rule of 2-hop <code>gene-interacts with</code> to allow certain flexibility.</p>
@@ -640,7 +640,15 @@ RETURN path<!--/code--></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Then, we filter to specific source and target nodes with the <em>identifier</em> (<code>id</code>) node attribute. The source is Pngl (FlyBase:FBgn0033050), which is the fly ortholog of the human gene NGLY1, (HGNC:17646) and the target is the human gene AQP1 (HGNC:633):</p>
+<p>Then, we filter to specific source and target nodes with the <em>preferred label</em> (<code>preflabel</code>) node attribute. The source is Pngl (FlyBase:FBgn0033050), which is the fly ortholog of the human gene NGLY1, (HGNC:17646) and the target is the human gene AQP1 (HGNC:633):</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>WHERE source.preflabel = 'Pngl' AND target.preflabel = 'AQP1'</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Alternatively, we could also use the <em>identifier</em> (<code>id</code>) node attribute to filter to specific entities without ambiguity:</p>
 </div>
 <div class="literalblock">
 <div class="content">
