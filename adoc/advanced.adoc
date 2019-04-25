@@ -119,7 +119,7 @@ To solve a question we explore and search the review by querying the graph. Let'
 
 
 === Open query: extraction of metapaths
-
+First, we query how many paths link NGLY1 and AQP1 human genes in the review with an open query, i.e. no specific query template defined:
 
 _Open query_
 
@@ -140,7 +140,9 @@ RETURN count(distinct path) as paths
 ----
 
 
-_Metapaths_
+As a result, the review provides 6670 linking paths or hypotheses. Let's retrieve a summary table with the most common meta-pahts or the semantics of these 6670 paths:
+
+_Meta-paths_
 
 [source,cypher]
 ----
@@ -159,15 +161,22 @@ RETURN DISTINCT extract (x in rels(path) | type(x)) as types, extract (n in node
 ORDER BY mp_length, paths DESC
 ----
 
+The meta-path information is useful to refine the query template to a meaningful mechanism and to get less than (and more visually explorable) 1000 paths.
 
-=== Query template
+=== Query template: query a specific query template semantics 
 
-To structure the query in Cypher, it is important to first formulate the question in natural language and then translate it in a query template.
+To structure the query in Cypher, it is important to first formulate the question in natural language and then translate it in a query template:
+
+****
+# Find source and target gene interactors that are expressed in the same tissue or cell type:
+
+``source:GENE)-[i1:`RO:0002434`]->(:GENE)-[:`RO:0002206`]-(:ANAT)-[:`RO:0002206`]-(:GENE)-[:`RO:0002434`]-(target:GENE)``
+****
 
 
 ==== Query in Cypher
 
-Once we have a clear idea of the query template, it is easier to formulated in a structured way in Cypher.
+Once we have a clear idea of the query template, it is easier to formulate it in a structured way in Cypher:
 
 
 _Query template_
@@ -192,9 +201,10 @@ RETURN count(distinct path) as paths
 
 
 ==== Results
+The query gives 3150 paths. This result is not visually explorable since the number of paths is larger than 1000. But we can summarize interesting information from these 3150 paths in a table. See the following summary table as example:
 
 
-_Table_
+_Summary Table_
 
 [source,cypher]
 ----
@@ -215,7 +225,15 @@ ORDER BY mp_length, paths DESC
 
 
 
-=== Refine query template
+=== Refine query template: refine the query to get visually explorable hypotheses (> 1000 paths)
+Let's refine the semantics and rules of the query to visualize meaningful mechanistic hypotheses. The refined query template is:
+
+****
+# Find source and target gene interactors that are linked by orthology:
+
+``(source:GENE)-[i1:`RO:0002434`]->(:GENE)-[:`RO:HOM0000017`]-(:GENE)-[:`RO:0002434`]-(:GENE)-[:`RO:0002434`]-(target:GENE)``
+****
+
 
 ==== Query in Cypher
 
@@ -244,7 +262,7 @@ RETURN count(distinct path) as paths
 
 ==== Results
 
-The results appear below the command shell as a graph or as a table. Results are only exportable as files: graphic (PNG, SVG, ..) or structured (CVS, ..) formats. 
+This query retrieves 114 paths. The results appear below the command shell as a graph or as a table. Results are only exportable as files: graphic (PNG, SVG, ..) or structured (CVS, ..) formats. 
 
 WARNING:   The current Neo4j Browser does not provide ``session`` services, thus there is not option to save any session.
 
@@ -255,10 +273,12 @@ WARNING:   The current Neo4j Browser does not provide ``session`` services, thus
 IMPORTANT:  Click the top right **black&white** arrow to go to the next page
 
 == QUERIES FOR TRANSCRIPTOME ANALYSIS
-
+In this page we give some query examples to analyze the transcriptomic profile integrated in the review.
 
 === Query for common TFs
+These queries retrieve information about the most common or frequent transcription factors (TFs):
 
+_Summarize most common TFs_
 
 
 [source,cypher]
@@ -316,9 +336,13 @@ ORDER BY genes DESC
 {sp}+
 
 === Query for TF Pathways
-
+The following query template is used to retrieve cellular pathways for each TF. Pathways are associated with the TF target genes:
 
 image::https://www.dropbox.com/s/kvty5e0fuoqdadh/query3_topology_v3.2.png?dl=1[height=1000, width=5000, align="center"]
+
+The query in Cypher:
+
+_TF pathways_
 
 
 [source,cypher]
@@ -351,8 +375,9 @@ RETURN DISTINCT tf.preflabel as TF_symbol, tf.name as TF_name,
 {sp}+
 
 === Query for TF GO annotations: Cellular function
+The following query in Cypher retrieves cellular functions for each TF. It follows the same logics as the prior query. Cellular functions are associated with the TF target genes:
 
-
+_TF cellular functions_
 
 [source,cypher]
 ----

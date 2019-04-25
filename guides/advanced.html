@@ -221,6 +221,9 @@ Click the top right <strong>black&amp;white</strong> arrow to go to the next pag
 
    <h4>Open query: extraction of metapaths</h4>
    <div class="paragraph">
+<p>First, we query how many paths link NGLY1 and AQP1 human genes in the review with an open query, i.e. no specific query template defined:</p>
+</div>
+<div class="paragraph">
 <p><em>Open query</em></p>
 </div>
 <div class="listingblock">
@@ -239,7 +242,10 @@ RETURN count(distinct path) as paths<!--/code--></pre>
 </div>
 </div>
 <div class="paragraph">
-<p><em>Metapaths</em></p>
+<p>As a result, the review provides 6670 linking paths or hypotheses. Let&#8217;s retrieve a summary table with the most common meta-pahts or the semantics of these 6670 paths:</p>
+</div>
+<div class="paragraph">
+<p><em>Meta-paths</em></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -258,19 +264,32 @@ RETURN DISTINCT extract (x in rels(path) | type(x)) as types, extract (n in node
 ORDER BY mp_length, paths DESC<!--/code--></pre>
 </div>
 </div>
+<div class="paragraph">
+<p>The meta-path information is useful to refine the query template to a meaningful mechanism and to get less than (and more visually explorable) 1000 paths.</p>
+</div>
 
 
 
-   <h4>Query template</h4>
+   <h4>Query template: query a specific query template semantics</h4>
    <div class="paragraph">
-<p>To structure the query in Cypher, it is important to first formulate the question in natural language and then translate it in a query template.</p>
+<p>To structure the query in Cypher, it is important to first formulate the question in natural language and then translate it in a query template:</p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="paragraph">
+<p># Find source and target gene interactors that are expressed in the same tissue or cell type:</p>
+</div>
+<div class="paragraph">
+<p><code>source:GENE)-[i1:`RO:0002434`]&#8594;(:GENE)-[:`RO:0002206`]-(:ANAT)-[:`RO:0002206`]-(:GENE)-[:`RO:0002434`]-(target:GENE)</code></p>
+</div>
+</div>
 </div>
 
 
 
    <h4>Query in Cypher</h4>
    <div class="paragraph">
-<p>Once we have a clear idea of the query template, it is easier to formulated in a structured way in Cypher.</p>
+<p>Once we have a clear idea of the query template, it is easier to formulate it in a structured way in Cypher:</p>
 </div>
 <div class="paragraph">
 <p><em>Query template</em></p>
@@ -295,7 +314,10 @@ RETURN count(distinct path) as paths<!--/code--></pre>
 
    <h4>Results</h4>
    <div class="paragraph">
-<p><em>Table</em></p>
+<p>The query gives 3150 paths. This result is not visually explorable since the number of paths is larger than 1000. But we can summarize interesting information from these 3150 paths in a table. See the following summary table as example:</p>
+</div>
+<div class="paragraph">
+<p><em>Summary Table</em></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -317,8 +339,21 @@ ORDER BY mp_length, paths DESC<!--/code--></pre>
 
 
 
-   <h4>Refine query template</h4>
-   
+   <h4>Refine query template: refine the query to get visually explorable hypotheses (&gt; 1000 paths)</h4>
+   <div class="paragraph">
+<p>Let&#8217;s refine the semantics and rules of the query to visualize meaningful mechanistic hypotheses. The refined query template is:</p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="paragraph">
+<p># Find source and target gene interactors that are linked by orthology:</p>
+</div>
+<div class="paragraph">
+<p><code>(source:GENE)-[i1:`RO:0002434`]&#8594;(:GENE)-[:`RO:HOM0000017`]-(:GENE)-[:`RO:0002434`]-(:GENE)-[:`RO:0002434`]-(target:GENE)</code></p>
+</div>
+</div>
+</div>
+
 
 
    <h4>Query in Cypher</h4>
@@ -348,7 +383,7 @@ RETURN count(distinct path) as paths<!--/code--></pre>
 
    <h4>Results</h4>
    <div class="paragraph">
-<p>The results appear below the command shell as a graph or as a table. Results are only exportable as files: graphic (PNG, SVG, ..) or structured (CVS, ..) formats.</p>
+<p>This query retrieves 114 paths. The results appear below the command shell as a graph or as a table. Results are only exportable as files: graphic (PNG, SVG, ..) or structured (CVS, ..) formats.</p>
 </div>
 <div class="admonitionblock warning">
 <table>
@@ -388,11 +423,20 @@ Click the top right <strong>black&amp;white</strong> arrow to go to the next pag
     <h3>QUERIES FOR TRANSCRIPTOME ANALYSIS</h3>
     <br/>
     <div>
-      
+      <div class="paragraph">
+<p>In this page we give some query examples to analyze the transcriptomic profile integrated in the review.</p>
+</div>
+
 
 
    <h4>Query for common TFs</h4>
-   <div class="listingblock">
+   <div class="paragraph">
+<p>These queries retrieve information about the most common or frequent transcription factors (TFs):</p>
+</div>
+<div class="paragraph">
+<p><em>Summarize most common TFs</em></p>
+</div>
+<div class="listingblock">
 <div class="content">
 <pre mode="cypher"  class="highlight pre-scrollable programlisting cm-s-neo code runnable standalone-example ng-binding" data-lang="cypher" lang="cypher"><!--code class="cypher language-cypher"-->MATCH path=(source:GENE)-[i1:`RO:0002434`]-&gt;(ortho:GENE)-[iortho]-(gene:GENE)&lt;-[i2:`RO:0002434`]-(tf:GENE)
 
@@ -448,10 +492,19 @@ ORDER BY genes DESC<!--/code--></pre>
 
 
    <h4>Query for TF Pathways</h4>
-   <div class="imageblock" style="text-align: center;">
+   <div class="paragraph">
+<p>The following query template is used to retrieve cellular pathways for each TF. Pathways are associated with the TF target genes:</p>
+</div>
+<div class="imageblock" style="text-align: center;">
 <div class="content">
 <img src="https://www.dropbox.com/s/kvty5e0fuoqdadh/query3_topology_v3.2.png?dl=1" alt="query3 topology v3.2" width="5000" height="1000">
 </div>
+</div>
+<div class="paragraph">
+<p>The query in Cypher:</p>
+</div>
+<div class="paragraph">
+<p><em>TF pathways</em></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -486,7 +539,13 @@ RETURN DISTINCT tf.preflabel as TF_symbol, tf.name as TF_name,
 
 
    <h4>Query for TF GO annotations: Cellular function</h4>
-   <div class="listingblock">
+   <div class="paragraph">
+<p>The following query in Cypher retrieves cellular functions for each TF. It follows the same logics as the prior query. Cellular functions are associated with the TF target genes:</p>
+</div>
+<div class="paragraph">
+<p><em>TF cellular functions</em></p>
+</div>
+<div class="listingblock">
 <div class="content">
 <pre mode="cypher"  class="highlight pre-scrollable programlisting cm-s-neo code runnable standalone-example ng-binding" data-lang="cypher" lang="cypher"><!--code class="cypher language-cypher"-->MATCH path=(source:GENE)-[i1:`RO:0002434`]-&gt;(o:GENE)-[iortho]-(g:GENE)&lt;-[i2:`RO:0002434`]-(tf:GENE), (g:GENE)-[i]-(pw:PHYS)
 

@@ -35,7 +35,7 @@ The knowledge graph can be queried in almost an infinite number of ways. This gu
 === DATA MODEL
 
 
-The picture shows the data model or schema or meta-graph for NGLY1 Deficiency Knowledge Graph v3.2. 
+The picture shows the data model or schema or meta-graph for NGLY1 Deficiency Knowledge Graph v3.2. Click the figure to zoom out. 
 
 
 [#img-schema]
@@ -286,10 +286,10 @@ image::https://www.dropbox.com/s/qypkrn1l50p83n6/query1_topology_v3.2.png?dl=1[h
 
 {sp}+
 
-In this template, we specify relations between genes to be of two types: 1) `'interacts with'` that with the use of filters on edge attributes will be explicitly either of _regulatory_ origin once filtered by source of provenance to the databases *tftargets* and *MSigDB*, or of _gene expression_ origin once filtered by reference to the *PubMed Identifier*, where the experimental fly transcriptome data set was published, or of a general _gene-gene interaction_ origin if none of these restrictions applied; and 2) `'in 1 to 1 orthology relationship with'` that relates to direct orthology between genes.
+In this template, we specify relations between genes to be of two types: 1) `'interacts with'` that with the use of filters on edge attributes will be explicitly either of _regulatory_ origin (once filtered by source of provenance to the databases *tftargets* and *MSigDB*), or of _gene expression_ origin (once filtered by reference to the *PubMed Identifier*, where the experimental fly transcriptome data set was published), or of a general _gene-gene interaction_ origin (if none of these restrictions are applied); and 2) `'in 1 to 1 orthology relationship with'` that relates to direct orthology between genes.
 
 
-If the user does not have a clear idea for a query template, she/he could formulate an open query _a priori_ to retrieve the meta-paths of all links between two entities in the review graph. For an example of how to query the graph to retrieve metapaths, go to the 4th slide in the extended tutorial (find how to access the extended tutorial in the next slide).
+If the user does not have a clear idea for a query template, she/he could formulate an open query _a priori_ to retrieve the meta-paths of all links between two entities in the review graph. For an example of how to query the graph to retrieve meta-paths, go to the extended tutorial (find how to access the extended tutorial in the last slide).
 
 {sp}+
 
@@ -405,18 +405,23 @@ Last, we retrieve paths:
 ==== Explore hypotheses
 
 
-Results can be vizualized in a summary table of a list of properties calculated from all paths or in a graph exposing all the paths. In this case we can explore all paths directly in graph format that looks like:
+Results can be vizualized in a summary table of a list of properties calculated from all paths or in a graph exposing all the paths. In this case we can explore all paths directly in graph format that looks like (click figures to zoom out):
 
 
-image::https://www.dropbox.com/s/bbdg1orj7ztrvup/query1_paths_v3.2.png?dl=1[height=5000, width=15500]
+[#img-q1-paths]
+.Query 1 resulting hypotheses
+[link=https://www.dropbox.com/s/bbdg1orj7ztrvup/query1_paths_v3.2.png?dl=0]
+image::https://www.dropbox.com/s/bbdg1orj7ztrvup/query1_paths_v3.2.png?dl=1[height=10000, width=15500]
 
 {sp}+
 
 If we want to retrieve a summary table with for instance all genes that are differentially expressed genes of Pngl and AQP1 Transcription Factors (TFs) ordered by the total number of paths they appear such as:
 
 
-
-image::https://www.dropbox.com/s/v7i3ld0x3cup7nj/query1_table_v3.2.png?dl=1[height=1000, width=10000]
+[#img-q1-table]
+.Query 1 summary table
+[link=https://www.dropbox.com/s/v7i3ld0x3cup7nj/query1_table_v3.2.png?dl=0]
+image::https://www.dropbox.com/s/v7i3ld0x3cup7nj/query1_table_v3.2.png?dl=1[height=5000, width=10000]
 
 {sp}+
 
@@ -484,7 +489,7 @@ image::https://www.dropbox.com/s/ch261h9xwpu5zm5/query2_topology_v3.2.png?dl=1[h
 
 {sp}+
 
-The logics of this query is in two steps: 1) to collect first the genetic evidence linking NGLY1 to AQP1 via regulatory hypothesis retrieved from qurey 1, and 2) from this gene collection to retrieve those genes that have association evidence with the disease phenotypes. Consequently, in the first step we have to define again the template used in query 1, and in the second step we define a new template, where we specify a first disease-phenotype relation for the NGLY1 Deficiency disease node and its associated phenoytpes and an open relation from these phenotypes to the genes collected in the query 1.
+The logics of this query is in two steps: 1) to collect first the genetic evidence linking NGLY1 to AQP1 via regulatory hypothesis retrieved from qurey 1, and 2) from this gene collection to retrieve those genes that have association evidence with the disease phenotypes. Consequently, in the first step we have to define again the template used in query 1, and in the second step we define a new template, where we specify a first disease-phenotype relation for the NGLY1 Deficiency disease node (*SOURCE*) and its associated phenoytpes, and a second relation from these phenotypes to the genes collected in the query 1 (*TARGET*) gene nodes.
 
 
 {sp}+
@@ -530,7 +535,7 @@ Let’s explain this query statement by statement. First, we look for mechanisms
 
  MATCH path=(source:GENE)-[i1:`RO:0002434`]->(rna:GENE)-[i2:`RO:HOM0000020`]-(ortholog_rna:GENE)-[i3:`RO:0002434`]-(tf:GENE)-[i4:`RO:0002434`]->(target:GENE)
 
-Then, we filter to the specific _Pngl_ source and _NGLY1_ target nodes and the no loops in the path rule:
+Then, we filter to the specific _Pngl_ source and _NGLY1_ target nodes (using the `id` attribute), and the no loops in the path rules:
 
  WHERE source.id = 'FlyBase:FBgn0033050' AND target.id = 'HGNC:633' AND ALL(x IN nodes(path) WHERE single(y IN nodes(path) WHERE y = x))
 
@@ -586,6 +591,9 @@ The resulting gene-phenotype links can be graphically visualized such as:
 
 {sp}+
 
+[#img-q2-paths]
+.Query 2 resulting hypotheses
+[link=https://www.dropbox.com/s/xh14124tnqz0noo/query2_paths_v3.2.png?dl=0]
 image::https://www.dropbox.com/s/xh14124tnqz0noo/query2_paths_v3.2.png?dl=1[height=500, width=3000]
 
 {sp}+
@@ -596,6 +604,10 @@ or can be summarized as a table such as:
 
 {sp}+
 
+
+[#img-q2-table]
+.Query 2 summary table
+[link=https://www.dropbox.com/s/vksf6gccraaf92g/query2_table_v3.2.png?dl=0]
 image::https://www.dropbox.com/s/vksf6gccraaf92g/query2_table_v3.2.png?dl=1[height=500, width=3000]
 
 
@@ -662,7 +674,7 @@ The development of the NGLY1 Deficiency Knowledge Graph and its deployment into 
 
 
 ==== To wrap up
-We offer a disease specific knowledge graph to represent and manage knowledge and data around the NGLY1 deficiency, and a web interface application served by Neo4j for exploration and visualization:
+We offer a disease specific knowledge graph to represent and manage knowledge and data around the NGLY1 Deficiency, and a web interface application served by Neo4j for exploration and visualization:
 
 - We integrated and represented existing knowledge and data as an open knowledge graph on the particular topic of a specific rare disease.
 - The knowledge graph makes knowledge and data more accessible to the NGLY1 Deficiency community.
