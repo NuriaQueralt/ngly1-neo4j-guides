@@ -53,7 +53,7 @@
 <p>The NGLY1 Deficiency Knowledge Graph is the first knowledge network for the <a href="https://rarediseases.info.nih.gov/diseases/12315/deficiency-of-n-glycanase-1">Deficiency of N-glycanase 1 or NGLY1 Deficiency</a>, which is an ultra-rare genetic disease with neither a treatment nor a clear understanding of the underlying biology. It reviews the current knowledge and data on the NGLY1 Deficiency and it is represented as a single graph for exploration and discovery. Knowledge comes from biocuration of the scientific literature and retrieval from biomedical knowledge bases. This knowledge is integrated with omics data from the fruit fly (<a href="https://en.wikipedia.org/wiki/Drosophila_melanogaster"><em>Drosophila melanogaster</em></a>) model, an animal system that has helped the community understand a wide range of human conditions, from alcoholism to Alzheimer&#8217;s disease and Rett&#8217;s syndrome (<a href="http://modencode.sciencemag.org/drosophila/introduction"><em>Drosophila</em> as a model organism</a>). The fruit fly genetics and biology are also used in the Model Organisms Screening Center for the <a href="https://undiagnosed.hms.harvard.edu/research/model-organisms-phase-ii/">Undiagnosed Diseases Network</a> to tackle rare and undiagnosed diseases. The parallels between the genomes of Drosophila and humans, over about 60%, provides an opportunity to reveal basic genes or processes associated with disease.</p>
 </div>
 <div class="paragraph">
-<p>This is the Neo4j Web interface for the NGLY1 Deficiency Knowledge Graph to run queries and explore the structured reviewed knowledge and data. The current graph version v3.2 contains 234,717 relationships of 29 types among 9,361 nodes of 8 types. This application provides read-only access to the graph. To contribute new information to the graph, the user should refer to <a href="http://100.25.145.12:8181/wiki/Main_Page">NGLY1 Deficiency Community Building</a> graph wiki site of the project, a collaborative and community-editable version of the graph.</p>
+<p>This is the Neo4j Web interface for the NGLY1 Deficiency Knowledge Graph to run queries and explore the structured reviewed knowledge and data. The current graph version v3.2 contains <strong>234,717</strong> relationships of 29 types among <strong>9,361</strong> nodes of 8 types. This application provides read-only access to the graph. To contribute new information to the graph, the user should refer to <a href="http://100.25.145.12:8181/wiki/Main_Page">NGLY1 Deficiency Community Building</a> graph wiki site of the project, a collaborative and community-editable version of the graph.</p>
 </div>
 <div class="paragraph">
 <p><br></p>
@@ -123,10 +123,23 @@
 
    <h4>Data types</h4>
    <div class="paragraph">
-<p>The network relates data of 8 types: <strong>genes</strong> (<code>GENE</code>), <strong>disease phenotypes</strong> (<code>DISO</code>), <strong>variants</strong> (<code>VARI</code>), <strong>genotypes</strong> (<code>GENO</code>), <strong>pathways</strong> (<code>PHYS</code>), <strong>chemicals</strong> (<code>CHEM</code>), <strong>anatomy</strong> (<code>ANAT</code>), and <strong>organisms</strong> (<code>LIVB</code>) with different levels of association expressiveness (32 edge types). Data and relations are described using standard semantics: community-driven ontologies and controlled vocabularies to enable interoperability with external resources and reduce ambiguity.</p>
+<p>The network relates data of 8 types: <strong>genes</strong> (<code>GENE</code>), <strong>disease phenotypes</strong> (<code>DISO</code>), <strong>variants</strong> (<code>VARI</code>), <strong>genotypes</strong> (<code>GENO</code>), <strong>pathways</strong> (<code>PHYS</code>), <strong>chemicals</strong> (<code>CHEM</code>), <strong>anatomy</strong> (<code>ANAT</code>), and <strong>organisms</strong> (<code>LIVB</code>) with different levels of association expressiveness (29 edge types). Data and relations are described using standard semantics: community-driven ontologies and controlled vocabularies to enable interoperability with external resources and reduce ambiguity. To see the frequency of node types, run the following query:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre mode="cypher"  class="highlight pre-scrollable programlisting cm-s-neo code runnable standalone-example ng-binding" data-lang="cypher" lang="cypher"><!--code class="cypher language-cypher"-->MATCH (n) RETURN DISTINCT labels(n), COUNT(DISTINCT n.id) AS nodes ORDER BY nodes DESC<!--/code--></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>The semantics of the concepts in the graph rely on the semantic types that build the <a href="https://www.nlm.nih.gov/pubs/factsheets/umlssemn.html">UMLS Semantic Network</a>. To check the definition of each semantic type abbreviation see the <a href="https://metamap.nlm.nih.gov/Docs/SemGroups_2013.txt">UMLS Semantic Groups definitions</a>. The semantics of the relations rely basically on the <a href="http://www.obofoundry.org/ontology/ro.html">Relation Ontology (RO)</a>.</p>
+<p><br></p>
+</div>
+<div class="paragraph">
+<p>The semantics of the concepts in the graph rely on the semantic types that build the <a href="https://www.nlm.nih.gov/pubs/factsheets/umlssemn.html">UMLS Semantic Network</a>. To check the definition of each semantic type abbreviation see the <a href="https://metamap.nlm.nih.gov/Docs/SemGroups_2013.txt">UMLS Semantic Groups definitions</a>. The semantics of the relations rely basically on the <a href="http://www.obofoundry.org/ontology/ro.html">Relation Ontology (RO)</a>. To see the frequency of semantic relation types, run the following query:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre mode="cypher"  class="highlight pre-scrollable programlisting cm-s-neo code runnable standalone-example ng-binding" data-lang="cypher" lang="cypher"><!--code class="cypher language-cypher"-->MATCH path=(n)-[r]-&gt;(m) RETURN DISTINCT type(r) AS id, r.property_label AS label, COUNT(DISTINCT path) AS paths ORDER BY paths DESC<!--/code--></pre>
+</div>
 </div>
 <div class="paragraph">
 <p><br></p>
@@ -239,7 +252,7 @@
 </ul>
 </div>
 <div class="paragraph">
-<p><em>NOTE</em>: The attribute(s) do not appear in the graphical interface when the valued is null.</p>
+<p><em>NOTE</em>: The attribute(s) do not appear in the graphical interface when the value is null.</p>
 </div>
 <div class="paragraph">
 <p><br></p>
