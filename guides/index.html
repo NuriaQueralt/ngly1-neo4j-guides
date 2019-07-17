@@ -41,7 +41,16 @@
         </figure>
       </div>
     </slide-->
-    
+    <div id="img-app" class="imageblock" style="float: center;">
+<div class="content">
+<a class="image" href="http://ngly1graph.org/contribute/"><img src="https://www.dropbox.com/s/rkq3595pkkvflot/ngly1_app_logo.png?dl=1" alt="ngly1 app logo"></a>
+</div>
+<div class="title">Figure 1. NGLY1 Deficiency Knowledge Graph application. Go to the <strong>Wikibase site</strong> by clicking the application logo.</div>
+</div>
+<div class="paragraph">
+<p><br></p>
+</div>
+
 
 
 <slide class="row-fluid">
@@ -52,14 +61,8 @@
       <div class="paragraph">
 <p>The NGLY1 Deficiency Knowledge Graph is the first knowledge network for the <a href="https://rarediseases.info.nih.gov/diseases/12315/deficiency-of-n-glycanase-1">Deficiency of N-glycanase 1 or NGLY1 Deficiency</a>, which is an ultra-rare genetic disease with neither a treatment nor a clear understanding of the underlying biology. It is a <strong>living structured review</strong> that summarizes the current knowledge and data on the NGLY1 Deficiency in a modern and computable fashion represented as a single graph for exploration and discovery. Knowledge comes from biocuration of the scientific literature and retrieval from biomedical knowledge bases. This knowledge is integrated with omics data from the fruit fly (<a href="https://en.wikipedia.org/wiki/Drosophila_melanogaster"><em>Drosophila melanogaster</em></a>) model, an animal system that has helped the community understand a wide range of human conditions, from alcoholism to Alzheimer&#8217;s disease and Rett&#8217;s syndrome (<a href="http://modencode.sciencemag.org/drosophila/introduction"><em>Drosophila</em> as a model organism</a>). The fruit fly genetics and biology are also used in the Model Organisms Screening Center for the <a href="https://undiagnosed.hms.harvard.edu/research/model-organisms-phase-ii/">Undiagnosed Diseases Network</a> to tackle rare and undiagnosed diseases. The parallels between the genomes of Drosophila and humans, over about 60%, provides an opportunity to reveal basic genes or processes associated with disease.</p>
 </div>
-<div id="img-app" class="imageblock" style="float: center;">
-<div class="content">
-<a class="image" href="http://ngly1graph.org/contribute/"><img src="https://www.dropbox.com/s/rkq3595pkkvflot/ngly1_app_logo.png?dl=1" alt="ngly1 app logo"></a>
-</div>
-<div class="title">Figure 1. NGLY1 Deficiency Knowledge Graph application</div>
-</div>
 <div class="paragraph">
-<p>This is the <strong>Neo4j Web interface</strong> for the NGLY1 Deficiency Knowledge Graph to visualize, run queries and explore the structured reviewed knowledge and data. This application provides read-only access to the graph. To contribute new information to the graph, the user should refer to <a href="http://ngly1graph.org/contribute/">NGLY1 Deficiency Knowledge Graph in Wikibase</a> site of the project, a collaborative and community-editable version of the graph. <em>Note that</em> this is a living graph because users community can build and curate it in Wikibase. For that reason, content statistics and screenshots in the guide may differ with the current time evolving graph. The initial graph version v3.2 contains <strong>234,714</strong> relationships of 29 types among <strong>9,359</strong> nodes of 8 types.</p>
+<p>This is the <strong>Neo4j Web interface</strong> for the NGLY1 Deficiency Knowledge Graph to visualize, run queries and explore the structured reviewed knowledge and data. This application provides read-only access to the graph. To contribute new information to the graph, the user should refer to <a href="http://ngly1graph.org/contribute/">NGLY1 Deficiency Knowledge Graph in Wikibase</a> site of the project, a collaborative and community-editable version of the graph. <em>Note that</em> this is a living graph because users community can build and curate it in Wikibase. For that reason, content statistics, data model and screenshots in the guide may differ with the current time evolving graph. The initial graph version v3.2 contains <strong>234,714</strong> relationships of 29 types among <strong>9,359</strong> nodes of 8 types.</p>
 </div>
 <div class="paragraph">
 <p><br></p>
@@ -549,7 +552,7 @@ Click the top right <strong>black&amp;white</strong> arrow to go to the next pag
 </div>
 <div class="listingblock">
 <div class="content">
-<pre mode="cypher"  class="highlight pre-scrollable programlisting cm-s-neo code runnable standalone-example ng-binding" data-lang="cypher" lang="cypher"><!--code class="cypher language-cypher"-->:style http://100.25.145.12:8001/guides/style.grass<!--/code--></pre>
+<pre mode="cypher"  class="highlight pre-scrollable programlisting cm-s-neo code runnable standalone-example ng-binding" data-lang="cypher" lang="cypher"><!--code class="cypher language-cypher"-->:style http://ngly1graph.org:8001/guides/style.grass<!--/code--></pre>
 </div>
 </div>
 <div class="admonitionblock tip">
@@ -888,7 +891,7 @@ AND toLower(i4.reference_supporting_text) =~ '.*tftargets.*|.*msigdb.*'
 
 WITH COLLECT(DISTINCT ortholog_rna.id) + COLLECT(DISTINCT tf.id) AS genes
 
-MATCH path=(:DISO {id: 'DOID:0060728'})--&gt;(ph:DISO)--(g:GENE)
+MATCH path=(:DISO {id: 'MONDO:0014109'})--&gt;(ph:DISO)--(g:GENE)
 
 WHERE g.id in genes AND ph.id CONTAINS 'HP:'
 
@@ -971,11 +974,11 @@ RETURN path<!--/code--></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>First, we look for all the genes in the graph that have an association of any type with the disease phenotypes. We keep those paths that match the NGLY1 Deficiency disease node, defining the node type <em>DISO</em> and the node <code>id</code> attribute to <em>DOID:0060728</em> (the DOID of the NGLY1 Deficiency), with its associated phenotypes using an open edge type to a disease phenotype node type with the <em>DISO</em> label, and from these disease phenotypes we match those edges (open type) that relate the disease phenotypes to gene node types using the <em>GENE</em> label. In this template we named the associated NGLY1 Deficiency disease phenotypes as 'ph' and their associated genes as 'g'.</p>
+<p>First, we look for all the genes in the graph that have an association of any type with the disease phenotypes. We keep those paths that match the NGLY1 Deficiency disease node, defining the node type <em>DISO</em> and the node <code>id</code> attribute to <em>MONDO:0014109</em> (the MONDO ID of the NGLY1 Deficiency), with its associated phenotypes using an open edge type to a disease phenotype node type with the <em>DISO</em> label, and from these disease phenotypes we match those edges (open type) that relate the disease phenotypes to gene node types using the <em>GENE</em> label. In this template we named the associated NGLY1 Deficiency disease phenotypes as 'ph' and their associated genes as 'g'.</p>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>MATCH path=(:DISO {id: 'DOID:0060728'})--&gt;(ph:DISO)--(g:GENE)</pre>
+<pre>MATCH path=(:DISO {id: 'MONDO:0014109'})--&gt;(ph:DISO)--(g:GENE)</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1057,7 +1060,7 @@ AND toLower(i4.reference_supporting_text) =~ '.*tftargets.*|.*msigdb.*'
 
 WITH COLLECT(DISTINCT ortholog_rna.id) + COLLECT(DISTINCT tf.id) AS genes
 
-MATCH path=(:DISO {id: 'DOID:0060728'})--&gt;(ph:DISO)--(g:GENE)
+MATCH path=(:DISO {id: 'MONDO:0014109'})--&gt;(ph:DISO)--(g:GENE)
 
 WHERE g.id in genes AND ph.id CONTAINS 'HP:'
 
