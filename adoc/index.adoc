@@ -14,12 +14,13 @@ The NGLY1 Deficiency Knowledge Graph is the first knowledge network for the http
 [#img-app]
 .NGLY1 Deficiency Knowledge Graph application. Go to the *Wikibase site* by clicking the application logo.
 [link=http://ngly1graph.org/contribute/]
-image::https://www.dropbox.com/s/rkq3595pkkvflot/ngly1_app_logo.png?dl=1[float=center]
-
+image::https://www.dropbox.com/s/mpxmakwy3x5fajv/ngly1_app_logo_youRInNeo4j2.png?dl=1[height=1250px, width=2500px,float=center]
+//image::https://www.dropbox.com/s/id5ks05900clj26/ngly1_app_logo_youRInNeo4j.png?dl=1[height=900, width=1052,float=center]
+//image::https://www.dropbox.com/s/rkq3595pkkvflot/ngly1_app_logo.png?dl=1[float=center]
 
 {sp}+
 
-This is the *Neo4j Web interface* for the NGLY1 Deficiency Knowledge Graph to visualize, run queries and explore the structured reviewed knowledge and data. This application provides read-only access to the graph. To contribute new information to the graph, the user should refer to http://ngly1graph.org/contribute/[NGLY1 Deficiency Knowledge Graph in Wikibase] site of the project, a collaborative and community-editable version of the graph. Neo4j and Wikibase are synchronized as a single application to provide access to the NGLY1 Deficiency Knowledge Graph. _Note that_ this is a living graph because the users community can build and curate it in Wikibase. For that reason, static descriptions in the guide such as content statistics, data model and screenshots may differ with the current time evolving graph. The initial graph version v3.2 contains *234,714* relationships of 29 types among *9,359* nodes of 8 types. 
+This is the *Neo4j Web interface* for the NGLY1 Deficiency Knowledge Graph to visualize, run queries and explore the structured reviewed knowledge and data. This application provides read-only access to the graph. To contribute new information to the graph, the user should refer to http://ngly1graph.org/contribute/[NGLY1 Deficiency Knowledge Graph in Wikibase] site of the project, a collaborative and community-editable version of the graph. Neo4j and Wikibase are synchronized as a single application to provide access to the NGLY1 Deficiency Knowledge Graph. _Note that_ this is a living graph because the users community can build and curate it in Wikibase. For that reason, static descriptions in the guide such as content statistics, data model and screenshots may differ with the current time evolving graph. The first deployed NGLY1 Deficiency Knowledge Graph is version v3.2 and contains *234,714* relationships of 29 types among *9,359* nodes of 8 types. 
 
 {sp}+
 
@@ -145,7 +146,7 @@ IMPORTANT:  Click the top right **black&white** arrow to go to the next page
 == Data 
 
 
-The NGLY1 Deficiency Knowledge Graph reviews heterogeneous **knowledge** from basic biological and clinical research in humans and derived from animal models, and **data** generated from high-throughput experiments. The integrated knowledge and data comes from different external sources including scientific literature, knowledge bases and experimental omics data sets and are annotated to its provenance and evidence. The integration is performed by means of vocabulary mapping and normalization. We provide a computational tool for the reproducible generation workflow of the graph, a https://github.com/NuriaQueralt/graph-hypothesis-generation-lib[Python library] where each data source has a specific module to prepare edges as a network to be integrated into the NGLY1 Deficiency Knowledge Graph schema.
+The NGLY1 Deficiency Knowledge Graph reviews heterogeneous **knowledge** from basic biological and clinical research in humans and derived from animal models, and **data** generated from high-throughput experiments. The integrated knowledge and data comes from different external sources including scientific literature, knowledge bases and experimental omics data sets and are annotated to its provenance and evidence. The integration is performed by means of vocabulary mapping and normalization. We provide a computational tool for the reproducible generation workflow of the graph, a https://github.com/NuriaQueralt/bioknowledge-reviewer[Python library] where each data source has a specific module to prepare edges as a network to be integrated into the NGLY1 Deficiency Knowledge Graph schema.
 
 
 We reviewed and structured _knowledge_ with its evidence around the clinical profile and the pathophysiology of the NGLY1 Deficiency to help biomedical researchers to discover evidence-based explanations for their hypotheses on its cause and of its symptoms. We assembled **human** diverse knowledge about basic molecular biology, cys-regulation, and clinical disease phenotypes extracted by biocuration of publications in scientific journals, retrieved from databases, and knowledge from domain experts. We derived knowledge from **animal models** assembling homologs and ortholog-phenotypes. This knowledge is complemented and gives structure to new experimental transcriptomics _data_ from recent studies.
@@ -159,7 +160,7 @@ We reviewed and structured _knowledge_ with its evidence around the clinical pro
 
 
 
-The third release of the graph organizes information as edges from human and animal models 1) manually extracted from investigations published in https://www.ncbi.nlm.nih.gov/pubmed/[PubMed]; 2) retrieved from https://monarchinitiative.org/[the Monarch Initiative]; 3) transcription factor regulation from several sources in https://github.com/slowkow/tftargets[tftargets] and the http://software.broadinstitute.org/gsea/msigdb[Molecular Signatures Database or MSigDB]; 4) manually contributed by the community from http://100.25.145.12:8181/wiki/Main_Page[the NGLY1 Deficiency wikibase platform]; and integrates all this heterogeneous knowledge with an experimental gene expression data set from a fruit fly _Drosophila melanogaster_ model of the disease https://www.ncbi.nlm.nih.gov/pubmed/29346549[Owings _et al_.]. We have ingested existing data into a knowledge graph creating first several networks, which type of content is:
+The third release of the graph organizes information as edges from human and animal models 1) manually extracted from investigations published in https://www.ncbi.nlm.nih.gov/pubmed/[PubMed]; 2) retrieved from https://monarchinitiative.org/[the Monarch Initiative]; 3) transcription factor regulation from several sources in https://github.com/slowkow/tftargets[tftargets] and the http://software.broadinstitute.org/gsea/msigdb[Molecular Signatures Database or MSigDB]; 4) manually contributed by the community from http://ngly1graph.org/contribute/[the NGLY1 Deficiency Wikibase platform]; and integrates all this heterogeneous knowledge with an experimental gene expression data set from a fruit fly _Drosophila melanogaster_ model of the disease https://www.ncbi.nlm.nih.gov/pubmed/29346549[Owings _et al_.]. We have ingested existing data into a knowledge graph creating first several networks, which type of content is:
 
 * Knowledge:
     - Human heterogeneous edges: curation, Monarch and regulation networks
@@ -175,11 +176,11 @@ Networks are assembled and organized according the types and source of edges:
 
 
 ==== Curation Network
-Data come from manual curation. We manually curated https://www.ncbi.nlm.nih.gov/pubmed/24651605[Enns _et al_., 2014] and https://www.ncbi.nlm.nih.gov/pubmed/27388694[Lam _et al_., 2017] publications to capture the known pathophysiology and clinical phenotypic spectrum of the disease. From free text in Lam _et al_., we structured around 100 associated disease phenotypes and formalized them into the HPO. Data are retrieved from https://github.com/NuriaQueralt/graph-hypothesis-generation-lib/tree/master/plan/curation/data/v20180118[tabulated files] generated by the biocurator.
+Data come from manual curation. We manually curated https://www.ncbi.nlm.nih.gov/pubmed/24651605[Enns _et al_., 2014] and https://www.ncbi.nlm.nih.gov/pubmed/27388694[Lam _et al_., 2017] publications to capture the known pathophysiology and clinical phenotypic spectrum of the disease. From free text in Lam _et al_., we structured around 100 associated disease phenotypes and formalized them into the HPO. Data are retrieved from https://github.com/NuriaQueralt/bioknowledge-reviewer/tree/master/bioknowledge_reviewer/curation/data/v20180118[tabulated files] generated by the biocurator. Network files: https://github.com/NuriaQueralt/ngly1-graph/blob/master/regulation/graph/curated_v20180118/curated_nodes_v2019-01-18.csv[_nodes_], https://github.com/NuriaQueralt/ngly1-graph/blob/master/regulation/graph/curated_v20180118/curated_edges_v2019-01-18.csv[_edges_].
 
 
 ==== Monarch Network
-Data come from the Monarch Initiative Knowledge Base. To translate genotype and phenotype, the knowledge base semantically integrates animal model with human data such as diseases, genes, variants, or phenotypes. They are retrieved through the BioLink API. Data are obtained for specific seed nodes requested by NGLY1 Deficiency researchers using the https://github.com/NuriaQueralt/graph-hypothesis-generation-lib/blob/master/plan/graph_v3.2_v20190312.ipynb[workflow]. 
+Data come from the Monarch Initiative Knowledge Base. To translate genotype and phenotype, the knowledge base semantically integrates animal model with human data such as diseases, genes, variants, or phenotypes. They are retrieved through the BioLink API. Data are obtained for specific seed nodes requested by NGLY1 Deficiency researchers using the https://github.com/NuriaQueralt/bioknowledge-reviewer/blob/master/bioknowledge_reviewer/graph_v3.2_v20190616.ipynb[workflow]. Network files: https://github.com/NuriaQueralt/ngly1-graph/blob/master/monarch/1shell-animal/add-connections-to-net/monarch_nodes_v2019-01-16.tsv[_nodes_], https://github.com/NuriaQueralt/ngly1-graph/blob/master/monarch/1shell-animal/add-connections-to-net/monarch_edges_v2019-01-16.tsv[_edges_].
 
 
 ==== Regulation Network 
@@ -187,11 +188,13 @@ Data come from the tftargets and the MSigDB databases and consist of known human
 
 **tftargets** R package provides TF-genes associations data from 6 databases with different type of evidence. We retrieved only data from TRED, ENCODE, Neph2012 and TRRUST databases because they have reliable curated or experimental evidence. Data are retrieved from the GitHub tftargets repository as a bulk download. Data come from the https://github.com/slowkow/tftargets/blob/master/data/tftargets.rda[tftargets.rda files] and provenance from the https://github.com/slowkow/tftargets/blob/master/data-raw/TRRUST/trrust_rawdata.txt.gz[TRRUST raw data file].
 
-**MSigDB** is a collection of annotated gene sets for use with GSEA software. Data are retrieved from the MSigDB web site as a bulk download. We use the C3:TFT gene set collection from the https://github.com/NuriaQueralt/graph-hypothesis-generation-lib/blob/master/plan/regulation/msigdb/data/c3.tft.v6.1.entrez.gmt[entrez genes ids GMT file]. 
+**MSigDB** is a collection of annotated gene sets for use with GSEA software. Data are retrieved from the MSigDB web site as a bulk download. We use the C3:TFT gene set collection from the https://github.com/NuriaQueralt/bioknowledge-reviewer/blob/master/bioknowledge_reviewer/regulation/msigdb/data/c3.tft.v6.1.entrez.gmt[entrez genes ids GMT file]. 
+
+Network files: https://github.com/NuriaQueralt/ngly1-graph/blob/master/regulation/graph/regulation_nodes_v2019-01-17.csv[_nodes_], https://github.com/NuriaQueralt/ngly1-graph/blob/master/regulation/graph/regulation_edges_v2019-01-17.csv[_edges_].
 
 
 ==== Transcriptomics Network
-Data come from an RNA-seq experiment on the perturbed transcriptome in a fly model of NGLY1 Deficiency https://www.ncbi.nlm.nih.gov/pubmed/29346549[Owings _et al_., 2018]. It contains the differential expression at cutoffs of absolute fold change > 1.5 and false discovery rate < 0.05. Data are retrieved from data authors by request. Data are obtained from the https://github.com/NuriaQueralt/graph-hypothesis-generation-lib/blob/master/plan/transcriptomics/ngly1-fly-chow-2018/data/supp_table_1.csv[CSV file].
+Data come from an RNA-seq experiment on the perturbed transcriptome in a fly model of NGLY1 Deficiency https://www.ncbi.nlm.nih.gov/pubmed/29346549[Owings _et al_., 2018]. It contains the differential expression at cutoffs of absolute fold change > 1.5 and false discovery rate < 0.05. Data are retrieved from data authors by request. Data are obtained from the https://github.com/NuriaQueralt/bioknowledge-reviewer/blob/master/bioknowledge_reviewer/transcriptomics/ngly1-fly-chow-2018/data/supp_table_1.csv[CSV file]. Network files: https://github.com/NuriaQueralt/ngly1-graph/blob/master/regulation/graph/rna_nodes_v2019-01-17.csv[_nodes_], https://github.com/NuriaQueralt/ngly1-graph/blob/master/regulation/graph/rna_edges_v2019-01-17.csv[_edges_].
 
 
 {sp}+
@@ -230,8 +233,12 @@ Files used to build the NGLY1 Deficiency Knowledge graph v3.2 are available at:
 - Monarch network files: https://github.com/NuriaQueralt/ngly1-graph/blob/master/regulation/graph/monarch_nodes_v2019-01-18.tsv[_nodes_]; https://github.com/NuriaQueralt/ngly1-graph/blob/master/regulation/graph/monarch_edges_v2019-01-18.tsv[_edges_]
 - Regulation network files: https://github.com/NuriaQueralt/ngly1-graph/blob/master/regulation/graph/regulation_nodes_v2019-01-17.csv[_nodes_]; https://github.com/NuriaQueralt/ngly1-graph/blob/master/regulation/graph/regulation_graph_edges_v2019-01-17.csv[_edges_]
 - Transcriptomics network files: https://github.com/NuriaQueralt/ngly1-graph/blob/master/regulation/graph/rna_nodes_v2019-01-17.csv[_nodes_]; https://github.com/NuriaQueralt/ngly1-graph/blob/master/regulation/graph/rna_edges_v2019-01-17.csv[_edges_]
-- NGLY1 Deficiency Knowledge Graph files: https://github.com/NuriaQueralt/ngly1-graph/tree/master/neo4j-graphs/ngly1-v3.2/import/ngly1[_network files_]
 
+
+
+==== NGLY1 Deficiency Knowledge Graph files:
+- NGLY1 Deficiency Knowledge Graph in *CSV data*: https://github.com/NuriaQueralt/ngly1-graph/tree/master/neo4j-graphs/ngly1-v3.2/import/ngly1[_network files_]
+- NGLY1 Deficiency Knowledge Graph in *FAIR data*: https://github.com/NuriaQueralt/ngly1-graph/blob/master/wikibase-rdf/ngly1_wikibase.rdf.gz[RDF] 
 
 {sp}+
 
@@ -684,8 +691,8 @@ IMPORTANT:  Click the top right **black&white** arrow to go to the next page
 The NGLY1 Deficiency Knowledge Graph is a *structured review* of the current knowledge around this ultra-rare disease. Reviewing and structuring knowledge as a graph allows exploration of connections between entities otherwise difficult to query in one step and from only one endpoint. The user can explore explicit and implicit knowledge and check the supporting evidence. A graph allows to connect diverse types of nodes and relationships, different sources and importantly different domains and knowledge graphs. Some of the sophisticated queries that can be solved now are thanks to the heterogeneous information integrated from different topics (disease phenotypes, regulatory interactions or biological pathways) and sources (curated, animal, experimental evidence). We showcase how the graph can be interrogated to mine the gap of knowledge from gene to phenotype for instance. Integrating structured knowledge with omics data has the value to anchor data in a conceptual knowledge collection to aid interpretation and to facilitate discovery of new knowledge from experimental data in context. 
 
 
-==== The neo4j browser application
-The development of the NGLY1 Deficiency Knowledge Graph and its deployment into the Neo4j Browser application has been done to support researchers for *discovery*. The Neo4j Browser allows exploration through the Cypher query language, and visualization. Remarkably, Neo4j allows to store our graph and offers drivers for languages such as Python to communicate with the connected knowledge and data. Our pursuit is to review the current knowledge around a disease and to make it actionable for humans and machines to accelerate discoveries in the basic sciences for translational use. The knowledge and data landscape of the structured review cannot be extended interactively using the Neo4j Browser. The graph has also a community-editable http://100.25.145.12:8181/wiki/Main_Page[NGLY1 Deficiency *wikibase*] interface intended to _engage with the NGLY1 Deficiency research and patient&family community_ to expand the review with *expert knowledge*. Both graphs applications are synchronized to share the same content. Tracking biomedical with expert knowledge as a knowledge graph is a current strategy for knowledge-driven discovery and precision medicine. 
+==== The Neo4j Browser application
+The development of the NGLY1 Deficiency Knowledge Graph and its deployment into the Neo4j Browser application has been done to support researchers for *discovery*. The Neo4j Browser allows exploration through the Cypher query language, and visualization. Remarkably, Neo4j allows to store our graph and offers drivers for languages such as Python to communicate with the connected knowledge and data. Our pursuit is to review the current knowledge around a disease and to make it actionable for humans and machines to accelerate discoveries in the basic sciences for translational use. The knowledge and data landscape of the structured review cannot be extended interactively using the Neo4j Web interface. The graph has also a community-editable http://ngly1graph.org/contribute/[NGLY1 Deficiency *Wikibase*] interface intended to _engage with the NGLY1 Deficiency research and patient&family community_ to expand the review with *expert knowledge*. Both graphs applications are synchronized to share the same content. Tracking biomedical with expert knowledge as a knowledge graph is a current strategy for knowledge-driven discovery and precision medicine. 
 
 //** Neo4j allows to deploy a exploration and vizualization app
 //** Neo4j via cypher allows exploration
@@ -701,7 +708,7 @@ We offer a disease specific knowledge graph to represent and manage knowledge an
 - The knowledge graph allows to ingest crowdsourced statements from the NGLY1 Deficiency Wikibase.
 - The knowledge graph allows graph processing to query entities, their relations to their attributes or to other entities, along with provenance and evidence of where that knowledge was obtained to enable evidence-based discovery for the NGLY1 Deficiency research community.
 - Multi-dimensional complicated information can be now easily queried without specialized knowledge in an interactive way. Based on answers, users can take analysis in new directions and hypothesis.
-- We deployed the knowledge graph on GitHub as flat files, and on an online Neo4j Browser to make it *findable*, *accessible* and *queryable-usable* and *re-usable*. 
+- We deployed the knowledge graph on GitHub as flat files, and on an online Neo4j Browser to make it *findable*, *accessible* and *queryable-usable* and *reusable*. 
 - We implemented a Python library to make the creation and use of the knowledge graph more *reproducible*.
 - We created a FAIR knowledge graph to the benefit of humans and machines.
 
