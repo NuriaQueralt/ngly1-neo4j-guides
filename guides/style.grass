@@ -22,15 +22,15 @@ node.PHYS {
         border-color: #5CA8DB;
           text-color-internal: #FFFFFF;
             caption: '{preflabel}';
-              diameter: 80px;
+              diameter: 50px;
 }
 
 node.GENE {
-      color: #6DCE9E;
+      color: #6DCF9F;
         border-color: #60B58B;
           text-color-internal: #FFFFFF;
-            caption: '{name}';
-              diameter: 80px;
+            caption: '{preflabel}';
+              diameter: 50px;
 }
 
 node.ANAT {
@@ -38,15 +38,15 @@ node.ANAT {
         border-color: #E06760;
           text-color-internal: #FFFFFF;
             caption: '{preflabel}';
-              diameter: 80px;
+              diameter: 50px;
 }
 
 node.DISO {
-      color: #DE9BF9;
+      color: #DE9BFA;
         border-color: #BF85D6;
           text-color-internal: #FFFFFF;
             caption: '{preflabel}';
-              diameter: 80px;
+              diameter: 50px;
 }
 
 relationship.BFO:0000050 {
@@ -86,7 +86,7 @@ node.GENO {
         border-color: #EDBA39;
           text-color-internal: #604A0E;
             caption: '{preflabel}';
-              diameter: 80px;
+              diameter: 50px;
 }
 
 node.VARI {
@@ -94,7 +94,7 @@ node.VARI {
         border-color: #EDBA39;
           text-color-internal: #604A0E;
             caption: '{preflabel}';
-              diameter: 80px;
+              diameter: 50px;
 }
 
 node.CHEM {
@@ -102,7 +102,7 @@ node.CHEM {
         border-color: #E0849B;
           text-color-internal: #FFFFFF;
             caption: '{preflabel}';
-              diameter: 80px;
+              diameter: 50px;
 }
 
 relationship.colocalizes_with {
@@ -174,7 +174,7 @@ node.LIVB {
         border-color: #9AA1AC;
           text-color-internal: #FFFFFF;
             caption: '{name}';
-              diameter: 80px;
+              diameter: 50px;
 }
 
 

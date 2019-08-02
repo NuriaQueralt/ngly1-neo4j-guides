@@ -14,7 +14,8 @@ The NGLY1 Deficiency Knowledge Graph is the first knowledge network for the http
 [#img-app]
 .NGLY1 Deficiency Knowledge Graph application. Go to the *Wikibase site* by clicking the application logo.
 [link=http://ngly1graph.org/contribute/]
-image::https://www.dropbox.com/s/mpxmakwy3x5fajv/ngly1_app_logo_youRInNeo4j2.png?dl=1[height=1250px, width=2500px,float=center]
+image::https://www.dropbox.com/s/tvexo76iqduivjw/ngly1_app_logo_youRInNeo4j3.png?dl=1[height=1250px, width=2500px,float=center]
+//image::https://www.dropbox.com/s/mpxmakwy3x5fajv/ngly1_app_logo_youRInNeo4j2.png?dl=1[height=1250px, width=2500px,float=center]
 //image::https://www.dropbox.com/s/id5ks05900clj26/ngly1_app_logo_youRInNeo4j.png?dl=1[height=900, width=1052,float=center]
 //image::https://www.dropbox.com/s/rkq3595pkkvflot/ngly1_app_logo.png?dl=1[float=center]
 
@@ -308,7 +309,8 @@ The first think to do is to formulate the query template in a structured manner 
 
 {sp}+
 
-image::https://www.dropbox.com/s/qypkrn1l50p83n6/query1_topology_v3.2.png?dl=1[height=100, width=5000, align="center"]
+image::https://www.dropbox.com/s/q2ncinoocvquuv0/q1_topology_guidecolors.png?dl=1[height=100, width=3621, align="center"]
+//image::https://www.dropbox.com/s/qypkrn1l50p83n6/query1_topology_v3.2.png?dl=1[height=100, width=5000, align="center"]
 
 {sp}+
 
@@ -436,8 +438,10 @@ Results can be vizualized in a summary table of a list of properties calculated 
 
 [#img-q1-paths]
 .Query 1 resulting hypotheses
-[link=https://www.dropbox.com/s/bbdg1orj7ztrvup/query1_paths_v3.2.png?dl=0]
-image::https://www.dropbox.com/s/bbdg1orj7ztrvup/query1_paths_v3.2.png?dl=1[height=10000, width=15500]
+[link=https://www.dropbox.com/s/onwzkxf2pqritok/q1_graph_screenshot.png?dl=0]
+image::https://www.dropbox.com/s/onwzkxf2pqritok/q1_graph_screenshot.png?dl=1[height=1607, width=2642]
+//[link=https://www.dropbox.com/s/bbdg1orj7ztrvup/query1_paths_v3.2.png?dl=0]
+//image::https://www.dropbox.com/s/bbdg1orj7ztrvup/query1_paths_v3.2.png?dl=1[height=10000, width=15500]
 
 {sp}+
 
@@ -446,8 +450,10 @@ If we want to retrieve a summary table with for instance all genes that are diff
 
 [#img-q1-table]
 .Query 1 summary table
-[link=https://www.dropbox.com/s/v7i3ld0x3cup7nj/query1_table_v3.2.png?dl=0]
-image::https://www.dropbox.com/s/v7i3ld0x3cup7nj/query1_table_v3.2.png?dl=1[height=5000, width=10000]
+[link=https://www.dropbox.com/s/u8ufzxrj2uo6bue/q1_table_screenshot.png?dl=0]
+image::https://www.dropbox.com/s/u8ufzxrj2uo6bue/q1_table_screenshot.png?dl=1[height=1122, width=2646]
+//[link=https://www.dropbox.com/s/v7i3ld0x3cup7nj/query1_table_v3.2.png?dl=0]
+//image::https://www.dropbox.com/s/v7i3ld0x3cup7nj/query1_table_v3.2.png?dl=1[height=5000, width=10000]
 
 {sp}+
 
@@ -511,7 +517,8 @@ Again, the first think to do is to formulate the query template in a structured 
 
 {sp}+
 
-image::https://www.dropbox.com/s/ch261h9xwpu5zm5/query2_topology_v3.2.png?dl=1[height=600, width=2500, align="center"]
+image::https://www.dropbox.com/s/gj1q4w8uvd4gsjf/q2_topology_guidecolors.png?dl=1[height=830, width=3615, align="center"]
+//image::https://www.dropbox.com/s/ch261h9xwpu5zm5/query2_topology_v3.2.png?dl=1[height=600, width=2500, align="center"]
 
 {sp}+
 
@@ -619,8 +626,11 @@ The resulting gene-phenotype links can be graphically visualized such as:
 
 [#img-q2-paths]
 .Query 2 resulting hypotheses
-[link=https://www.dropbox.com/s/xh14124tnqz0noo/query2_paths_v3.2.png?dl=0]
-image::https://www.dropbox.com/s/xh14124tnqz0noo/query2_paths_v3.2.png?dl=1[height=500, width=3000]
+[link=https://www.dropbox.com/s/ox1e3rk3vwgoq9e/q2_graph_screenshot.png?dl=0]
+image::https://www.dropbox.com/s/ox1e3rk3vwgoq9e/q2_graph_screenshot.png?dl=1[height=500, width=500]
+//image::https://www.dropbox.com/s/ox1e3rk3vwgoq9e/q2_graph_screenshot.png?dl=1[height=1600, width=1640]
+//image::https://www.dropbox.com/s/ox1e3rk3vwgoq9e/q2_graph_screenshot.png?dl=1[height=1600, width=2640]
+//image::https://www.dropbox.com/s/ox1e3rk3vwgoq9e/q2_graph_screenshot.png?dl=1[height=2521, width=3081]
 
 {sp}+
 
@@ -633,8 +643,10 @@ or can be summarized as a table such as:
 
 [#img-q2-table]
 .Query 2 summary table
-[link=https://www.dropbox.com/s/vksf6gccraaf92g/query2_table_v3.2.png?dl=0]
-image::https://www.dropbox.com/s/vksf6gccraaf92g/query2_table_v3.2.png?dl=1[height=500, width=3000]
+[link=https://www.dropbox.com/s/oc3ykhqrohfjzj1/q2_table_screenshot.png?dl=0]
+image::https://www.dropbox.com/s/oc3ykhqrohfjzj1/q2_table_screenshot.png?dl=1[height=800, width=800]
+//image::https://www.dropbox.com/s/oc3ykhqrohfjzj1/q2_table_screenshot.png?dl=1[height=1100, width=2641]
+//image::https://www.dropbox.com/s/oc3ykhqrohfjzj1/q2_table_screenshot.png?dl=1[height=1727, width=2641]
 
 
 {sp}+
