@@ -134,7 +134,7 @@ The graph data are created as two different data structures: nodes and edges. Th
     - `reference_date`: Date of publication of the reference of the edge.
 
 
-_NOTE_: The attribute(s) do not appear in the graphical interface when the value is null.
+_NOTE_: When the attribute is 'NA' that states for Not Available, and it means we could not access to this information from the original source.
 
 
 {sp}+
